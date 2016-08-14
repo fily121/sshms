@@ -19,6 +19,10 @@ public class PubUsers implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5395095858734027949L;
 	private Integer userId;
 	private String userAccount;
 	private String userName;

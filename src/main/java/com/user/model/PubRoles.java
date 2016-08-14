@@ -19,6 +19,10 @@ public class PubRoles implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 936138868675108590L;
 	private String roleId;
 	private String roleName;
 	private String roleDesc;

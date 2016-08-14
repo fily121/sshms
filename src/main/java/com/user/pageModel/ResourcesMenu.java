@@ -1,17 +1,6 @@
 package com.user.pageModel;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * PubResources entity. @author MyEclipse Persistence Tools
@@ -19,6 +8,10 @@ import javax.persistence.Table;
 
 public class ResourcesMenu implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1245361687185245070L;
 	private String id;
 	private String pid;
 	private String text;
