@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skynet.collection.dao.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.skynet.collection.vo.Permission" >
+    <id column="PER_ID" property="perId" jdbcType="VARCHAR" />
+    <result column="PER_NAME" property="perName" jdbcType="VARCHAR" />
+    <result column="PARENT_PER_ID" property="parentPerId" jdbcType="VARCHAR" />
+    <result column="PER_URL" property="perUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PER_ID, PER_NAME, PARENT_PER_ID, PER_URL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where PER_ID = #{perId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from permission
+    where PER_ID = #{perId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.skynet.collection.vo.Permission" >
+    insert into permission (PER_ID, PER_NAME, PARENT_PER_ID, 
+      PER_URL)
+    values (#{perId,jdbcType=VARCHAR}, #{perName,jdbcType=VARCHAR}, #{parentPerId,jdbcType=VARCHAR}, 
+      #{perUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skynet.collection.vo.Permission" >
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="perId != null" >
+        PER_ID,
+      </if>
+      <if test="perName != null" >
+        PER_NAME,
+      </if>
+      <if test="parentPerId != null" >
+        PARENT_PER_ID,
+      </if>
+      <if test="perUrl != null" >
+        PER_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="perId != null" >
+        #{perId,jdbcType=VARCHAR},
+      </if>
+      <if test="perName != null" >
+        #{perName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentPerId != null" >
+        #{parentPerId,jdbcType=VARCHAR},
+      </if>
+      <if test="perUrl != null" >
+        #{perUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skynet.collection.vo.Permission" >
+    update permission
+    <set >
+      <if test="perName != null" >
+        PER_NAME = #{perName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentPerId != null" >
+        PARENT_PER_ID = #{parentPerId,jdbcType=VARCHAR},
+      </if>
+      <if test="perUrl != null" >
+        PER_URL = #{perUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PER_ID = #{perId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skynet.collection.vo.Permission" >
+    update permission
+    set PER_NAME = #{perName,jdbcType=VARCHAR},
+      PARENT_PER_ID = #{parentPerId,jdbcType=VARCHAR},
+      PER_URL = #{perUrl,jdbcType=VARCHAR}
+    where PER_ID = #{perId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectPermissionsByRoleId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	select distinct per.* from permission per, role_pers rps
+  	where per.per_id = rps.per_id and rps.role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
+</mapper>

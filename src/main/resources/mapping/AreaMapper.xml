@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skynet.collection.dao.AreaMapper" >
+  <resultMap id="BaseResultMap" type="com.skynet.collection.vo.Area" >
+    <id column="AREA_ID" property="areaId" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="LEVEL" property="level" jdbcType="INTEGER" />
+    <result column="PARENT_AREA_ID" property="parentAreaId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AREA_ID, AREA_NAME, LEVEL, PARENT_AREA_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from p_area
+    where AREA_ID = #{areaId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from p_area
+    where AREA_ID = #{areaId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.skynet.collection.vo.Area" >
+    insert into p_area (AREA_ID, AREA_NAME, LEVEL, 
+      PARENT_AREA_ID)
+    values (#{areaId,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, 
+      #{parentAreaId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skynet.collection.vo.Area" >
+    insert into p_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="level != null" >
+        LEVEL,
+      </if>
+      <if test="parentAreaId != null" >
+        PARENT_AREA_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="parentAreaId != null" >
+        #{parentAreaId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skynet.collection.vo.Area" >
+    update p_area
+    <set >
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        LEVEL = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="parentAreaId != null" >
+        PARENT_AREA_ID = #{parentAreaId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AREA_ID = #{areaId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skynet.collection.vo.Area" >
+    update p_area
+    set AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      LEVEL = #{level,jdbcType=INTEGER},
+      PARENT_AREA_ID = #{parentAreaId,jdbcType=VARCHAR}
+    where AREA_ID = #{areaId,jdbcType=VARCHAR}
+  </update>
+</mapper>
