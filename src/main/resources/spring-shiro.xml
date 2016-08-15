@@ -60,7 +60,7 @@
     </bean> -->
 
 	<!-- 項目自定义的Realm -->
-	<bean id="userRealm" class="com.skynet.collection.realm.MyShiroRealm">
+	<bean id="userRealm" class="cn.com.sinoi.zyqyh.realm.MyShiroRealm">
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 	

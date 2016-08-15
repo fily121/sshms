@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.skynet.collection.dao.RaceMapper" >
-  <resultMap id="BaseResultMap" type="com.skynet.collection.vo.Race" >
+<mapper namespace="cn.com.sinoi.zyqyh.dao.RaceMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Race" >
     <id column="RACE_ID" property="raceId" jdbcType="VARCHAR" />
     <result column="RACE_NAME" property="raceName" jdbcType="VARCHAR" />
     <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
@@ -25,7 +25,7 @@
     delete from race
     where RACE_ID = #{raceId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.skynet.collection.vo.Race" >
+  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Race" >
     insert into race (RACE_ID, RACE_NAME, CREATE_DATE, 
       UPDATE_DATE, CREATE_USER, REMARK, 
       EXT2, EXT1, EXT3)
@@ -33,7 +33,7 @@
       #{updateDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{ext2,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.skynet.collection.vo.Race" >
+  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Race" >
     insert into race
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="raceId != null" >
@@ -94,7 +94,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.skynet.collection.vo.Race" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Race" >
     update race
     <set >
       <if test="raceName != null" >
@@ -124,7 +124,7 @@
     </set>
     where RACE_ID = #{raceId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.skynet.collection.vo.Race" >
+  <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Race" >
     update race
     set RACE_NAME = #{raceName,jdbcType=VARCHAR},
       CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},

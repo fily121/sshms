@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.skynet.collection.dao.CollectionMapper" >
-  <resultMap id="BaseResultMap" type="com.skynet.collection.vo.CollectionInfo" >
+<mapper namespace="cn.com.sinoi.zyqyh.dao.CollectionMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.CollectionInfo" >
     <id column="C_ID" property="cId" jdbcType="VARCHAR" />
     <result column="AREA_ID" property="areaId" jdbcType="VARCHAR" />
     <result column="RACE_ID" property="raceId" jdbcType="VARCHAR" />
@@ -55,7 +55,7 @@
     delete from collection
     where C_ID = #{cId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.skynet.collection.vo.CollectionInfo" >
+  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.CollectionInfo" >
     insert into collection (C_ID, AREA_ID, RACE_ID, 
       NAME, SEX, ID_CARD_NO, 
       ID_CARD_START_DATE, ID_CARD_END_DATE, ANMELDEN_ADDRESS, 
@@ -75,7 +75,7 @@
       #{createUser2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
       #{ext1,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.skynet.collection.vo.CollectionInfo" >
+  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.CollectionInfo" >
     insert into collection
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cId != null" >
@@ -226,7 +226,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.skynet.collection.vo.CollectionInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.CollectionInfo" >
     update collection
     <set >
       <if test="areaId != null" >
@@ -301,7 +301,7 @@
     </set>
     where C_ID = #{cId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.skynet.collection.vo.CollectionInfo" >
+  <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.CollectionInfo" >
     update collection
     set AREA_ID = #{areaId,jdbcType=VARCHAR},
       RACE_ID = #{raceId,jdbcType=VARCHAR},

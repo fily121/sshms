@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.skynet.collection.dao.OrgMapper" >
-  <resultMap id="BaseResultMap" type="com.skynet.collection.vo.Org" >
+<mapper namespace="cn.com.sinoi.zyqyh.dao.OrgMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Org" >
     <id column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
     <result column="PARENT_ORG_ID" property="parentOrgId" jdbcType="VARCHAR" />
@@ -29,7 +29,7 @@
     delete from p_org
     where ORG_ID = #{orgId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.skynet.collection.vo.Org" >
+  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Org" >
     insert into p_org (ORG_ID, ORG_NAME, PARENT_ORG_ID, 
       ORG_TYPE, AUTH_CODE, CREATE_DATE, 
       UPDATE_DATE, CREATE_USER, EXT1, 
@@ -39,7 +39,7 @@
       #{updateDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
       #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.skynet.collection.vo.Org" >
+  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Org" >
     insert into p_org
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="orgId != null" >
@@ -118,7 +118,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.skynet.collection.vo.Org" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Org" >
     update p_org
     <set >
       <if test="orgName != null" >
@@ -157,7 +157,7 @@
     </set>
     where ORG_ID = #{orgId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.skynet.collection.vo.Org" >
+  <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Org" >
     update p_org
     set ORG_NAME = #{orgName,jdbcType=VARCHAR},
       PARENT_ORG_ID = #{parentOrgId,jdbcType=VARCHAR},

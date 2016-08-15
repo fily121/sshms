@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.skynet.collection.dao.RolePersMapper" >
-  <resultMap id="BaseResultMap" type="com.skynet.collection.vo.RolePersKey" >
+<mapper namespace="cn.com.sinoi.zyqyh.dao.RolePersMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.RolePersKey" >
     <id column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
     <id column="PER_ID" property="perId" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap type="com.skynet.collection.vo.RolePersKey" id="rolesResultMap">
-  	<collection property="roles" ofType="com.skynet.collection.vo.Role" javaType="ArrayList">
+  <resultMap type="cn.com.sinoi.zyqyh.vo.RolePersKey" id="rolesResultMap">
+  	<collection property="roles" ofType="cn.com.sinoi.zyqyh.vo.Role" javaType="ArrayList">
   		<id column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
     	<result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
   	</collection>  
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="com.skynet.collection.vo.RolePersKey" >
+  <delete id="deleteByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.RolePersKey" >
     delete from role_pers
     where ROLE_ID = #{roleId,jdbcType=VARCHAR}
       and PER_ID = #{perId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.skynet.collection.vo.RolePersKey" >
+  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.RolePersKey" >
     insert into role_pers (ROLE_ID, PER_ID)
     values (#{roleId,jdbcType=VARCHAR}, #{perId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.skynet.collection.vo.RolePersKey" >
+  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.RolePersKey" >
     insert into role_pers
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >

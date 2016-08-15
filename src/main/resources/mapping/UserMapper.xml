@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.skynet.collection.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.skynet.collection.vo.User" >
+<mapper namespace="cn.com.sinoi.zyqyh.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.User" >
     <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
     <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
     <result column="USER_PWD" property="userPwd" jdbcType="VARCHAR" />
@@ -31,7 +31,7 @@
     delete from p_user
     where USER_ID = #{userId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.skynet.collection.vo.User" >
+  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.User" >
     insert into p_user (USER_ID, USER_NAME, USER_PWD, 
       IS_GUEST, IS_LOCKED, ROLE_ID, 
       ORG_ID, CREATE_DATE, UPDATE_DATE, 
@@ -43,7 +43,7 @@
       #{createUser,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
       #{ext1,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.skynet.collection.vo.User" >
+  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.User" >
     insert into p_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -134,7 +134,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.skynet.collection.vo.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.User" >
     update p_user
     <set >
       <if test="userName != null" >
@@ -179,7 +179,7 @@
     </set>
     where USER_ID = #{userId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.skynet.collection.vo.User" >
+  <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.User" >
     update p_user
     set USER_NAME = #{userName,jdbcType=VARCHAR},
       USER_PWD = #{userPwd,jdbcType=VARCHAR},
@@ -210,7 +210,7 @@
     where USER_NAME = #{userName,jdbcType=VARCHAR}
   </select>
   
-  <select id="findByCondication" resultMap="BaseResultMap" parameterType="com.skynet.collection.utils.SearchParams" >
+  <select id="findByCondication" resultMap="BaseResultMap" parameterType="cn.com.sinoi.zyqyh.utils.SearchParams" >
   	select 
     <include refid="Base_Column_List" />
     from p_user

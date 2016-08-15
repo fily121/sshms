@@ -6,9 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.skynet.collection.service.IPermissionService;
-import com.skynet.collection.service.IRoleService;
-import com.skynet.collection.service.IUserService;
+
+import cn.com.sinoi.zyqyh.service.IPermissionService;
+import cn.com.sinoi.zyqyh.service.IRoleService;
+import cn.com.sinoi.zyqyh.service.IUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:applicationContext.xml")
