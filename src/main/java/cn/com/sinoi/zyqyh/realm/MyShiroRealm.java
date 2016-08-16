@@ -29,8 +29,8 @@ import cn.com.sinoi.zyqyh.vo.User;
  * <p>Title: 自定义的系统ShrioRealm</p>
  * <p>Description: </p>
  *
- * @author Liujian
- * @version 1.00.00
+ * @author 强成西
+ * 
  * <pre>
  * 修改记录:
  * 版本号    修改人        修改日期       修改内容

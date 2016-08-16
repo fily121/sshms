@@ -45,8 +45,8 @@ import cn.com.sinoi.zyqyh.vo.User;
  * Description:
  * </p>
  *
- * @author Liujian
- * @version 1.00.00
+ * @author 强成西
+ * 
  * 
  *          <pre>
  *          修改记录: 版本号 修改人 修改日期 修改内容
@@ -78,7 +78,7 @@ public class UserController {
 	@RequestMapping("index.do")
 	public String index(Model model, @ModelAttribute("params") SearchParams params) {
 		Pagination<User> pageList = null;
-		String resultPageURL = "user/index";
+		String resultPageURL = "index";
 		try {
 			User loginUser = getUserBySubject();
 			if (loginUser.getIsGuest() == 1) { // 如果是来宾用户，则直接跳转到信息录入界面，已录入过信息的跳转到录入详情界面
