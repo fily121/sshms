@@ -68,13 +68,12 @@
     <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
-        <property name="loginUrl" value="/login.jsp"/>
     </bean>
 
 	<!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/user/login"/>
+        <property name="loginUrl" value="/user/login.do"/>
         <property name="unauthorizedUrl" value="/"/>
         <property name="filters">
             <util:map>
@@ -83,12 +82,17 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
-                /user/login=anon
-		        /user/getVerifyCodeImage=anon
-		        /index.jsp=authc
-		        /user/**=authc
+                /static/** = anon
+                /user/login.do=anon
+		        /user/getVerifyCodeImage.do=anon
+		        /logout.do = logout
+				/** = user
             </value>
         </property>
+    </bean>
+    
+    <bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+        <property name="redirectUrl" value="/user/login.do" />
     </bean>
 
 	<!-- Shiro生命周期处理器 保证实现了Shiro内部lifecycle函数的bean执行 -->

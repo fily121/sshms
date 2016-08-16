@@ -1,9 +1,8 @@
 package cn.com.sinoi.wechat.oauth2;
 
 
-import net.sf.json.JSONObject;
-import cn.com.sinoi.wechat.ParamesAPI.ParamesAPI;
 import cn.com.sinoi.wechat.ParamesAPI.WeixinUtil;
+import net.sf.json.JSONObject;
 
 /**
  * OAuth2类

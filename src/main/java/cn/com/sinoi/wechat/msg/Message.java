@@ -1,13 +1,5 @@
 package cn.com.sinoi.wechat.msg;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import cn.com.sinoi.wechat.ParamesAPI.ParamesAPI;
-import cn.com.sinoi.wechat.ParamesAPI.WeixinUtil;
-import cn.com.sinoi.wechat.msg.Resp.Article;
-
 /**
  * 发送消息类
  * 
