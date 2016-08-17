@@ -33,6 +33,7 @@ import cn.com.sinoi.zyqyh.service.ICollectionInfoService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.utils.Pagination;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
+import cn.com.sinoi.zyqyh.utils.ShiroUtils;
 import cn.com.sinoi.zyqyh.utils.VerifyCodeUtil;
 import cn.com.sinoi.zyqyh.vo.CollectionInfo;
 import cn.com.sinoi.zyqyh.vo.User;
@@ -46,13 +47,8 @@ import cn.com.sinoi.zyqyh.vo.User;
  * </p>
  *
  * @author 强成西
- * 
- * 
- *          <pre>
- *          修改记录: 版本号 修改人 修改日期 修改内容
  */
 @Controller
-@RequestMapping("user")
 public class UserController {
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
@@ -63,7 +59,12 @@ public class UserController {
 	@Autowired
 	private ICollectionInfoService collectionInfoService;
 
-	@RequestMapping("login.do")
+	@RequestMapping("/user/welcome.do")
+	public String home(Model model) {
+		return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/user/login.do";
+	}
+	
+	@RequestMapping("user/login.do")
 	public String login(Model model, String message_login) {
 		if (message_login != null) {
 			try {
@@ -75,15 +76,15 @@ public class UserController {
 		return "user/login";
 	}
 
-	@RequestMapping("index.do")
+	@RequestMapping("user/index.do")
 	public String index(Model model, @ModelAttribute("params") SearchParams params) {
 		Pagination<User> pageList = null;
 		String resultPageURL = "index";
 		try {
-			User loginUser = getUserBySubject();
-			if (loginUser.getIsGuest() == 1) { // 如果是来宾用户，则直接跳转到信息录入界面，已录入过信息的跳转到录入详情界面
+			User loginUser = ShiroUtils.getUserBySubject(userService);
+			if (loginUser.getIsGuest() == 1) { 
 				CollectionInfo collectionInfo = this.collectionInfoService.selectByIdCardNo(loginUser.getUserId());
-				if (collectionInfo == null) { // 没有采集信息则跳转到新增页面，有则跳转详情页
+				if (collectionInfo == null) { 
 					resultPageURL = "collection/add";
 				} else {
 					model.addAttribute("collectionInfo", collectionInfo);
@@ -107,7 +108,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	@RequestMapping(value = "user/login.do", method = RequestMethod.POST)
 	public String login(User user, Model model, HttpServletRequest request) {
 		String resultPageURL = InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/user/login.do";
 		String username = user.getUserName();
@@ -170,7 +171,7 @@ public class UserController {
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping("/getVerifyCodeImage.do")
+	@RequestMapping("user/getVerifyCodeImage.do")
 	public void getVerifyCodeImage(HttpServletRequest request, HttpServletResponse response) {
 		// 设置页面不缓存
 		response.setHeader("Pragma", "no-cache");
@@ -198,26 +199,9 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/logout.do")
+	@RequestMapping("user/logout.do")
 	public String logout(HttpServletRequest request) {
 		SecurityUtils.getSubject().logout();
 		return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/user/login.do";
 	}
-
-	/**
-	 * 根据Shiro的登录用户名查询用户
-	 * 
-	 * @return
-	 */
-	public User getUserBySubject() {
-		User user = null;
-		try {
-			UsernamePasswordToken token = (UsernamePasswordToken) SecurityUtils.getSubject().getPrincipal();
-			user = this.userService.selectByUserName(token.getUsername());
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		return user;
-	}
-
 }

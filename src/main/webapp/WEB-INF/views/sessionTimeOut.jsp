@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    
        <br/>
        <h3> 对不起，你还未登录或登录已超时，请登录后再访问！</h3>
-       <h3><a href="<%=basePath%>login.jsp">登录</a></h3>
+       <h3><a href="<%=basePath%>user/login.do">登录</a></h3>
    
   </body>
 </html>

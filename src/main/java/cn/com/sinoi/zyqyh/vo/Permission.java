@@ -8,7 +8,8 @@ public class Permission {
     private String parentPerId;
 
     private String perUrl;
-
+    
+    private String parentPerName;
     public String getPerId() {
         return perId;
     }
@@ -40,4 +41,18 @@ public class Permission {
     public void setPerUrl(String perUrl) {
         this.perUrl = perUrl == null ? null : perUrl.trim();
     }
+
+	/**
+	 * @return the parentPerName
+	 */
+	public String getParentPerName() {
+		return parentPerName;
+	}
+
+	/**
+	 * @param parentPerName the parentPerName to set
+	 */
+	public void setParentPerName(String parentPerName) {
+		this.parentPerName = parentPerName;
+	}
 }

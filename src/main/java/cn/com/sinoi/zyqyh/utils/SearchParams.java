@@ -5,6 +5,11 @@ import java.util.Map;
 
 public class SearchParams implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8368512563948696560L;
+
 	private int page = 1;// 当前页
 	
 	private int rows = 10;// 每页显示记录数

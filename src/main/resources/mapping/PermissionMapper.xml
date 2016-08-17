@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Permission" >
     <id column="PER_ID" property="perId" jdbcType="VARCHAR" />
     <result column="PER_NAME" property="perName" jdbcType="VARCHAR" />
+    <result column="PARENT_PER_NAME" property="parentPerName" jdbcType="VARCHAR" />
     <result column="PARENT_PER_ID" property="parentPerId" jdbcType="VARCHAR" />
     <result column="PER_URL" property="perUrl" jdbcType="VARCHAR" />
   </resultMap>
@@ -16,6 +17,15 @@
     from permission
     where PER_ID = #{perId,jdbcType=VARCHAR}
   </select>
+
+  <select id="findAll" resultMap="BaseResultMap" >
+    select 
+    a.PER_ID, a.PER_NAME, a.PARENT_PER_ID, a.PER_URL,
+    b.PER_NAME as PARENT_PER_NAME
+    from permission a 
+    left join permission b on a.PARENT_PER_ID = b.PER_ID
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from permission
     where PER_ID = #{perId,jdbcType=VARCHAR}

@@ -22,7 +22,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<Permission> implement
 
 	@Override
 	public List<Permission> findAll() throws Exception {
-		return null;
+		return this.permissionMapper.findAll();
 	}
 
 	@Override
