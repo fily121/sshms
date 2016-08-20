@@ -35,6 +35,10 @@
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
+        
+        <listener>
+            <listener-class>org.directwebremoting.servlet.DwrListener</listener-class>
+        </listener>
 
 	<!-- Spring MVC servlet -->
 	<servlet>
@@ -97,7 +101,47 @@
 		<servlet-name>DruidStatView</servlet-name>
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
-
+        <servlet>
+            <servlet-name>dwr-invoker</servlet-name>
+            <display-name>DWR Servlet</display-name>
+            <description>Direct Web Remoter Servlet</description>
+            <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+                <init-param>
+             <param-name>fileUploadMaxBytes</param-name>
+             <param-value>25000</param-value>
+            </init-param>
+            <!-- This should NEVER be present in live -->
+            <init-param>
+              <param-name>debug</param-name>
+              <param-value>true</param-value>
+            </init-param>
+            <init-param>
+              <param-name>accessLogLevel</param-name>
+              <param-value>runtimeexception</param-value>
+            </init-param>
+            <!-- Remove this unless you want to use active reverse ajax -->
+            <init-param>
+              <param-name>activeReverseAjaxEnabled</param-name>
+              <param-value>true</param-value>
+            </init-param>
+            <!-- By default DWR creates application scope objects when they are first
+            used. This creates them when the app-server is started -->
+            <init-param>
+              <param-name>initApplicationScopeCreatorsAtStartup</param-name>
+              <param-value>true</param-value>
+            </init-param>
+            <!-- data: URLs are good for small images, but are slower, and could OOM for
+            larger images. Leave this out (or keep 'false') for anything but small images -->
+            <init-param>
+              <param-name>preferDataUrlSchema</param-name>
+              <param-value>false</param-value>
+            </init-param>
+            <load-on-startup>1</load-on-startup>
+          </servlet>
+          <servlet-mapping>
+            <servlet-name>dwr-invoker</servlet-name>
+            <url-pattern>/dwr/*</url-pattern>
+          </servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>/user/welcome.do</welcome-file>
 	</welcome-file-list>
