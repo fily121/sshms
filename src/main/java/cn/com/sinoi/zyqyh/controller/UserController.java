@@ -1,12 +1,10 @@
 package cn.com.sinoi.zyqyh.controller;
 
-import cn.com.sinoi.zyqyh.service.ICollectionInfoService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.utils.Pagination;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.utils.ShiroUtils;
 import cn.com.sinoi.zyqyh.utils.VerifyCodeUtil;
-import cn.com.sinoi.zyqyh.vo.CollectionInfo;
 import cn.com.sinoi.zyqyh.vo.User;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -52,9 +50,6 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @Autowired
-    private ICollectionInfoService collectionInfoService;
-
     @RequestMapping("/showMessage.do")
     public String showMessage(Model model) {
         return "showMessage";
@@ -88,18 +83,8 @@ public class UserController {
         String resultPageURL = "index";
         try {
             User loginUser = ShiroUtils.getUserBySubject(userService);
-            if (loginUser.getIsGuest() == 1) {
-                CollectionInfo collectionInfo = this.collectionInfoService.selectByIdCardNo(loginUser.getUserId());
-                if (collectionInfo == null) {
-                    resultPageURL = "collection/add";
-                } else {
-                    model.addAttribute("collectionInfo", collectionInfo);
-                    resultPageURL = "collection/view";
-                }
-            } else { // 系统用户展示列表
-                pageList = this.userService.findByCondication(params);
-                model.addAttribute("pageList", pageList);
-            }
+            pageList = this.userService.findByCondication(params);
+            model.addAttribute("pageList", pageList);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
@@ -201,8 +186,8 @@ public class UserController {
     /**
      * 注销登录
      *
-     * @param request
-     * @return
+     * @param request HttpServletRequest
+     * @return "redirect:/user/login.do"
      */
     @RequestMapping("user/logout.do")
     public String logout(HttpServletRequest request) {

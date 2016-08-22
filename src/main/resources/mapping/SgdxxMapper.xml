@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.sinoi.zyqyh.dao.SgdxxMapper" >
+    <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Sgdxx" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="sgdmc" property="sgdmc" jdbcType="VARCHAR" />
+        <result column="detail" property="detail" jdbcType="VARCHAR" />
+        <result column="duizhang" property="duizhang" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="duizhangMc" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, sgdmc, detail, duizhang
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from sgdxx
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findAll" resultMap="BaseResultMap" >
+        select 
+        <include refid="Base_Column_List" />, b.USER_NAME
+        from sgdxx a left join p_user b where a.duizhang = b.id
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from sgdxx
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
+        insert into sgdxx (id, sgdmc, detail, 
+        duizhang)
+        values (#{id,jdbcType=VARCHAR}, #{sgdmc,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
+        #{duizhang,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
+        insert into sgdxx
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="sgdmc != null" >
+                sgdmc,
+            </if>
+            <if test="detail != null" >
+                detail,
+            </if>
+            <if test="duizhang != null" >
+                duizhang,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="sgdmc != null" >
+                #{sgdmc,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null" >
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="duizhang != null" >
+                #{duizhang,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
+        update sgdxx
+        <set >
+            <if test="sgdmc != null" >
+                sgdmc = #{sgdmc,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null" >
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="duizhang != null" >
+                duizhang = #{duizhang,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
+        update sgdxx
+        set sgdmc = #{sgdmc,jdbcType=VARCHAR},
+        detail = #{detail,jdbcType=VARCHAR},
+        duizhang = #{duizhang,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

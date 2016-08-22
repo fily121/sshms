@@ -10,7 +10,7 @@
 </head>
 <body>
 <header>
- <h1><img src="static/images/admin_logo.png"/></h1>
+ <h1><img src="static/css/images/admin_logo.png"/></h1>
  <ul class="rt_nav">
   <li><a href="http://www.baidu.com" target="_blank" class="website_icon">站点首页</a></li>
   <li><a href="#" class="admin_icon">DeathGhost</a></li>
@@ -64,10 +64,10 @@
     <dt>现场相关管理</dt>
     </shiro:hasPermission>
     <shiro:hasPermission name="现场管理">
-    <dd><a href="#">现场管理</a></dd>
+    <dd><a href="xcgl/xcglManage.do">现场管理</a></dd>
     </shiro:hasPermission>
     <shiro:hasPermission name="现场检查">
-    <dd><a href="#">现场检查</a></dd>
+    <dd><a href="xcgl/xcjcManage">现场检查</a></dd>
     </shiro:hasPermission>
    </dl>
   </li>
