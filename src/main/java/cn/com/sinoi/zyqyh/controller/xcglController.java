@@ -1,7 +1,6 @@
 package cn.com.sinoi.zyqyh.controller;
 
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
-import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("xcgl")
-public class xcglController {
+public class XcglController {
 
-    private static final Logger logger = Logger.getLogger(xcglController.class);
+    private static final Logger logger = Logger.getLogger(XcglController.class);
 
     @Autowired
     ISgdxxService sgdxxService;
@@ -34,18 +33,25 @@ public class xcglController {
     /**
      * 现场管理
      *
-     * @param model
      * @return
      */
     @RequestMapping("xcglManage.do")
-    public String xcglManage(Model model) {
-        try {
-            List<Sgdxx> sgdList = sgdxxService.findAll();
-            model.addAttribute("sgdList", sgdList);
-        } catch (Exception e) {
-            logger.info(e);
-        }
+    public String xcglManage() {
         return "xcgl/xcglManage";
+    }
+
+    /**
+     * 现场联系
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping("xclx.do")
+    public String xclx(Model model, String id) {
+        model.addAttribute("gcdId", id);
+        List<String> userIdList = sgdxxService.findUserIdByGcdId(id);
+        model.addAttribute("userIdList", userIdList);
+        return "xcgl/sgdgl";
     }
 
     /**
