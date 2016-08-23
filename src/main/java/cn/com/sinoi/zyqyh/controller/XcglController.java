@@ -33,7 +33,6 @@ public class XcglController {
     /**
      * 现场管理
      *
-     * @param model
      * @return
      */
     @RequestMapping("xcglManage.do")
