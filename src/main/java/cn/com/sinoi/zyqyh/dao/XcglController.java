@@ -1,4 +1,4 @@
-package cn.com.sinoi.zyqyh.controller;
+package cn.com.sinoi.zyqyh.dao;
 
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import java.util.List;
