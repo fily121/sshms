@@ -12,6 +12,7 @@ import java.io.UnsupportedEncodingException;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -78,7 +79,7 @@ public class UserController {
     }
 
     @RequestMapping("user/index.do")
-    public String index(Model model, @ModelAttribute("params") SearchParams params) {
+    public String index(Model model, @ModelAttribute("params") SearchParams params, HttpSession session) {
         Pagination<User> pageList = null;
         String resultPageURL = "index";
         try {

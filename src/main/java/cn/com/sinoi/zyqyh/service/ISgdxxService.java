@@ -1,6 +1,7 @@
 package cn.com.sinoi.zyqyh.service;
 
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
+import java.util.List;
 
 public interface ISgdxxService extends IBaseService<Sgdxx> {
 
@@ -15,4 +16,6 @@ public interface ISgdxxService extends IBaseService<Sgdxx> {
     int updateByPrimaryKeySelective(Sgdxx record);
 
     int updateByPrimaryKey(Sgdxx record);
+
+    List<String> findUserIdByGcdId(String id);
 }

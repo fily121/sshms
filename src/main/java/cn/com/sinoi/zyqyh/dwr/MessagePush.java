@@ -16,13 +16,12 @@ import org.directwebremoting.WebContextFactory;
  */
 public class MessagePush {
 
-    public void onPageLoad(String userId) {
+    public void onPageLoad(String gcdId) {
         ScriptSession scriptSession = WebContextFactory.get().getScriptSession();
-        scriptSession.setAttribute(userId, userId);
+        scriptSession.setAttribute("gcdId", gcdId);
         DwrScriptSessionManagerUtil dwrScriptSessionManagerUtil = new DwrScriptSessionManagerUtil();
         try {
             dwrScriptSessionManagerUtil.init();
-            System.out.println("cacaca");
         } catch (ServletException e) {
             e.printStackTrace();
         }

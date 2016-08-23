@@ -5,8 +5,8 @@
         <create creator="new" javascript="MessagePush">  
             <param name="class" value="cn.com.sinoi.zyqyh.dwr.MessagePush"/>  
         </create>  
-        <create creator="new" javascript="TestPush">  
-            <param name="class" value="cn.com.sinoi.zyqyh.dwr.Test"/>  
+        <create creator="new" javascript="ShowMessage">  
+            <param name="class" value="cn.com.sinoi.zyqyh.dwr.ShowMessage"/>  
         </create>  
   </allow>
 </dwr>

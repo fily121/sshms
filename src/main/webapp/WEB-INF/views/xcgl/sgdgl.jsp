@@ -8,18 +8,17 @@
     <head>  
         <base href="<%=basePath%>">  
         <title>DWR  DEMO</title>  
-        <script type="text/javascript"  src="<%= basePath%>static/js/jquery.js"></script>
         <script type="text/javascript"  src="<%= basePath%>static/js/gcdtx.js"></script>
         <script type='text/javascript' src='<%= basePath%>dwr/engine.js'></script>  
         <script type='text/javascript' src='<%= basePath%>dwr/util.js'></script>  
         <script type="text/javascript" src="<%= basePath%>dwr/interface/MessagePush.js"></script>  
-        <script type='text/javascript' src='<%= basePath%>dwr/interface/TestPush.js'></script>
+        <script type='text/javascript' src='<%= basePath%>dwr/interface/ShowMessage.js'></script>
         <link rel="stylesheet" type="text/css" href="<%= basePath%>/static/css/gcdtx.css" />
         <script type="text/javascript">
             var messageMeUiStart = '<div class="message me">' +
                     '<img class="avatar" src="static/css/images/hyf.jpg" />' +
                     '<div class="content">' +
-                    '<div class="nickname"><span class="time">10:10:08</span></div>' +
+                    '<div class="nickname"><span class="time">{time}</span></div>' +
                     '<div class="bubble bubble_primary right">' +
                     '<div class="bubble_cont">' +
                     '<div class="plain">' +
@@ -32,29 +31,27 @@
                     '</div>';
             //通过该方法与后台交互，确保推送时能找到指定用户  
             function onPageLoad() {
-                MessagePush.onPageLoad(123);
+                MessagePush.onPageLoad(${gcdId});
             }
             //推送信息  
-            function showMessage(autoMessage) {
+            function showMessage(autoMessage, time) {
                autoMessage =  messageMeUiStart + autoMessage + messageMeUiEnd;
+               autoMessage = autoMessage.replace('{time}', time);
                 $("#messageList").append(autoMessage);
                 $("#editArea").text('');
             }
             function test() {
                 var msg = $("#editArea").html();
                 //msg = {msgId: '1', context: $("#msgContext").val()};
-                TestPush.sendMessageAuto(123, msg);
+                var date = new Date();
+                ShowMessage.sendMessageAuto(${gcdId}, msg, date.Format('yyyy/mm/dd hh:mm:ss'));
             }
+            $(function(){
+                onPageLoad(); dwr.engine.setActiveReverseAjax(true); dwr.engine.setNotifyServerOnPageUnload(true);
+            })
         </script>  
     </head>  
-    <body onload="onPageLoad();
-            dwr.engine.setActiveReverseAjax(true);
-            dwr.engine.setNotifyServerOnPageUnload(true);">   
-        This is my DWR DEOM page. <hr>  
-        <br>  
-        <div id="DemoDiv">demo</div>  
-        <input type="text" name="msgId" id="msgId" /> <br />
-        <input type="button" value="Send" onclick="test()"  />
+    <body>   
         <div class="main">  
             <div class="main_inner clearfix">  
                 <div class="panel"></div>  
@@ -68,7 +65,7 @@
                                 <div class="bubble bubble_primary right">  
                                     <div class="bubble_cont">  
                                         <div class="plain">  
-                                            <pre>你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐</pre>  
+                                            <pre>1212</pre>  
                                         </div>  
                                     </div>  
                                 </div>  

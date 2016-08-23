@@ -3,35 +3,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <title>现场管理</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>施工队管理</title>
     </head>
     <body>
+        <script type="text/javascript">
+            $(function () {
+                $('#datagrid').datagrid({
+                    url: 'data/system/getSgdList.do',
+                    method: 'get',
+                    toolbar: '#tb',
+                    singleSelect: true,
+                    title: '施工队列表',
+                    columns: [[
+                            {field: 'id', width: 80, hidden: true},
+                            {field: 'duizhang', width: 80, hidden: true},
+                            {field: 'sgdmc', title: '施工队名称', width: 120},
+                            {field: 'duizhangMc', title: '队长名称', width: 120},
+                            {field: 'detail', title: '详情', width: 240, align: 'left'},
+                            {field: 'caozuo', title: '操作', width: 120, align: 'center', formatter: function (value, row, index) {
+                                    return '<a href="xcgl/xclx.do?id='+row.id+'" class="easyui-linkbutton" data-options="iconCls:\'icon-edit\',plain:true">联系</a>';
+                                }}
+                        ]]
+                });
+            })
+        </script>
     <section>
         <h2>
             <strong style="color: grey;">施工队列表</strong>
         </h2>
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>施工队名称</th>
-                    <th>队长</th>
-                    <th>详情</th>
-                    <th>操作</th>
-                </tr>
-                <c:forEach items="${sgdList }" var="sgd">
-                    <tr>
-                        <td style="width: 265px;">
-                            <input type="hidden" value="${sgd.id }"/>
-                            ${sgd.sgdmc }
-                        </td>
-                        <td><input type="hidden" value="${sgd.duizhang }"/>${sgd.duizhangMc }</td>
-                        <td>${sgd.detail }</td>
-                        <td><a href="xcgl/sgdgl.do?id=${sgd.id }&dzid=${sgd.duizhang }">管理</a></td>
-                    </tr>
-                </c:forEach>
-            </tbody>
+        <table title="施工队列表" style="width:auto;height:600px;" id="datagrid">
         </table>
+        <div id="tb" style="display:none">
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"></a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true"></a>
+        </div>
     </section>
 </body>
 </html>

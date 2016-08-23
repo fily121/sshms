@@ -1,8 +1,6 @@
 package cn.com.sinoi.zyqyh.controller;
 
 import cn.com.sinoi.zyqyh.service.IPermissionService;
-import cn.com.sinoi.zyqyh.vo.Permission;
-import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,12 +37,6 @@ public class SystemController {
      */
     @RequestMapping("menuManage.do")
     public String menuManage(Model model) {
-        try {
-            List<Permission> permissionList = permissionService.findAll();
-            model.addAttribute("permissionList", permissionList);
-        } catch (Exception e) {
-            logger.info(e);
-        }
         return "system/menuManage";
     }
 

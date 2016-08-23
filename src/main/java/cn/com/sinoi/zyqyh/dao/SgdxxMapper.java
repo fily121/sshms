@@ -18,4 +18,6 @@ public interface SgdxxMapper {
     int updateByPrimaryKeySelective(Sgdxx record);
 
     int updateByPrimaryKey(Sgdxx record);
+
+    List<String> findUserIdByGcdId();
 }
