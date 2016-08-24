@@ -15,6 +15,7 @@
                     toolbar: '#tb',
                     singleSelect: true,
                     title: '施工队列表',
+                    pagination: true,
                     columns: [[
                             {field: 'id', width: 80, hidden: true},
                             {field: 'duizhang', width: 80, hidden: true},
@@ -35,8 +36,9 @@
         <table title="施工队列表" style="width:auto;height:600px;" id="datagrid">
         </table>
         <div id="tb" style="display:none">
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"></a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true"></a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
         </div>
     </section>
 </body>

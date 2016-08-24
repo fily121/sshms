@@ -1,9 +1,10 @@
 package cn.com.sinoi.zyqyh.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
 public class User {
-	
+
     private String userId;
 
     private String userName;
@@ -11,12 +12,12 @@ public class User {
     private String userPwd;
 
     private Integer isLocked;
-    
+
     private Integer isGuest;
 
-	private String roleId;
-	
-	private String orgId;
+    private String roleId;
+
+    private String orgId;
 
     private Date createDate;
 
@@ -31,18 +32,18 @@ public class User {
     private String ext1;
 
     private String remark;
-    
+
     private String verifyCode;
 
     public String getVerifyCode() {
-		return verifyCode;
-	}
+        return verifyCode;
+    }
 
-	public void setVerifyCode(String verifyCode) {
-		this.verifyCode = verifyCode;
-	}
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
+    }
 
-	public String getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -58,6 +59,7 @@ public class User {
         this.userName = userName == null ? null : userName.trim();
     }
 
+    @JsonIgnore
     public String getUserPwd() {
         return userPwd;
     }
@@ -73,14 +75,14 @@ public class User {
     public void setIsLocked(Integer isLocked) {
         this.isLocked = isLocked;
     }
-    
-    public Integer getIsGuest() {
-		return isGuest;
-	}
 
-	public void setIsGuest(Integer isGuest) {
-		this.isGuest = isGuest;
-	}
+    public Integer getIsGuest() {
+        return isGuest;
+    }
+
+    public void setIsGuest(Integer isGuest) {
+        this.isGuest = isGuest;
+    }
 
     public String getRoleId() {
         return roleId;
@@ -91,14 +93,14 @@ public class User {
     }
 
     public String getOrgId() {
-		return orgId;
-	}
+        return orgId;
+    }
 
-	public void setOrgId(String orgId) {
-		this.orgId = orgId;
-	}
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
 
-	public Date getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 

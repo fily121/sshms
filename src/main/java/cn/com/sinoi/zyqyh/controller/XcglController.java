@@ -1,7 +1,19 @@
 package cn.com.sinoi.zyqyh.controller;
 
+import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
+import cn.com.sinoi.zyqyh.service.IUserService;
+import cn.com.sinoi.zyqyh.utils.SearchParams;
+import cn.com.sinoi.zyqyh.utils.ShiroUtils;
+import cn.com.sinoi.zyqyh.vo.Message;
+import cn.com.sinoi.zyqyh.vo.User;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,13 +42,20 @@ public class XcglController {
     @Autowired
     ISgdxxService sgdxxService;
 
+    @Autowired
+    IMessageService messageService;
+
+    @Autowired
+    IUserService userService;
+
     /**
      * 现场管理
      *
      * @return
      */
     @RequestMapping("xcglManage.do")
-    public String xcglManage() {
+    public String xcglManage(String menuId, HttpSession session) {
+        session.setAttribute("menuId", menuId);
         return "xcgl/xcglManage";
     }
 
@@ -51,6 +70,24 @@ public class XcglController {
         model.addAttribute("gcdId", id);
         List<String> userIdList = sgdxxService.findUserIdByGcdId(id);
         model.addAttribute("userIdList", userIdList);
+        User user = ShiroUtils.getUserBySubject(userService);
+        if (user != null) {
+            model.addAttribute("userId", user.getUserId());
+        }
+        SearchParams params = new SearchParams();
+        Map<String, Object> map = new HashMap<>();
+        map.put("toSgdId", id);
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//可以方便地修改日期格式
+        String time = dateFormat.format(now);
+        map.put("time", time);
+        params.setSearchParams(map);
+        try {
+            List<Message> messageList = messageService.findByCondition(params);
+            model.addAttribute("messageList", messageList);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(XcglController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return "xcgl/sgdgl";
     }
 
@@ -72,7 +109,8 @@ public class XcglController {
      * @return
      */
     @RequestMapping("xcjcManage.do")
-    public String xcjcManage(Model model) {
+    public String xcjcManage(String menuId, HttpSession session) {
+        session.setAttribute("menuId", menuId);
         return "xcgl/xcjcManage";
     }
 }

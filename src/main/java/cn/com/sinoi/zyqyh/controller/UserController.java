@@ -1,7 +1,6 @@
 package cn.com.sinoi.zyqyh.controller;
 
 import cn.com.sinoi.zyqyh.service.IUserService;
-import cn.com.sinoi.zyqyh.utils.Pagination;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.utils.ShiroUtils;
 import cn.com.sinoi.zyqyh.utils.VerifyCodeUtil;
@@ -80,12 +79,11 @@ public class UserController {
 
     @RequestMapping("user/index.do")
     public String index(Model model, @ModelAttribute("params") SearchParams params, HttpSession session) {
-        Pagination<User> pageList = null;
         String resultPageURL = "index";
         try {
             User loginUser = ShiroUtils.getUserBySubject(userService);
-            pageList = this.userService.findByCondication(params);
-            model.addAttribute("pageList", pageList);
+            session.setAttribute("userName", loginUser.getExt1());
+            session.setAttribute("menuId", "0");
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

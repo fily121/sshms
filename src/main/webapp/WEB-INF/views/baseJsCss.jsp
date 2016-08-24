@@ -7,6 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript"  src="<%= basePath%>static/js/plugins/easyUi/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%= basePath%>static/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="<%= basePath%>static/js/main.js"></script>
+<script type="text/javascript" src="<%= basePath%>static/js/plugins/easyUi/locale/easyui-lang-zh_CN.js"></script>
 <link rel="stylesheet" type="text/css" href="<%= basePath%>static/css/style.css" />
 <link rel="stylesheet" type="text/css" href="<%= basePath%>static/js/plugins/easyUi/themes/metro-green/easyui.css" />
 <link rel="stylesheet" type="text/css" href="<%= basePath%>static/js/plugins/easyUi/themes/icon.css" />

@@ -18,4 +18,6 @@ public interface ISgdxxService extends IBaseService<Sgdxx> {
     int updateByPrimaryKey(Sgdxx record);
 
     List<String> findUserIdByGcdId(String id);
+
+    List<Sgdxx> findAllForPage(int page, int rows);
 }

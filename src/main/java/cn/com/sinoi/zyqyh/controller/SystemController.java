@@ -1,10 +1,10 @@
 package cn.com.sinoi.zyqyh.controller;
 
 import cn.com.sinoi.zyqyh.service.IPermissionService;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -36,7 +36,8 @@ public class SystemController {
      * @return
      */
     @RequestMapping("menuManage.do")
-    public String menuManage(Model model) {
+    public String menuManage(String menuId, HttpSession session) {
+        session.setAttribute("menuId", menuId);
         return "system/menuManage";
     }
 
@@ -47,7 +48,8 @@ public class SystemController {
      * @return
      */
     @RequestMapping("userManage.do")
-    public String userManage(Model model) {
+    public String userManage(String menuId, HttpSession session) {
+        session.setAttribute("menuId", menuId);
         return "system/userManage";
     }
 
@@ -58,7 +60,8 @@ public class SystemController {
      * @return
      */
     @RequestMapping("roleManage.do")
-    public String roleManage(Model model) {
+    public String roleManage(String menuId, HttpSession session) {
+        session.setAttribute("menuId", menuId);
         return "system/roleManage";
     }
 }

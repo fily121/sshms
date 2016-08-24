@@ -22,6 +22,12 @@
         <include refid="Base_Column_List" />, b.EXT1
         from sgdxx a left join p_user b on a.duizhang = b.USER_ID
     </select>
+    <select id="findAllForPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select 
+        <include refid="Base_Column_List" />, b.EXT1
+        from sgdxx a left join p_user b on a.duizhang = b.USER_ID
+        limit #{limit1}, #{limit2}
+    </select>
     <select id="findUserIdByGcdId" resultType="java.lang.String" parameterType="java.lang.String">
         select 
         USER_ID

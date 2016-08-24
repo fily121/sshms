@@ -1,221 +1,236 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.sinoi.zyqyh.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.User" >
-    <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
-    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
-    <result column="USER_PWD" property="userPwd" jdbcType="VARCHAR" />
-    <result column="IS_GUEST" property="isGuest" jdbcType="INTEGER" />
-    <result column="IS_LOCKED" property="isLocked" jdbcType="INTEGER" />
-    <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
-    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
-    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
-    <result column="EXT3" property="ext3" jdbcType="VARCHAR" />
-    <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
-    <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
-    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    USER_ID, USER_NAME, USER_PWD, IS_GUEST, IS_LOCKED, ROLE_ID, ORG_ID, CREATE_DATE, 
-    UPDATE_DATE, CREATE_USER, EXT3, EXT2, EXT1, REMARK
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from p_user
-    where USER_ID = #{userId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from p_user
-    where USER_ID = #{userId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.User" >
-    insert into p_user (USER_ID, USER_NAME, USER_PWD, 
-      IS_GUEST, IS_LOCKED, ROLE_ID, 
-      ORG_ID, CREATE_DATE, UPDATE_DATE, 
-      CREATE_USER, EXT3, EXT2, 
-      EXT1, REMARK)
-    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
-      #{isGuest,jdbcType=INTEGER}, #{isLocked,jdbcType=INTEGER}, #{roleId,jdbcType=VARCHAR}, 
-      #{orgId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
-      #{createUser,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
-      #{ext1,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.User" >
-    insert into p_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        USER_ID,
-      </if>
-      <if test="userName != null" >
-        USER_NAME,
-      </if>
-      <if test="userPwd != null" >
-        USER_PWD,
-      </if>
-      <if test="isGuest != null" >
-        IS_GUEST,
-      </if>
-      <if test="isLocked != null" >
-        IS_LOCKED,
-      </if>
-      <if test="roleId != null" >
-        ROLE_ID,
-      </if>
-      <if test="orgId != null" >
-        ORG_ID,
-      </if>
-      <if test="createDate != null" >
-        CREATE_DATE,
-      </if>
-      <if test="updateDate != null" >
-        UPDATE_DATE,
-      </if>
-      <if test="createUser != null" >
-        CREATE_USER,
-      </if>
-      <if test="ext3 != null" >
-        EXT3,
-      </if>
-      <if test="ext2 != null" >
-        EXT2,
-      </if>
-      <if test="ext1 != null" >
-        EXT1,
-      </if>
-      <if test="remark != null" >
-        REMARK,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPwd != null" >
-        #{userPwd,jdbcType=VARCHAR},
-      </if>
-      <if test="isGuest != null" >
-        #{isGuest,jdbcType=INTEGER},
-      </if>
-      <if test="isLocked != null" >
-        #{isLocked,jdbcType=INTEGER},
-      </if>
-      <if test="roleId != null" >
-        #{roleId,jdbcType=VARCHAR},
-      </if>
-      <if test="orgId != null" >
-        #{orgId,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUser != null" >
-        #{createUser,jdbcType=VARCHAR},
-      </if>
-      <if test="ext3 != null" >
-        #{ext3,jdbcType=VARCHAR},
-      </if>
-      <if test="ext2 != null" >
-        #{ext2,jdbcType=VARCHAR},
-      </if>
-      <if test="ext1 != null" >
-        #{ext1,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.User" >
-    update p_user
-    <set >
-      <if test="userName != null" >
-        USER_NAME = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPwd != null" >
+    <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.User" >
+        <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="USER_PWD" property="userPwd" jdbcType="VARCHAR" />
+        <result column="IS_GUEST" property="isGuest" jdbcType="INTEGER" />
+        <result column="IS_LOCKED" property="isLocked" jdbcType="INTEGER" />
+        <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+        <result column="EXT3" property="ext3" jdbcType="VARCHAR" />
+        <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
+        <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
+        <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        USER_ID, USER_NAME, USER_PWD, IS_GUEST, IS_LOCKED, ROLE_ID, ORG_ID, CREATE_DATE, 
+        UPDATE_DATE, CREATE_USER, EXT3, EXT2, EXT1, REMARK
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from p_user
+        where USER_ID = #{userId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from p_user
+        where USER_ID = #{userId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.User" >
+        insert into p_user (USER_ID, USER_NAME, USER_PWD, 
+        IS_GUEST, IS_LOCKED, ROLE_ID, 
+        ORG_ID, CREATE_DATE, UPDATE_DATE, 
+        CREATE_USER, EXT3, EXT2, 
+        EXT1, REMARK)
+        values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
+        #{isGuest,jdbcType=INTEGER}, #{isLocked,jdbcType=INTEGER}, #{roleId,jdbcType=VARCHAR}, 
+        #{orgId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+        #{createUser,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+        #{ext1,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.User" >
+        insert into p_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                USER_ID,
+            </if>
+            <if test="userName != null" >
+                USER_NAME,
+            </if>
+            <if test="userPwd != null" >
+                USER_PWD,
+            </if>
+            <if test="isGuest != null" >
+                IS_GUEST,
+            </if>
+            <if test="isLocked != null" >
+                IS_LOCKED,
+            </if>
+            <if test="roleId != null" >
+                ROLE_ID,
+            </if>
+            <if test="orgId != null" >
+                ORG_ID,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE,
+            </if>
+            <if test="createUser != null" >
+                CREATE_USER,
+            </if>
+            <if test="ext3 != null" >
+                EXT3,
+            </if>
+            <if test="ext2 != null" >
+                EXT2,
+            </if>
+            <if test="ext1 != null" >
+                EXT1,
+            </if>
+            <if test="remark != null" >
+                REMARK,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null" >
+                #{userPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="isGuest != null" >
+                #{isGuest,jdbcType=INTEGER},
+            </if>
+            <if test="isLocked != null" >
+                #{isLocked,jdbcType=INTEGER},
+            </if>
+            <if test="roleId != null" >
+                #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null" >
+                #{orgId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null" >
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null" >
+                #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null" >
+                #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null" >
+                #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.User" >
+        update p_user
+        <set >
+            <if test="userName != null" >
+                USER_NAME = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null" >
+                USER_PWD = #{userPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="isGuest != null" >
+                IS_GUEST = #{isGuest,jdbcType=INTEGER},
+            </if>
+            <if test="isLocked != null" >
+                IS_LOCKED = #{isLocked,jdbcType=INTEGER},
+            </if>
+            <if test="roleId != null" >
+                ROLE_ID = #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null" >
+                ORG_ID = #{orgId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null" >
+                CREATE_USER = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null" >
+                EXT3 = #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null" >
+                EXT2 = #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null" >
+                EXT1 = #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where USER_ID = #{userId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.User" >
+        update p_user
+        set USER_NAME = #{userName,jdbcType=VARCHAR},
         USER_PWD = #{userPwd,jdbcType=VARCHAR},
-      </if>
-      <if test="isGuest != null" >
         IS_GUEST = #{isGuest,jdbcType=INTEGER},
-      </if>
-      <if test="isLocked != null" >
         IS_LOCKED = #{isLocked,jdbcType=INTEGER},
-      </if>
-      <if test="roleId != null" >
         ROLE_ID = #{roleId,jdbcType=VARCHAR},
-      </if>
-      <if test="orgId != null" >
         ORG_ID = #{orgId,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null" >
         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUser != null" >
         CREATE_USER = #{createUser,jdbcType=VARCHAR},
-      </if>
-      <if test="ext3 != null" >
         EXT3 = #{ext3,jdbcType=VARCHAR},
-      </if>
-      <if test="ext2 != null" >
         EXT2 = #{ext2,jdbcType=VARCHAR},
-      </if>
-      <if test="ext1 != null" >
         EXT1 = #{ext1,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        REMARK = #{remark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where USER_ID = #{userId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.User" >
-    update p_user
-    set USER_NAME = #{userName,jdbcType=VARCHAR},
-      USER_PWD = #{userPwd,jdbcType=VARCHAR},
-      IS_GUEST = #{isGuest,jdbcType=INTEGER},
-      IS_LOCKED = #{isLocked,jdbcType=INTEGER},
-      ROLE_ID = #{roleId,jdbcType=VARCHAR},
-      ORG_ID = #{orgId,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
-      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
-      CREATE_USER = #{createUser,jdbcType=VARCHAR},
-      EXT3 = #{ext3,jdbcType=VARCHAR},
-      EXT2 = #{ext2,jdbcType=VARCHAR},
-      EXT1 = #{ext1,jdbcType=VARCHAR},
-      REMARK = #{remark,jdbcType=VARCHAR}
-    where USER_ID = #{userId,jdbcType=VARCHAR}
-  </update>
+        REMARK = #{remark,jdbcType=VARCHAR}
+        where USER_ID = #{userId,jdbcType=VARCHAR}
+    </update>
   
-  <select id="findAll" resultMap="BaseResultMap" >
-  	select 
-    <include refid="Base_Column_List" />
-    from p_user
-  </select>
+    <select id="findAll" resultMap="BaseResultMap" >
+        select 
+        <include refid="Base_Column_List" />
+        from p_user
+    </select>
   
-  <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
-  	select 
-    <include refid="Base_Column_List" />
-    from p_user
-    where USER_NAME = #{userName,jdbcType=VARCHAR}
-  </select>
+    <resultMap id="UserDetail_resultMap" type="cn.com.sinoi.zyqyh.vo.relate.UserDetail" >
+        <id column="USER_ID" />
+        <result column="sgdmc" property="sgdmc" jdbcType="VARCHAR" />
+        <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+        <association property="user" resultMap="BaseResultMap" />
+    </resultMap>
+    <select id="findAllForPage" resultMap="UserDetail_resultMap" parameterType="java.util.Map">
+        select 
+        <include refid="Base_Column_List" />, b.sgdmc, d.ROLE_NAME
+        from p_user a left join sgdxx b on a.ORG_ID = b.id
+        left join role_pers c on a.USER_ID = c.PER_ID
+        left join role d on c.ROLE_ID = d.ROLE_ID
+        limit #{limit1}, #{limit2}
+    </select>
   
-  <select id="findByCondication" resultMap="BaseResultMap" parameterType="cn.com.sinoi.zyqyh.utils.SearchParams" >
-  	select 
-    <include refid="Base_Column_List" />
-    from p_user
-    <if test="searchParams != null">
+    <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from p_user
+        where USER_NAME = #{userName,jdbcType=VARCHAR}
+    </select>
+  
+    <select id="findByCondication" resultMap="BaseResultMap" parameterType="cn.com.sinoi.zyqyh.utils.SearchParams" >
+        select 
+        <include refid="Base_Column_List" />
+        from p_user
+        <if test="searchParams != null">
     	
-    </if>
-  </select>
+        </if>
+    </select>
 </mapper>

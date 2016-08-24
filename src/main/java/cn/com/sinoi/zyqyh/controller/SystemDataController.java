@@ -2,15 +2,22 @@ package cn.com.sinoi.zyqyh.controller;
 
 import cn.com.sinoi.zyqyh.service.IPermissionService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
+import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.utils.PageModel;
+import cn.com.sinoi.zyqyh.utils.ShiroUtils;
 import cn.com.sinoi.zyqyh.vo.Permission;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
+import cn.com.sinoi.zyqyh.vo.User;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -38,6 +45,9 @@ public class SystemDataController {
     @Autowired
     ISgdxxService sgdxxService;
 
+    @Autowired
+    private IUserService userService;
+
     @RequestMapping("getMenuList.do")
     @ResponseBody
     public PageModel<Permission> getMenuList() {
@@ -56,17 +66,70 @@ public class SystemDataController {
 
     @RequestMapping("getSgdList.do")
     @ResponseBody
-    public PageModel<Sgdxx> getSgdList() {
+    public PageModel<Sgdxx> getSgdList(Integer page, Integer rows) {
+        if (page == null || page == 0) {
+            page = 1;
+        }
+        if (rows == null || rows == 0) {
+            rows = 10;
+        }
         List<Sgdxx> sgdList = null;
         try {
-            sgdList = sgdxxService.findAll();
+            sgdList = sgdxxService.findAllForPage(page, rows);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (sgdList != null) {
             PageModel<Sgdxx> result = new PageModel<>(sgdList, sgdList.size());
+            result.setPage(page);
             return result;
         }
         return null;
+    }
+
+    @RequestMapping("getUserList.do")
+    @ResponseBody
+    public PageModel<User> getUserList(Integer page, Integer rows) {
+        if (page == null || page == 0) {
+            page = 1;
+        }
+        if (rows == null || rows == 0) {
+            rows = 10;
+        }
+        List<User> sgdList = null;
+        try {
+            sgdList = userService.findAllForPage(page, rows);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (sgdList != null) {
+            PageModel<User> result = new PageModel<>(sgdList, sgdList.size());
+            result.setPage(page);
+            return result;
+        }
+        return null;
+    }
+
+    /**
+     * 修改 密码
+     *
+     * @return
+     */
+    @RequestMapping(value = "changePassword.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> changePassword(String password1, String password2, String password3, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=UTF-8");
+        User loginUser = ShiroUtils.getUserBySubject(userService);
+        Map<String, String> result = new HashMap<>();
+        if (!loginUser.getUserPwd().equals(password1)) {
+            result.put("code", "false");
+            result.put("message", "原密码不正确，请重试。");
+            return result;
+        }
+        loginUser.setUserPwd(password3);
+        userService.update(loginUser);
+        result.put("code", "true");
+        result.put("message", "修改成功，请重新登录。");
+        return result;
     }
 }

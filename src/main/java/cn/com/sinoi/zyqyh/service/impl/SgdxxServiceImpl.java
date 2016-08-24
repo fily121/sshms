@@ -4,7 +4,9 @@ import cn.com.sinoi.zyqyh.dao.SgdxxMapper;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +63,14 @@ public class SgdxxServiceImpl extends BaseServiceImpl<Sgdxx> implements ISgdxxSe
     @Override
     public List<String> findUserIdByGcdId(String id) {
         return sgdxxMapper.findUserIdByGcdId();
+    }
+
+    @Override
+    public List<Sgdxx> findAllForPage(int page, int rows) {
+        Map<String, Integer> param = new HashMap<>();
+        param.put("limit1", (page - 1) * rows);
+        param.put("limit2", rows);
+        return sgdxxMapper.findAllForPage(param);
     }
 
 }

@@ -11,6 +11,15 @@ public class PageModel<T> {
 
     private int total;
     private List<T> rows;
+    private int page;
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
 
     public PageModel(List<T> rows, int total) {
         this.rows = rows;

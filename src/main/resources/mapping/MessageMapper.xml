@@ -1,133 +1,160 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.sinoi.zyqyh.dao.MessageMapper" >
-  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Message" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="fromUser" property="fromuser" jdbcType="VARCHAR" />
-    <result column="toSgdId" property="tosgdid" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
-    <result column="attachmentId" property="attachmentid" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="cn.com.sinoi.zyqyh.vo.Message" extends="BaseResultMap" >
-    <result column="content" property="content" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, fromUser, toSgdId, type, time, attachmentId
-  </sql>
-  <sql id="Blob_Column_List" >
-    content
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from message
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from message
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
-    insert into message (id, fromUser, toSgdId, 
-      type, time, attachmentId, 
-      content)
-    values (#{id,jdbcType=VARCHAR}, #{fromuser,jdbcType=VARCHAR}, #{tosgdid,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{attachmentid,jdbcType=VARCHAR}, 
-      #{content,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
-    insert into message
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="fromuser != null" >
-        fromUser,
-      </if>
-      <if test="tosgdid != null" >
-        toSgdId,
-      </if>
-      <if test="type != null" >
-        type,
-      </if>
-      <if test="time != null" >
-        time,
-      </if>
-      <if test="attachmentid != null" >
-        attachmentId,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="fromuser != null" >
-        #{fromuser,jdbcType=VARCHAR},
-      </if>
-      <if test="tosgdid != null" >
-        #{tosgdid,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="time != null" >
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="attachmentid != null" >
-        #{attachmentid,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
-    update message
-    <set >
-      <if test="fromuser != null" >
-        fromUser = #{fromuser,jdbcType=VARCHAR},
-      </if>
-      <if test="tosgdid != null" >
+    <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Message" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="fromUser" property="fromuser" jdbcType="VARCHAR" />
+        <result column="toSgdId" property="tosgdid" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="time" property="time" jdbcType="TIMESTAMP" />
+        <result column="attachmentId" property="attachmentid" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="cn.com.sinoi.zyqyh.vo.Message" extends="BaseResultMap" >
+        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, fromUser, toSgdId, type, time, attachmentId
+    </sql>
+    <sql id="Blob_Column_List" >
+        content
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from message
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from message
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
+        insert into message (id, fromUser, toSgdId, 
+        type, time, attachmentId, 
+        content)
+        values (#{id,jdbcType=VARCHAR}, #{fromuser,jdbcType=VARCHAR}, #{tosgdid,jdbcType=VARCHAR}, 
+        #{type,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{attachmentid,jdbcType=VARCHAR}, 
+        #{content,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
+        insert into message
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="fromuser != null" >
+                fromUser,
+            </if>
+            <if test="tosgdid != null" >
+                toSgdId,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+            <if test="time != null" >
+                time,
+            </if>
+            <if test="attachmentid != null" >
+                attachmentId,
+            </if>
+            <if test="content != null" >
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="fromuser != null" >
+                #{fromuser,jdbcType=VARCHAR},
+            </if>
+            <if test="tosgdid != null" >
+                #{tosgdid,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="time != null" >
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="attachmentid != null" >
+                #{attachmentid,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="findByCondition" parameterType="cn.com.sinoi.zyqyh.utils.SearchParams"  resultMap="ResultMapWithBLOBs">
+        select 
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from  message
+        <where >
+            <if test="searchParams.fromuser != null" >
+                fromUser = #{fromuser,jdbcType=VARCHAR},
+            </if>
+            <if test="searchParams.tosgdid != null" >
+                toSgdId = #{tosgdid,jdbcType=VARCHAR},
+            </if>
+            <if test="searchParams.type != null" >
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="searchParams.time != null" >
+                DATE_FORMAT(time,'%Y/%m/%d') = #{time},
+            </if>
+            <if test="searchParams.attachmentid != null" >
+                attachmentId = #{attachmentid,jdbcType=VARCHAR},
+            </if>
+            <if test="searchParams.content != null" >
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </where>
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
+        update message
+        <set >
+            <if test="fromuser != null" >
+                fromUser = #{fromuser,jdbcType=VARCHAR},
+            </if>
+            <if test="tosgdid != null" >
+                toSgdId = #{tosgdid,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="time != null" >
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="attachmentid != null" >
+                attachmentId = #{attachmentid,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
+        update message
+        set fromUser = #{fromuser,jdbcType=VARCHAR},
         toSgdId = #{tosgdid,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="time != null" >
         time = #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="attachmentid != null" >
         attachmentId = #{attachmentid,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
-    update message
-    set fromUser = #{fromuser,jdbcType=VARCHAR},
-      toSgdId = #{tosgdid,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      time = #{time,jdbcType=TIMESTAMP},
-      attachmentId = #{attachmentid,jdbcType=VARCHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
-    update message
-    set fromUser = #{fromuser,jdbcType=VARCHAR},
-      toSgdId = #{tosgdid,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      time = #{time,jdbcType=TIMESTAMP},
-      attachmentId = #{attachmentid,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        content = #{content,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
+        update message
+        set fromUser = #{fromuser,jdbcType=VARCHAR},
+        toSgdId = #{tosgdid,jdbcType=VARCHAR},
+        type = #{type,jdbcType=INTEGER},
+        time = #{time,jdbcType=TIMESTAMP},
+        attachmentId = #{attachmentid,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

@@ -11,11 +11,5 @@
                 <skipTests>true</skipTests>
             </properties>
         </action>
-        <action>
-            <actionName>CUSTOM-mybatis-generator</actionName>
-            <displayName>mybatis-generator</displayName>
-            <goals>
-                <goal>mybatis-generator:generate</goal>
-            </goals>
-        </action>
+        
     </actions>
