@@ -16,7 +16,7 @@
              <property name="forceBigDecimals" value="false" />
          </javaTypeResolver>
          <!-- 生成实体类的包名和位置，这里配置将生成的实体类放在com.liyi.test.domain这个包下 -->
-         <javaModelGenerator targetPackage="cn.com.sinoi.zyqyh.vo" targetProject="I:\java\">
+         <javaModelGenerator targetPackage="cn.com.sinoi.zyqyh.vo" targetProject="d:\java\">
              <property name="enableSubPackages" value="true" />
              <property name="trimStrings" value="true" />
          </javaModelGenerator>

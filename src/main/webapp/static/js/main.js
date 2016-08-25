@@ -153,3 +153,20 @@ if (!Array.prototype.indexOf)
         return -1;
     };
 }
+
+$.extend($.fn.validatebox.defaults.rules, {
+    maxLength: {
+        validator: function(value, param){
+            return value.length <= param[0];
+        },
+        message: '最多不超过{0}个字.'
+    }
+});
+$.extend($.fn.validatebox.defaults.rules, {
+            equals: {
+                validator: function(value,param){
+                    return value == $(param[0]).val();
+                },
+                message: '密码两次输入不一致。'
+            }
+        });

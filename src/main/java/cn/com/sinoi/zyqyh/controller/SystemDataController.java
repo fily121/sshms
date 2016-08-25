@@ -1,13 +1,17 @@
 package cn.com.sinoi.zyqyh.controller;
 
 import cn.com.sinoi.zyqyh.service.IPermissionService;
+import cn.com.sinoi.zyqyh.service.IRoleService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.utils.PageModel;
 import cn.com.sinoi.zyqyh.utils.ShiroUtils;
 import cn.com.sinoi.zyqyh.vo.Permission;
+import cn.com.sinoi.zyqyh.vo.Role;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.User;
+import cn.com.sinoi.zyqyh.vo.relate.UserDetail;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +48,9 @@ public class SystemDataController {
 
     @Autowired
     ISgdxxService sgdxxService;
+
+    @Autowired
+    IRoleService roleService;
 
     @Autowired
     private IUserService userService;
@@ -89,21 +96,21 @@ public class SystemDataController {
 
     @RequestMapping("getUserList.do")
     @ResponseBody
-    public PageModel<User> getUserList(Integer page, Integer rows) {
+    public PageModel<UserDetail> getUserList(Integer page, Integer rows) {
         if (page == null || page == 0) {
             page = 1;
         }
         if (rows == null || rows == 0) {
             rows = 10;
         }
-        List<User> sgdList = null;
+        List<UserDetail> userList = null;
         try {
-            sgdList = userService.findAllForPage(page, rows);
+            userList = userService.findAllForPage(page, rows);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (sgdList != null) {
-            PageModel<User> result = new PageModel<>(sgdList, sgdList.size());
+        if (userList != null) {
+            PageModel<UserDetail> result = new PageModel<>(userList, userList.size());
             result.setPage(page);
             return result;
         }
@@ -130,6 +137,30 @@ public class SystemDataController {
         userService.update(loginUser);
         result.put("code", "true");
         result.put("message", "修改成功，请重新登录。");
+        return result;
+    }
+
+    @RequestMapping(value = "getAllRole.do", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Role> getAllRole() {
+        List<Role> result = Collections.EMPTY_LIST;
+        try {
+            result = roleService.findAll();
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "getAllSgd.do", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Sgdxx> getAllSgd() {
+        List<Sgdxx> result = Collections.EMPTY_LIST;
+        try {
+            result = sgdxxService.findAll();
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return result;
     }
 }

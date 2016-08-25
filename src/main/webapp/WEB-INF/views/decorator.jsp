@@ -9,14 +9,6 @@
     <title>中移铁通微信企业号-<sitemesh:write property='title' /></title>
     <sitemesh:write property='head' />
     <script type="text/javascript" >
-        $.extend($.fn.validatebox.defaults.rules, {
-            equals: {
-                validator: function(value,param){
-                    return value == $(param[0]).val();
-                },
-                message: '密码两次输入不一致。'
-            }
-        });
         function changePassword() {
             $('#changePasswordFormDialog').dialog({
                 title: '修改密码',

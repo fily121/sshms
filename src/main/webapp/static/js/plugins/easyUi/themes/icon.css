@@ -40,6 +40,9 @@
 .icon-help{
 	background:url('icons/help.png') no-repeat center center;
 }
+.icon-import{
+	background:url('icons/import.png') no-repeat center center;
+}
 .icon-undo{
 	background:url('icons/undo.png') no-repeat center center;
 }

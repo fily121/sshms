@@ -3,6 +3,7 @@ package cn.com.sinoi.zyqyh.service;
 import cn.com.sinoi.zyqyh.utils.Pagination;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.User;
+import cn.com.sinoi.zyqyh.vo.relate.UserDetail;
 import java.util.List;
 
 public interface IUserService extends IBaseService<User> {
@@ -23,5 +24,5 @@ public interface IUserService extends IBaseService<User> {
 
     Pagination<User> findByCondication(SearchParams params) throws Exception;
 
-    List<User> findAllForPage(int page, int rows);
+    List<UserDetail> findAllForPage(int page, int rows);
 }

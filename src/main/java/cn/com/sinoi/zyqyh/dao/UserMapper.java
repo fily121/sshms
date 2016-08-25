@@ -2,6 +2,7 @@ package cn.com.sinoi.zyqyh.dao;
 
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.User;
+import cn.com.sinoi.zyqyh.vo.relate.UserDetail;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Repository;
@@ -27,5 +28,5 @@ public interface UserMapper {
 
     User selectByUserName(String userName);
 
-    List<User> findAllForPage(Map<String, Integer> param);
+    List<UserDetail> findAllForPage(Map<String, Integer> param);
 }

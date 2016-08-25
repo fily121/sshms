@@ -56,9 +56,12 @@
     where ROLE_ID = #{roleId,jdbcType=VARCHAR}
   </update>
   
-  <select id="selectRolesByRoleId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="selectRolesByRoleId" resultMap="BaseResultMap" parameterType="java.util.Map">
   	select distinct r.* from role r, role_pers rps
-  	where r.role_id = rps.role_id and rps.role_id = #{roleId,jdbcType=VARCHAR}
+  	where r.role_id = rps.role_id
+      <if test="roleId != null" >
+      and rps.role_id = #{roleId,jdbcType=VARCHAR}
+      </if>
   </select>
   
 </mapper>

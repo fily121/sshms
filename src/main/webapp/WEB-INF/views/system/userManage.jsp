@@ -5,29 +5,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>人员管理</title>
+        <script type="text/javascript" src="static/js/customer/userManage.js"></script>
     </head>
     <body>
-        <script type="text/javascript">
-            $(function () {
-                $('#datagrid').datagrid({
-                    url: 'data/system/getUserList.do',
-                    method: 'get',
-                    toolbar: '#tb',
-                    singleSelect: true,
-                    pagination: true，
-                    title: '施工队列表',
-                    columns: [[
-                            {field: 'user.userId', width: 80, hidden: true},
-                            {field: 'user.orgId', width: 80, hidden: true},
-                            {field: 'user.roleId', width: 80, hidden: true},
-                            {field: 'user.userName', title: '用户名', width: 120},
-                            {field: 'roleName', title: '角色名', width: 120},
-                            {field: 'user.ext1', title: '姓名', width: 120},
-                            {field: 'sgdmc', title: '所属施工队', width: 240, align: 'left'}
-                        ]]
-                });
-            })
-        </script>
     <section>
         <h2>
             <strong style="color: grey;">人员列表</strong>
@@ -35,10 +15,15 @@
         <table class="easyui-datagrid" title="人员列表" style="width:auto;height:600px;" id="datagrid">
         </table>
         <div id="tb" style="display:none">
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">增加</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true">删除</a>
+            <a href="javascript:userManage.addUser();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
+            <a href="javascript:userManage.modifyUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a href="javascript:userManage.deleteUser();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+            <a href="javascript:userManage.importUser();" class="easyui-linkbutton" data-options="iconCls:'icon-import',plain:true">从excel导入用户</a>
         </div>
     </section>
+    
+    <div id="userManageDialog" style="display:none;padding: 10px;">
+        
+    </div>
 </body>
 </html>

@@ -45,12 +45,6 @@ $(function () {
         $('#btn_send').show();  
     });  
   
-    resetMessageArea();  
-  
-  
-    function sendMsg(str) {  
-    }  
-  
     function resetMessageArea() {  
         $('#messageList').animate({ 'scrollTop': 999 }, 500);  
     }  

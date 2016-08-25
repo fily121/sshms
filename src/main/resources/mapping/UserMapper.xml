@@ -211,10 +211,10 @@
     </resultMap>
     <select id="findAllForPage" resultMap="UserDetail_resultMap" parameterType="java.util.Map">
         select 
-        <include refid="Base_Column_List" />, b.sgdmc, d.ROLE_NAME
+        a.USER_ID, a.USER_NAME, a.USER_PWD, a.IS_GUEST, a.IS_LOCKED, a.ROLE_ID, a.ORG_ID, a.CREATE_DATE, 
+        a.UPDATE_DATE, a.CREATE_USER, a.EXT3, a.EXT2, a.EXT1, a.REMARK, b.sgdmc, d.ROLE_NAME
         from p_user a left join sgdxx b on a.ORG_ID = b.id
-        left join role_pers c on a.USER_ID = c.PER_ID
-        left join role d on c.ROLE_ID = d.ROLE_ID
+        left join role d on a.ROLE_ID = d.ROLE_ID
         limit #{limit1}, #{limit2}
     </select>
   

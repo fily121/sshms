@@ -5,6 +5,7 @@ import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.utils.Pagination;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.User;
+import cn.com.sinoi.zyqyh.vo.relate.UserDetail;
 import com.github.pagehelper.PageHelper;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +67,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     }
 
     @Override
-    public List<User> findAllForPage(int page, int rows) {
+    public List<UserDetail> findAllForPage(int page, int rows) {
         Map<String, Integer> param = new HashMap<>();
         param.put("limit1", (page - 1) * rows);
         param.put("limit2", rows);
