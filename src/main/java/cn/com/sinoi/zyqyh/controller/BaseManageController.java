@@ -23,4 +23,23 @@ public class BaseManageController {
 
     private static final Logger logger = Logger.getLogger(BaseManageController.class);
 
+    @RequestMapping("orderManage.do")
+    public String orderManage() {
+        return "baseManage/orderManage";
+    }
+
+    @RequestMapping("gzzdManage.do")
+    public String gzzdManage() {
+        return "baseManage/gzzdManage";
+    }
+
+    @RequestMapping("clManage.do")
+    public String clManage() {
+        return "baseManage/clManage";
+    }
+
+    @RequestMapping("sgdwManage.do")
+    public String sgdwManage() {
+        return "baseManage/sgdwManage";
+    }
 }
