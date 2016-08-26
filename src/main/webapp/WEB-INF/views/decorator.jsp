@@ -5,6 +5,7 @@
 <html>
     <head>
         <meta charset="utf-8"/>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <%@ include file="/WEB-INF/views/baseJsCss.jsp" %>
         <title>中移铁通微信企业号-<sitemesh:write property='title' /></title>
     <sitemesh:write property='head' />

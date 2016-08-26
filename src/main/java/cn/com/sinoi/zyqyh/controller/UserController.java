@@ -121,7 +121,6 @@ public class UserController {
             // 每个Realm都能在必要时对提交的AuthenticationTokens作出反应
             // 所以这一步在调用login(token)方法时,它会走到MyRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法
             // 尝试登录
-            token.setRememberMe(true);
             currentUser.login(token);
             logger.info("对用户[" + username + "]进行登录验证..验证开始");
             logger.info("对用户[" + username + "]进行登录验证..验证通过");
