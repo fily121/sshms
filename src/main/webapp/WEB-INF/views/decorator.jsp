@@ -100,7 +100,7 @@
     <dd><a href="xcgl/xcglManage.do?menuId=8" <c:if test="${menuId eq 8}">class="active"</c:if>>现场管理</a></dd>
     </shiro:hasPermission>
     <shiro:hasPermission name="现场检查">
-    <dd><a href="xcgl/xcjcManage?menuId=9" <c:if test="${menuId eq 9}">class="active"</c:if>>现场检查</a></dd>
+    <dd><a href="xcgl/xcjcManage.do?menuId=9" <c:if test="${menuId eq 9}">class="active"</c:if>>现场检查</a></dd>
     </shiro:hasPermission>
    </dl>
   </li>

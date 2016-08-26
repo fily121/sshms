@@ -7,7 +7,7 @@ var userManage = function () {
                 toolbar: '#tb',
                 singleSelect: true,
                 pagination: true,
-                title: '施工队列表',
+                title: '人员列表',
                 columns: [[
                         {field: 'userId', width: 80, hidden: true, formatter: function (value, rows, index) {
                                 if (rows.user) {
@@ -54,19 +54,22 @@ var userManage = function () {
                     ]]
             });
         },
-        addUser: function () {
+        addModifyUser: function (isAdd) {
+            var userId;
+            if (!isAdd) {
+                
+            }
             $('#userManageDialog').dialog({
                 title: '增加用户',
                 width: 800,
                 height: 400,
                 closed: true,
                 cache: false,
-                href: 'div/system/addUser.do',
+                href: 'div/system/addModifyUser.do?userId='+userId,
                 modal: true
             });
             $('#userManageDialog').dialog('open');
         },
-        modifyUser: function () {},
         deleteUser: function () {},
         importUser: function () {},
         submitForm: function () {},

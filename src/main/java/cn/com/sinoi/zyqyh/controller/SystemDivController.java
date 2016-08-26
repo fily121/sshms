@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SystemDivController {
 
     @RequestMapping("addUser.do")
-    public String addUser() {
-        return "system/addUser";
+    public String addModifyUser() {
+        return "system/addModifyUser";
     }
 
 }

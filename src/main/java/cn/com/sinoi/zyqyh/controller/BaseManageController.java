@@ -1,5 +1,6 @@
 package cn.com.sinoi.zyqyh.controller;
 
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,22 +25,26 @@ public class BaseManageController {
     private static final Logger logger = Logger.getLogger(BaseManageController.class);
 
     @RequestMapping("orderManage.do")
-    public String orderManage() {
+    public String orderManage(String menuId, HttpSession session) {
+        session.setAttribute("menuId", menuId);
         return "baseManage/orderManage";
     }
 
     @RequestMapping("gzzdManage.do")
-    public String gzzdManage() {
+    public String gzzdManage(String menuId, HttpSession session) {
+        session.setAttribute("menuId", menuId);
         return "baseManage/gzzdManage";
     }
 
     @RequestMapping("clManage.do")
-    public String clManage() {
+    public String clManage(String menuId, HttpSession session) {
+        session.setAttribute("menuId", menuId);
         return "baseManage/clManage";
     }
 
     @RequestMapping("sgdwManage.do")
-    public String sgdwManage() {
+    public String sgdwManage(String menuId, HttpSession session) {
+        session.setAttribute("menuId", menuId);
         return "baseManage/sgdwManage";
     }
 }
