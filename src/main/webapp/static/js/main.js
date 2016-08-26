@@ -31,7 +31,7 @@ var Message = function () {
             } else {
                 $.messager.alert('错误', msg, 'error');
             }
-      },
+        },
         /**
          * 确认消息
          * demo:
@@ -156,17 +156,36 @@ if (!Array.prototype.indexOf)
 
 $.extend($.fn.validatebox.defaults.rules, {
     maxLength: {
-        validator: function(value, param){
+        validator: function (value, param) {
             return value.length <= param[0];
         },
         message: '最多不超过{0}个字.'
     }
 });
 $.extend($.fn.validatebox.defaults.rules, {
-            equals: {
-                validator: function(value,param){
-                    return value == $(param[0]).val();
-                },
-                message: '密码两次输入不一致。'
+    equals: {
+        validator: function (value, param) {
+            return value == $(param[0]).val();
+        },
+        message: '密码两次输入不一致。'
+    }
+});
+
+function submitForm(formSelector, fun) {
+    $(formSelector).form('submit', {
+        success: function (data) {
+            data = eval("(" + data + ")");
+            if (data) {
+                if (data.code === 'true') {
+                    Message.alert(data.message, fun);
+                } else {
+                    Message.alert(data.message);
+                }
             }
-        });
+        }
+    });
+}
+
+function clearForm(formSelector) {
+    $(formSelector).form('clear');
+}

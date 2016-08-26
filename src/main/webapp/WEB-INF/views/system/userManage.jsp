@@ -19,6 +19,7 @@
             <a href="javascript:userManage.addModifyUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
             <a href="javascript:userManage.deleteUser();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
             <a href="javascript:userManage.importUser();" class="easyui-linkbutton" data-options="iconCls:'icon-import',plain:true">从excel导入用户</a>
+            <span><input type="text" name="searchKey" id="searchKey"/><a href="javascript:userManage.searchUser($('#searchKey').val());" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">检索</a></span>
         </div>
     </section>
     

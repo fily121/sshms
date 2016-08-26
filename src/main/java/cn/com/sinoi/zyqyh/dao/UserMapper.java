@@ -28,5 +28,5 @@ public interface UserMapper {
 
     User selectByUserName(String userName);
 
-    List<UserDetail> findAllForPage(Map<String, Integer> param);
+    List<UserDetail> findAllForPage(Map<String, Object> param);
 }

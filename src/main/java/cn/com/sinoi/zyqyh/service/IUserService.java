@@ -24,5 +24,5 @@ public interface IUserService extends IBaseService<User> {
 
     Pagination<User> findByCondication(SearchParams params) throws Exception;
 
-    List<UserDetail> findAllForPage(int page, int rows);
+    List<UserDetail> findAllForPage(int page, int rows, String searchKey);
 }

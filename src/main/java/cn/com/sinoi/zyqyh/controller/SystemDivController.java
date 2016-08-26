@@ -1,6 +1,13 @@
 package cn.com.sinoi.zyqyh.controller;
 
+import cn.com.sinoi.zyqyh.service.IUserService;
+import cn.com.sinoi.zyqyh.vo.User;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -17,8 +24,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("div/system")
 public class SystemDivController {
 
-    @RequestMapping("addUser.do")
-    public String addModifyUser() {
+    @Autowired
+    IUserService userService;
+
+    @RequestMapping("addModifyUser.do")
+    public String addModifyUser(String userId, Model model) {
+        if (StringUtils.isNotEmpty(userId)) {
+            try {
+                User user = userService.selectById(userId);
+                model.addAttribute("user", user);
+            } catch (Exception ex) {
+                Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return "system/addModifyUser";
     }
 

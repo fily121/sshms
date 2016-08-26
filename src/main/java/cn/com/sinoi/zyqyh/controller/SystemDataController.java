@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -96,7 +97,7 @@ public class SystemDataController {
 
     @RequestMapping("getUserList.do")
     @ResponseBody
-    public PageModel<UserDetail> getUserList(Integer page, Integer rows) {
+    public PageModel<UserDetail> getUserList(Integer page, Integer rows, String searchKey) {
         if (page == null || page == 0) {
             page = 1;
         }
@@ -105,7 +106,7 @@ public class SystemDataController {
         }
         List<UserDetail> userList = null;
         try {
-            userList = userService.findAllForPage(page, rows);
+            userList = userService.findAllForPage(page, rows, searchKey);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -137,6 +138,45 @@ public class SystemDataController {
         userService.update(loginUser);
         result.put("code", "true");
         result.put("message", "修改成功，请重新登录。");
+        return result;
+    }
+
+    /**
+     * 增加修改用户
+     *
+     * @param user
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "addModifyUser.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> addModifyUser(User user, HttpServletResponse response) {
+        response.setContentType("text/html;charset=UTF-8");
+        Map<String, String> result = new HashMap<>();
+        try {
+            if (StringUtils.isEmpty(user.getUserId())) {
+                User existUser = userService.selectByUserName(user.getUserName());
+                if (existUser != null) {
+                    result.put("code", "false");
+                    result.put("message", "用户名已存在。");
+                    return result;
+                }
+                user.setUserId(java.util.UUID.randomUUID().toString());
+                if (StringUtils.isEmpty(user.getUserPwd())) {
+                    user.setUserPwd(user.getUserName());
+                }
+                userService.save(user);
+                result.put("code", "true");
+                result.put("message", "保存成功。");
+            } else {
+                userService.update(user);
+                result.put("code", "true");
+                result.put("message", "修改成功。");
+            }
+        } catch (Exception ex) {
+            result.put("code", "false");
+            result.put("message", ex.getMessage());
+        }
         return result;
     }
 

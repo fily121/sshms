@@ -215,6 +215,14 @@
         a.UPDATE_DATE, a.CREATE_USER, a.EXT3, a.EXT2, a.EXT1, a.REMARK, b.sgdmc, d.ROLE_NAME
         from p_user a left join sgdxx b on a.ORG_ID = b.id
         left join role d on a.ROLE_ID = d.ROLE_ID
+        where a.USER_NAME != 'admin'
+        <if test="searchKey  != null">
+            AND (
+                a.USER_NAME LIKE concat('%',#{searchKey},'%')
+            OR d.ROLE_NAME LIKE concat('%',#{searchKey},'%')
+            OR a.EXT1 LIKE concat('%',#{searchKey},'%')
+            )
+        </if>
         limit #{limit1}, #{limit2}
     </select>
   

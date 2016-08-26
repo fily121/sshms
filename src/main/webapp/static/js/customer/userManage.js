@@ -55,9 +55,14 @@ var userManage = function () {
             });
         },
         addModifyUser: function (isAdd) {
-            var userId;
+            var userId = '';
             if (!isAdd) {
-                
+                var row = $('#datagrid').datagrid("getSelected");
+                if (!row) {
+                    Message.alert("请选择一条数据进行修改。");
+                    return;
+                }
+                userId = row.user.userId;
             }
             $('#userManageDialog').dialog({
                 title: '增加用户',
@@ -65,15 +70,34 @@ var userManage = function () {
                 height: 400,
                 closed: true,
                 cache: false,
-                href: 'div/system/addModifyUser.do?userId='+userId,
+                href: 'div/system/addModifyUser.do?userId=' + userId,
                 modal: true
             });
             $('#userManageDialog').dialog('open');
         },
-        deleteUser: function () {},
+        searchUser: function (searchKey) {
+            if (!searchKey) {
+                $('#datagrid').datagrid('load', {
+                    searchKey: searchKey
+                });
+            }
+        },
+        deleteUser: function () {
+            Message.confirm("确认删除该用户吗？", function () {
+
+            });
+        },
         importUser: function () {},
-        submitForm: function () {},
-        clearForm: function () {}
+        submitForm: function () {
+            submitForm('#userManageForm', function () {
+                $('#userManageDialog').dialog('close');
+                $('#datagrid').datagrid('reload');
+
+            });
+        },
+        clearForm: function () {
+            clearForm('#userManageForm');
+        }
     };
 }();
 $(function () {
