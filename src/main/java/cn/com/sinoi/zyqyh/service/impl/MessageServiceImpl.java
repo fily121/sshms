@@ -4,7 +4,6 @@ import cn.com.sinoi.zyqyh.dao.MessageMapper;
 import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.Message;
-import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,12 +30,12 @@ public class MessageServiceImpl extends BaseServiceImpl<Message> implements IMes
     }
 
     @Override
-    public int insert(Sgdxx record) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int insert(Message record) {
+        return messageMapper.insert(record);
     }
 
     @Override
-    public int insertSelective(Sgdxx record) {
+    public int insertSelective(Message record) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

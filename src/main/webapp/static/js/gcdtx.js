@@ -9,10 +9,8 @@ $(function () {
             html = _this.html();  
             if (html.length > 0) {  
                 $('#web_wechat_pic').hide();  
-                $('#btn_send').show();  
             } else {  
                 $('#web_wechat_pic').show();  
-                $('#btn_send').hide();  
             }  
         }, 200);  
     });  
@@ -42,7 +40,6 @@ $(function () {
         var html = '<img class="' + _this[0].className + '" title="' + _this.html() + '" src="static/css/images/spacer.gif">';  
         _editArea.html(_editArea.html() + html);  
         $('#web_wechat_pic').hide();  
-        $('#btn_send').show();  
     });  
   
     function resetMessageArea() {  

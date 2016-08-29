@@ -7,7 +7,7 @@
 <html>  
     <head>  
         <base href="<%=basePath%>">  
-        <title>DWR  DEMO</title>  
+        <title>施工队联系</title>  
         <script type="text/javascript"  src="<%= basePath%>static/js/gcdtx.js"></script>
         <script type='text/javascript' src='<%= basePath%>dwr/engine.js'></script>  
         <script type='text/javascript' src='<%= basePath%>dwr/util.js'></script>  
@@ -35,51 +35,78 @@
             }
             //推送信息  
             function showMessage(autoMessage, time) {
-               autoMessage =  messageMeUiStart + autoMessage + messageMeUiEnd;
-               autoMessage = autoMessage.replace('{time}', time);
+                autoMessage = messageMeUiStart + autoMessage + messageMeUiEnd;
+                autoMessage = autoMessage.replace('{time}', time);
                 $("#messageList").append(autoMessage);
                 $("#editArea").text('');
             }
             function test() {
                 var msg = $("#editArea").html();
-                //msg = {msgId: '1', context: $("#msgContext").val()};
+                if (msg === '&nbsp;') {
+                    Message.alert("发送消息不能为空。");
+                    return;
+                }
                 var date = new Date();
-                ShowMessage.sendMessageAuto(${gcdId}, msg, date.Format('yyyy/MM/DD HH:mm:ss'));
-            }
-            $(function(){
-                onPageLoad(); dwr.engine.setActiveReverseAjax(true); dwr.engine.setNotifyServerOnPageUnload(true);
-                $(".exp_cont a").click(function(){
-                    $(".box_ft_bd").addClass('hide');
+                $.post('data/xcgl/reciveMessage.do', {
+                    msg: msg,
+                    datetime: date.Format('yyyy/M/DD HH:mm:ss'),
+                    gcdId:${gcdId}
+                }, function (data) {
+                    data = eval("(" + data + ")");
+                    if (data === 'true') {
+                        ShowMessage.sendMessageAuto(${gcdId}, msg, date.Format('yyyy-M-DD HH:mm:ss'));
+                    } else {
+                        Message.alert("消息发送失败。请重试");
+                    }
                 })
+            }
+            $(function () {
+                onPageLoad();
+                dwr.engine.setActiveReverseAjax(true);
+                dwr.engine.setNotifyServerOnPageUnload(true);
+                $(".exp_cont a").click(function () {
+                    $(".box_ft_bd").addClass('hide');
+                });
                 //定义回车事件
                 if (document.addEventListener) {//如果是Firefox
                     document.addEventListener("keypress", fireFoxHandler, true);
-                }
-                else {
+                } else {
                     document.attachEvent("onkeypress", ieHandler);
                 }
 
                 function fireFoxHandler(evt) {
-                    if (evt.keyCode == 13) {
+                    if (evt.keyCode === 13) {
                         $("#btn_send")[0].click();
                     }
                 }
                 function ieHandler(evt) {
-                    if (evt.keyCode == 13) {
+                    if (evt.keyCode === 13) {
                         $("#btn_send")[0].click();
                     }
                 }
 
-            })
+                $("#datetime").datebox('setValue', '${datetime}');
+                $('#datetime').datebox({
+                    onSelect: function (date) {
+                        var datetime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                        reloadPage(datetime);
+                    }
+                });
+            });
+            function reloadPage(datetime) {
+                var href = window.location.href;
+                href = href.replace(/\datetime\=.+/g, '');
+                window.location.href = href + "&datetime=" + datetime;
+            }
         </script>  
     </head>  
     <body>   
         <input type="hidden" id='userId' value="${userIdList}" />
         <div class="main">  
             <div class="main_inner clearfix">  
-                <div class="panel"></div>  
+                <div class="txpanel"></div>  
                 <div id="chatArea" class="box chat">  
-                    <div class="box_hd"></div>  
+                    <div class="box_hd"><input type="text" id='datetime' value="" class="easyui-datebox" /></div>  
                     <div class="box_bd" id="messageList">  
                     </div>  
                     <div class="box_ft">  
@@ -101,8 +128,8 @@
                             <div class="eaitWrap">  
                                 <pre id="editArea" class="editArea" contenteditable="true">&nbsp;</pre>  
                             </div>  
-                            <a href="javascript:;" class="web_wechat_face" id="web_wechat_face">表情</a>  
-                            <a href="javascript:;" class="btn btn_send hide" id="btn_send"  onclick="test()">发送</a>  
+                            <a href="javascript:;" class="web_wechat_face" id="web_wechat_face"></a>  
+                            <a href="javascript:;" class="btn btn_send" id="btn_send"  onclick="javascript:test();">发送</a>  
                         </div>  
                     </div>  
                 </div>  

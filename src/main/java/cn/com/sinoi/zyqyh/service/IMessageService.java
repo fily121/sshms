@@ -1,15 +1,14 @@
 package cn.com.sinoi.zyqyh.service;
 
 import cn.com.sinoi.zyqyh.vo.Message;
-import cn.com.sinoi.zyqyh.vo.Sgdxx;
 
 public interface IMessageService extends IBaseService<Message> {
 
     int deleteByPrimaryKey(String id);
 
-    int insert(Sgdxx record);
+    int insert(Message record);
 
-    int insertSelective(Sgdxx record);
+    int insertSelective(Message record);
 
     Message selectByPrimaryKey(String id);
 

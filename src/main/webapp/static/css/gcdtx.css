@@ -146,7 +146,6 @@ a.btn {
 .btn_send {  
     background-color: #5CB700;  
     color: white;  
-    display: none;  
 }  
   
   
@@ -163,16 +162,15 @@ a.btn {
 }  
   
 .main_inner {  
-    height: 100%;  
+    height: 85%;  
     overflow: hidden;  
 }  
   
-.panel {  
+.txpanel {  
     position: relative;  
     width: 0px;  
     height: 100%;  
     float: left;  
-    background: #2e3238;  
 }  
   
 /*信息*/  
@@ -186,7 +184,8 @@ a.btn {
 }  
   
 .box_hd {  
-    height: 0px;  
+    height: 30px;
+    margin-bottom: 10px;
 }  
   
 .box_bd {  
@@ -386,7 +385,7 @@ a.btn {
     }  
   
 .web_wechat_face {  
-    background: url(images/ico.png) 0 -805px;  
+    background: url(images/icon.png) 0 -805px;  
     width: 30px;  
     height: 30px;  
     vertical-align: middle;  
@@ -394,7 +393,7 @@ a.btn {
 }  
   
 .web_wechat_pic {  
-    background: url(images/ico.png) 0 -1638px;  
+    background: url(images/icon.png) 0 -1638px;  
     width: 30px;  
     height: 30px;  
     vertical-align: middle;  

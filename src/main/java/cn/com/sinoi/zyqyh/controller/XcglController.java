@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,7 +67,7 @@ public class XcglController {
      * @return
      */
     @RequestMapping("xclx.do")
-    public String xclx(Model model, String id) {
+    public String xclx(Model model, String id, String datetime) {
         model.addAttribute("gcdId", id);
         List<String> userIdList = sgdxxService.findUserIdByGcdId(id);
         model.addAttribute("userIdList", userIdList);
@@ -78,10 +79,13 @@ public class XcglController {
         Map<String, Object> map = new HashMap<>();
         map.put("toSgdId", id);
         Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//可以方便地修改日期格式
-        String time = dateFormat.format(now);
-        map.put("time", time);
-        params.setSearchParams(map);
+        if (StringUtils.isEmpty(datetime)) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            datetime = dateFormat.format(now);
+            map.put("datetime", datetime);
+            params.setSearchParams(map);
+        }
+        model.addAttribute("datetime", datetime);
         try {
             List<Message> messageList = messageService.findByCondition(params);
             model.addAttribute("messageList", messageList);
