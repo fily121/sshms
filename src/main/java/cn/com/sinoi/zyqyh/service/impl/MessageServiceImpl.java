@@ -4,7 +4,9 @@ import cn.com.sinoi.zyqyh.dao.MessageMapper;
 import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.Message;
+import cn.com.sinoi.zyqyh.vo.relate.MessageExt;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,5 +54,10 @@ public class MessageServiceImpl extends BaseServiceImpl<Message> implements IMes
     @Override
     public int updateByPrimaryKey(Message record) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<MessageExt> findRelateByCondition(Map<String, Object> map) {
+        return messageMapper.findRelateByCondition(map);
     }
 }

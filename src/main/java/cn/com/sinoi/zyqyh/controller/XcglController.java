@@ -3,10 +3,9 @@ package cn.com.sinoi.zyqyh.controller;
 import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.service.IUserService;
-import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.utils.ShiroUtils;
-import cn.com.sinoi.zyqyh.vo.Message;
 import cn.com.sinoi.zyqyh.vo.User;
+import cn.com.sinoi.zyqyh.vo.relate.MessageExt;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -73,21 +72,19 @@ public class XcglController {
         model.addAttribute("userIdList", userIdList);
         User user = ShiroUtils.getUserBySubject(userService);
         if (user != null) {
-            model.addAttribute("userId", user.getUserId());
+            model.addAttribute("userName", user.getUserName());
         }
-        SearchParams params = new SearchParams();
         Map<String, Object> map = new HashMap<>();
-        map.put("toSgdId", id);
+        map.put("tosgdid", id);
         Date now = new Date();
         if (StringUtils.isEmpty(datetime)) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             datetime = dateFormat.format(now);
-            map.put("datetime", datetime);
-            params.setSearchParams(map);
         }
+        map.put("time", datetime);
         model.addAttribute("datetime", datetime);
         try {
-            List<Message> messageList = messageService.findByCondition(params);
+            List<MessageExt> messageList = messageService.findRelateByCondition(map);
             model.addAttribute("messageList", messageList);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(XcglController.class.getName()).log(Level.SEVERE, null, ex);

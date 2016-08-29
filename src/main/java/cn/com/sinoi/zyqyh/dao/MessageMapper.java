@@ -2,7 +2,9 @@ package cn.com.sinoi.zyqyh.dao;
 
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.Message;
+import cn.com.sinoi.zyqyh.vo.relate.MessageExt;
 import java.util.List;
+import java.util.Map;
 
 public interface MessageMapper {
 
@@ -21,4 +23,6 @@ public interface MessageMapper {
     int updateByPrimaryKey(Message record);
 
     List<Message> findByCondition(SearchParams params);
+
+    List<MessageExt> findRelateByCondition(Map<String, Object> map);
 }

@@ -192,7 +192,7 @@ function clearForm(formSelector) {
 
 $.fn.datebox.defaults.formatter = function(date){
 	var y = date.getFullYear();
-	var m = date.getMonth()+1;
-	var d = date.getDate();
-	return m+'-'+d+'-'+y;
+	var m = (date.getMonth()+1)>9?(date.getMonth()+1):'0'+(date.getMonth()+1);
+	var d = date.getDate()>9?date.getDate():'0'+date.getDate();
+	return y+'-'+m+'-'+d;
 };

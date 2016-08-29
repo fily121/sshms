@@ -13,10 +13,10 @@
         <result column="content" property="content" jdbcType="LONGVARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
-        id, fromUser, toSgdId, type, time, attachmentId
+        message.id, message.fromUser, message.toSgdId, message.type, message.time, message.attachmentId
     </sql>
     <sql id="Blob_Column_List" >
-        content
+        message.content
     </sql>
     <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
         select 
@@ -94,26 +94,62 @@
         <include refid="Blob_Column_List" />
         from  message
         <where >
-            <if test="searchParams.fromuser != null" >
-                fromUser = #{fromuser,jdbcType=VARCHAR},
+            <if test="fromuser != null" >
+                and fromUser = #{fromuser,jdbcType=VARCHAR}
             </if>
-            <if test="searchParams.tosgdid != null" >
-                toSgdId = #{tosgdid,jdbcType=VARCHAR},
+            <if test="tosgdid != null" >
+                and toSgdId = #{tosgdid,jdbcType=VARCHAR}
             </if>
-            <if test="searchParams.type != null" >
-                type = #{type,jdbcType=INTEGER},
+            <if test="type != null" >
+                and type = #{type,jdbcType=INTEGER}
             </if>
-            <if test="searchParams.time != null" >
-                DATE_FORMAT(time,'%Y/%m/%d') = #{time},
+            <if test="time != null" >
+                and DATE_FORMAT(time,'%Y/%m/%d') = #{time}
             </if>
-            <if test="searchParams.attachmentid != null" >
-                attachmentId = #{attachmentid,jdbcType=VARCHAR},
+            <if test="attachmentid != null" >
+                and attachmentId = #{attachmentid,jdbcType=VARCHAR}
             </if>
-            <if test="searchParams.content != null" >
-                content = #{content,jdbcType=LONGVARCHAR},
+            <if test="content != null" >
+               and content = #{content,jdbcType=LONGVARCHAR}
             </if>
         </where>
     </select>
+    
+    <resultMap id="BaseRelateResultMap" type="cn.com.sinoi.zyqyh.vo.relate.MessageExt"  extends="ResultMapWithBLOBs">
+        <result column="userFullName" property="userFullName" jdbcType="VARCHAR" />
+        <result column="sgdmc" property="sgdmc" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findRelateByCondition" parameterType="java.util.Map"  resultMap="BaseRelateResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />,
+        user.EXT1 userFullName, sgdxx.sgdmc, DATE_FORMAT(time,'%Y-%m-%d %H:%i:%s') as formattedTime
+        from  message left join p_user user on message.fromUser = user.USER_ID
+        left join sgdxx on message.toSgdId = sgdxx.id
+        <where >
+            <if test="fromuser != null" >
+                and fromUser = #{fromuser,jdbcType=VARCHAR}
+            </if>
+            <if test="tosgdid != null" >
+                and toSgdId = #{tosgdid,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null" >
+                and type = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="time != null" >
+                and DATE_FORMAT(time,'%Y-%m-%d') = #{time}
+            </if>
+            <if test="attachmentid != null" >
+                and attachmentId = #{attachmentid,jdbcType=VARCHAR}
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=LONGVARCHAR}
+            </if>
+        </where>
+        order by time
+    </select>
+    
     <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Message" >
         update message
         <set >

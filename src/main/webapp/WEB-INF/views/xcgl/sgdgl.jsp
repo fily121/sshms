@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>  
 <%
     String path = request.getContextPath();
@@ -84,30 +85,46 @@
                         $("#btn_send")[0].click();
                     }
                 }
-
-                $("#datetime").datebox('setValue', '${datetime}');
                 $('#datetime').datebox({
                     onSelect: function (date) {
-                        var datetime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                        var y = date.getFullYear();
+                        var m = (date.getMonth()+1)>9?(date.getMonth()+1):'0'+(date.getMonth()+1);
+                        var d = date.getDate()>9?date.getDate():'0'+date.getDate();
+                        var datetime = y+'-'+m+'-'+d;
                         reloadPage(datetime);
                     }
                 });
+                $("#datetime").datebox('setValue', '${datetime}');
             });
             function reloadPage(datetime) {
                 var href = window.location.href;
-                href = href.replace(/\datetime\=.+/g, '');
+                href = href.replace(/\&.+\&?/g,'');
                 window.location.href = href + "&datetime=" + datetime;
             }
         </script>  
     </head>  
     <body>   
         <input type="hidden" id='userId' value="${userIdList}" />
-        <div class="main">  
+        <div class="main">
             <div class="main_inner clearfix">  
                 <div class="txpanel"></div>  
                 <div id="chatArea" class="box chat">  
                     <div class="box_hd"><input type="text" id='datetime' value="" class="easyui-datebox" /></div>  
                     <div class="box_bd" id="messageList">  
+                        <c:forEach items="${messageList}" var="message">
+                            <div class="message <c:if test="${message.fromuser eq userName}">me</c:if>">  
+                                <div class="content">  
+                                    <div class="nickname"><span class="time">${message.formattedTime}</span></div>  
+                                    <div class="bubble bubble_primary <c:if test="${message.fromuser eq userName}">right</c:if><c:if test="${message.fromuser ne userName}">left</c:if>">  
+                                        <div class="bubble_cont">  
+                                            <div class="plain">  
+                                                <pre>${message.content}</pre>  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                        </c:forEach>
                     </div>  
                     <div class="box_ft">  
                         <div class="box_ft_bd hide">  
