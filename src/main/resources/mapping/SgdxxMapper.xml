@@ -6,30 +6,35 @@
         <result column="sgdmc" property="sgdmc" jdbcType="VARCHAR" />
         <result column="detail" property="detail" jdbcType="VARCHAR" />
         <result column="duizhang" property="duizhang" jdbcType="VARCHAR" />
-        <result column="EXT1" property="duizhangMc" jdbcType="VARCHAR" />
+        <result column="duizhangMc" property="duizhangMc" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
         id, sgdmc, detail, duizhang
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-        select 
+        select
         <include refid="Base_Column_List" />
         from sgdxx
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="findAll" resultMap="BaseResultMap" >
-        select 
+        select
         <include refid="Base_Column_List" />, b.EXT1
         from sgdxx a left join p_user b on a.duizhang = b.USER_ID
     </select>
-    <select id="findAllForPage" resultMap="BaseResultMap" parameterType="java.util.Map">
-        select 
-        <include refid="Base_Column_List" />, b.EXT1
+    <resultMap id="ResultMap_Detail" type="cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail">
+        <id column="id" property="sgdxx.id" jdbcType="VARCHAR"/>
+        <association property="user" resultMap="cn.com.sinoi.zyqyh.dao.UserMapper.BaseResultMap"/>
+        <association property="sgdxx" resultMap="BaseResultMap"/>
+    </resultMap>
+    <select id="findAllForPage" resultMap="ResultMap_Detail" parameterType="java.util.Map">
+        select b.EXT1 duizhangMc,
+        <include refid="Base_Column_List" />, <include refid="cn.com.sinoi.zyqyh.dao.UserMapper.Base_Column_List" />
         from sgdxx a left join p_user b on a.duizhang = b.USER_ID
         limit #{limit1}, #{limit2}
     </select>
     <select id="findUserIdByGcdId" resultType="java.lang.String" parameterType="java.lang.String">
-        select 
+        select
         USER_ID
         from p_user where org_id=#{id,jdbcType=VARCHAR}
     </select>
@@ -38,9 +43,9 @@
         where id = #{id,jdbcType=VARCHAR}
     </delete>
     <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
-        insert into sgdxx (id, sgdmc, detail, 
+        insert into sgdxx (id, sgdmc, detail,
         duizhang)
-        values (#{id,jdbcType=VARCHAR}, #{sgdmc,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
+        values (#{id,jdbcType=VARCHAR}, #{sgdmc,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR},
         #{duizhang,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
@@ -96,4 +101,10 @@
         duizhang = #{duizhang,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
+    <select id="selectBySgdmc" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from sgdxx
+        where sgdmc = #{sgdmc,jdbcType=VARCHAR}
+    </select>
 </mapper>

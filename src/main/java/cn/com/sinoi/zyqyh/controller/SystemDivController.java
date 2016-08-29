@@ -1,6 +1,8 @@
 package cn.com.sinoi.zyqyh.controller;
 
+import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.service.IUserService;
+import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.User;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +28,8 @@ public class SystemDivController {
 
     @Autowired
     IUserService userService;
+    @Autowired
+    ISgdxxService sgdxxService;
 
     @RequestMapping("addModifyUser.do")
     public String addModifyUser(String userId, Model model) {
@@ -38,6 +42,19 @@ public class SystemDivController {
             }
         }
         return "system/addModifyUser";
+    }
+
+    @RequestMapping("addModifySgdxx.do")
+    public String addModifySgdw(String id, Model model) {
+        if (StringUtils.isNotEmpty(id)) {
+            try {
+                Sgdxx sgdxx = sgdxxService.selectByPrimaryKey(id);
+                model.addAttribute("sgdxx", sgdxx);
+            } catch (Exception ex) {
+                Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return "system/addModifySgdxx";
     }
 
 }

@@ -10,6 +10,7 @@ import cn.com.sinoi.zyqyh.vo.Permission;
 import cn.com.sinoi.zyqyh.vo.Role;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.User;
+import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
 import cn.com.sinoi.zyqyh.vo.relate.UserDetail;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -74,21 +76,21 @@ public class SystemDataController {
 
     @RequestMapping("getSgdList.do")
     @ResponseBody
-    public PageModel<Sgdxx> getSgdList(Integer page, Integer rows) {
+    public PageModel<SgdxxDetail> getSgdList(Integer page, Integer rows) {
         if (page == null || page == 0) {
             page = 1;
         }
         if (rows == null || rows == 0) {
             rows = 10;
         }
-        List<Sgdxx> sgdList = null;
+        List<SgdxxDetail> sgdList = null;
         try {
             sgdList = sgdxxService.findAllForPage(page, rows);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (sgdList != null) {
-            PageModel<Sgdxx> result = new PageModel<>(sgdList, sgdList.size());
+            PageModel<SgdxxDetail> result = new PageModel<>(sgdList, sgdList.size());
             result.setPage(page);
             return result;
         }
@@ -180,6 +182,54 @@ public class SystemDataController {
         return result;
     }
 
+    /**
+     * 增加修改施工队伍
+     *
+     * @param sgdxx
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "addModifySgdxx.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> addModifySgdxx(Sgdxx sgdxx, HttpServletResponse response) {
+        response.setContentType("text/html;charset=UTF-8");
+        Map<String, String> result = new HashMap<>();
+        try {
+            if (StringUtils.isEmpty(sgdxx.getId())) {
+                Sgdxx existSgdxx = sgdxxService.selectBySgdmc(sgdxx.getSgdmc());
+                if (existSgdxx != null) {
+                    result.put("code", "false");
+                    result.put("message", "施工队已存在。");
+                    return result;
+                }
+                sgdxx.setId(java.util.UUID.randomUUID().toString());
+                sgdxxService.insert(sgdxx);
+                result.put("code", "true");
+                result.put("message", "保存成功。");
+            } else {
+                sgdxxService.updateByPrimaryKeySelective(sgdxx);
+                result.put("code", "true");
+                result.put("message", "修改成功。");
+            }
+        } catch (Exception ex) {
+            result.put("code", "false");
+            result.put("message", ex.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping("deleteSgdw.do")
+    @ResponseBody
+    public boolean deleteSgdw(String id, Model model) {
+        try {
+            sgdxxService.deleteByPrimaryKey(id);
+            return true;
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     @RequestMapping(value = "getAllRole.do", method = RequestMethod.POST)
     @ResponseBody
     public List<Role> getAllRole() {
@@ -198,6 +248,18 @@ public class SystemDataController {
         List<Sgdxx> result = Collections.EMPTY_LIST;
         try {
             result = sgdxxService.findAll();
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "getAllUser.do", method = RequestMethod.POST)
+    @ResponseBody
+    public List<User> getAllUser() {
+        List<User> result = Collections.EMPTY_LIST;
+        try {
+            result = userService.findAll();
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
         }

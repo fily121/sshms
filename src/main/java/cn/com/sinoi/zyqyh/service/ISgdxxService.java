@@ -1,6 +1,7 @@
 package cn.com.sinoi.zyqyh.service;
 
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
+import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
 import java.util.List;
 
 public interface ISgdxxService extends IBaseService<Sgdxx> {
@@ -19,5 +20,7 @@ public interface ISgdxxService extends IBaseService<Sgdxx> {
 
     List<String> findUserIdByGcdId(String id);
 
-    List<Sgdxx> findAllForPage(int page, int rows);
+    List<SgdxxDetail> findAllForPage(int page, int rows);
+
+    Sgdxx selectBySgdmc(String sgdmc);
 }

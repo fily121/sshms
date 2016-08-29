@@ -1,6 +1,7 @@
 package cn.com.sinoi.zyqyh.dao;
 
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
+import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
 import java.util.List;
 import java.util.Map;
 
@@ -22,5 +23,7 @@ public interface SgdxxMapper {
 
     List<String> findUserIdByGcdId();
 
-    List<Sgdxx> findAllForPage(Map<String, Integer> param);
+    List<SgdxxDetail> findAllForPage(Map<String, Integer> param);
+
+    Sgdxx selectBySgdmc(String sgdmc);
 }

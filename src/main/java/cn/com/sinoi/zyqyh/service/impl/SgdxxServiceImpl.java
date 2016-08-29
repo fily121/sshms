@@ -4,6 +4,7 @@ import cn.com.sinoi.zyqyh.dao.SgdxxMapper;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
+import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,32 +33,32 @@ public class SgdxxServiceImpl extends BaseServiceImpl<Sgdxx> implements ISgdxxSe
 
     @Override
     public int deleteByPrimaryKey(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.sgdxxMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public int insert(Sgdxx record) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.sgdxxMapper.insert(record);
     }
 
     @Override
     public int insertSelective(Sgdxx record) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.sgdxxMapper.insertSelective(record);
     }
 
     @Override
     public Sgdxx selectByPrimaryKey(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.sgdxxMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public int updateByPrimaryKeySelective(Sgdxx record) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.sgdxxMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int updateByPrimaryKey(Sgdxx record) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.sgdxxMapper.updateByPrimaryKey(record);
     }
 
     @Override
@@ -66,11 +67,16 @@ public class SgdxxServiceImpl extends BaseServiceImpl<Sgdxx> implements ISgdxxSe
     }
 
     @Override
-    public List<Sgdxx> findAllForPage(int page, int rows) {
+    public List<SgdxxDetail> findAllForPage(int page, int rows) {
         Map<String, Integer> param = new HashMap<>();
         param.put("limit1", (page - 1) * rows);
         param.put("limit2", rows);
         return sgdxxMapper.findAllForPage(param);
+    }
+
+    @Override
+    public Sgdxx selectBySgdmc(String sgdmc) {
+        return this.sgdxxMapper.selectBySgdmc(sgdmc);
     }
 
 }
