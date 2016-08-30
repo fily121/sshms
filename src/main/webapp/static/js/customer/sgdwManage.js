@@ -82,7 +82,6 @@ var sgdwManage = function () {
                 modal: true
             });
             $('#sgdwManageDialog').dialog('open');
-            $("#duizhang").combogrid('setValue', {userId:'1'});
         },
         deleteSgdw: function () {
             var row = $('#datagrid').datagrid("getSelected");
