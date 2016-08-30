@@ -8,5 +8,8 @@
         <create creator="new" javascript="ShowMessage">  
             <param name="class" value="cn.com.sinoi.zyqyh.dwr.ShowMessage"/>  
         </create>  
+        <create creator="new" javascript="ShowLocation">  
+            <param name="class" value="cn.com.sinoi.zyqyh.dwr.ShowLocation"/>  
+        </create>  
   </allow>
 </dwr>

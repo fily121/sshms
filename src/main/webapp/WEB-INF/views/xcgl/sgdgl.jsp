@@ -16,8 +16,7 @@
         <script type='text/javascript' src='<%= basePath%>dwr/interface/ShowMessage.js'></script>
         <link rel="stylesheet" type="text/css" href="<%= basePath%>/static/css/gcdtx.css" />
         <script type="text/javascript">
-            var messageMeUiStart = '<div class="message {class}">' +
-                    '<img class="avatar" src="static/css/images/hyf.jpg" />' +
+            var messageMeUiStart = '<div class="message me">' +
                     '<div class="content">' +
                     '<div class="nickname"><span class="time">{time}</span></div>' +
                     '<div class="bubble bubble_primary right">' +
@@ -32,7 +31,7 @@
                     '</div>';
             //通过该方法与后台交互，确保推送时能找到指定用户  
             function onPageLoad() {
-                MessagePush.onPageLoad(${gcdId});
+                MessagePush.onPageLoad('${gcdId}');
             }
             //推送信息  
             function showMessage(autoMessage, time) {
@@ -51,11 +50,11 @@
                 $.post('data/xcgl/reciveMessage.do', {
                     msg: msg,
                     datetime: date.Format('yyyy/M/DD HH:mm:ss'),
-                    gcdId:${gcdId}
+                    gcdId:'${gcdId}'
                 }, function (data) {
                     data = eval("(" + data + ")");
                     if (data === 'true') {
-                        ShowMessage.sendMessageAuto(${gcdId}, msg, date.Format('yyyy-M-DD HH:mm:ss'));
+                        ShowMessage.sendMessageAuto('${gcdId}', msg, date.Format('yyyy-M-DD HH:mm:ss'));
                     } else {
                         Message.alert("消息发送失败。请重试");
                     }
