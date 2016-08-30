@@ -26,4 +26,6 @@ public interface SgdxxMapper {
     List<SgdxxDetail> findAllForPage(Map<String, Integer> param);
 
     Sgdxx selectBySgdmc(String sgdmc);
+
+    Sgdxx selectByCph(String cph);
 }

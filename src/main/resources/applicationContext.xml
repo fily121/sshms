@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <beans xmlns="http://www.springframework.org/schema/beans"  
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
-    xmlns:context="http://www.springframework.org/schema/context"  
-    xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:aop="http://www.springframework.org/schema/aop"
-    xmlns:tx="http://www.springframework.org/schema/tx"  
-    xsi:schemaLocation="http://www.springframework.org/schema/beans    
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
+       xmlns:context="http://www.springframework.org/schema/context"  
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"  
+       xsi:schemaLocation="http://www.springframework.org/schema/beans    
                         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
                         http://www.springframework.org/schema/context    
                         http://www.springframework.org/schema/context/spring-context-3.1.xsd    
@@ -19,7 +19,7 @@
     <context:component-scan base-package="cn.com.sinoi.zyqyh.dao.*,cn.com.sinoi.zyqyh.service.*" />  
     <!-- 引入配置文件 -->  
     <bean id="propertyConfigurer"  
-        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
         <property name="location" value="classpath:jdbc.properties" />  
     </bean>  
   
@@ -45,17 +45,17 @@
         <property name="dataSource" ref="dataSource" />  
         <!-- 自动扫描mapping.xml文件 -->  
         <property name="mapperLocations" value="classpath*:mapping/*.xml"></property> 
-		  <property name="plugins">
-		    <array>
-		      <bean class="com.github.pagehelper.PageHelper">
-		        <property name="properties">
-		          <value>
-		            dialect=mysql
-		          </value>
-		        </property>
-		      </bean>
-		    </array>
-		  </property> 
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property> 
     </bean>  
   
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->  
@@ -65,26 +65,26 @@
     </bean>  
   
     <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->  
-	<bean id="txManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-	<!-- spring declarative transaction management -->
-	<aop:config>
-		<aop:pointcut id="fooServiceMethods"
-			expression="execution(* cn.com.sinoi.zyqyh.service.impl.*.*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceMethods" />
-	</aop:config>
-	<tx:advice id="txAdvice" transaction-manager="txManager">
-		<tx:attributes>
-			<tx:method name="save*" propagation="REQUIRED"/>
-		      <tx:method name="del*" propagation="REQUIRED"/>
-		      <tx:method name="update*" propagation="REQUIRED"/>
-		      <tx:method name="add*" propagation="REQUIRED"/>
-		      <tx:method name="find*" propagation="REQUIRED"/>
-		      <tx:method name="get*" propagation="REQUIRED"/>
-		      <tx:method name="apply*" propagation="REQUIRED"/>
-		</tx:attributes>
-	</tx:advice>  
+    <bean id="txManager"
+              class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!-- spring declarative transaction management -->
+    <aop:config>
+        <aop:pointcut id="fooServiceMethods"
+                              expression="execution(* cn.com.sinoi.zyqyh.service.impl.*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceMethods" />
+    </aop:config>
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="find*" propagation="REQUIRED"/>
+            <tx:method name="get*" propagation="REQUIRED"/>
+            <tx:method name="apply*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>  
   
 </beans> 

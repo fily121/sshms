@@ -79,4 +79,9 @@ public class SgdxxServiceImpl extends BaseServiceImpl<Sgdxx> implements ISgdxxSe
         return this.sgdxxMapper.selectBySgdmc(sgdmc);
     }
 
+    @Override
+    public Sgdxx selectByCph(String cph) {
+        return this.sgdxxMapper.selectByCph(cph);
+    }
+
 }

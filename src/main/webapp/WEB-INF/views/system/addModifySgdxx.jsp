@@ -7,7 +7,7 @@
         width:350px
     }
 </style>
-<form action="data/system/addModifySgdxx.do" method="post" id="sgdxxManageForm">
+<form action="data/baseManage/addModifySgdxx.do" method="post" id="sgdxxManageForm">
     <div class="input_area" style="margin-top:20px;">
         <input name="id" value="${sgdxx.id}" type="hidden"/>
         <input class="easyui-textbox" name="sgdmc" id="sgdmc" value="${sgdxx.sgdmc}" style="width:95%" data-options="label:'施工队名',required:true">
@@ -23,6 +23,9 @@
                 {field:'ext1',title:'姓名',width:80},
                 {field:'ext2',title:'微信号',width:120}]],fitColumns: true">
         </select>
+    </div>
+    <div class="input_area" style="margin-top:20px;">
+        <input class="easyui-textbox" name="cph" id="detail" value="${sgdxx.cph}" style="width:95%" data-options="required:true,label:'车牌号'">
     </div>
     <div style="text-align:center;padding:5px 0;float:left;margin:0 auto;width:750px;">
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="sgdwManage.submitForm()" style="width:80px">提交</a>

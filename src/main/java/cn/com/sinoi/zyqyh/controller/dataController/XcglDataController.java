@@ -1,4 +1,4 @@
-package cn.com.sinoi.zyqyh.controller.DataController;
+package cn.com.sinoi.zyqyh.controller.dataController;
 
 import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.vo.Message;

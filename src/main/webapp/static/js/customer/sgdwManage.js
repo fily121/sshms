@@ -2,7 +2,7 @@ var sgdwManage = function () {
     return {
         init: function () {
             $('#datagrid').datagrid({
-                url: 'data/system/getSgdList.do',
+                url: 'data/baseManage/getSgdList.do',
                 method: 'get',
                 toolbar: '#tb',
                 singleSelect: true,
@@ -78,7 +78,7 @@ var sgdwManage = function () {
                 height: 400,
                 closed: true,
                 cache: false,
-                href: 'div/system/addModifySgdxx.do?id=' + id,
+                href: 'div/baseManage/addModifySgdxx.do?id=' + id,
                 modal: true
             });
             $('#sgdwManageDialog').dialog('open');
@@ -95,7 +95,7 @@ var sgdwManage = function () {
                     return;
                 }
                 var id = row.sgdxx.id;
-                $.get('data/system/deleteSgdw.do?id=' + id, function (data) {
+                $.get('data/baseManage/deleteSgdw.do?id=' + id, function (data) {
                     if (data) {
                         Message.alert("删除成功。");
                         $('#datagrid').datagrid('reload');

@@ -12,6 +12,16 @@ public class Sgdxx {
 
     private String duizhangMc;
 
+    private String cph;
+
+    public String getCph() {
+        return cph;
+    }
+
+    public void setCph(String cph) {
+        this.cph = cph;
+    }
+
     public String getDuizhangMc() {
         return duizhangMc;
     }

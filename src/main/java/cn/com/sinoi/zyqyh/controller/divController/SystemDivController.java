@@ -1,4 +1,4 @@
-package cn.com.sinoi.zyqyh.controller;
+package cn.com.sinoi.zyqyh.controller.divController;
 
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.service.IUserService;

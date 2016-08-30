@@ -7,9 +7,10 @@
         <result column="detail" property="detail" jdbcType="VARCHAR" />
         <result column="duizhang" property="duizhang" jdbcType="VARCHAR" />
         <result column="duizhangMc" property="duizhangMc" jdbcType="VARCHAR" />
+        <result column="cph" property="cph" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
-        id, sgdmc, detail, duizhang
+        id, sgdmc, detail, duizhang, cph
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
@@ -106,5 +107,11 @@
         <include refid="Base_Column_List" />
         from sgdxx
         where sgdmc = #{sgdmc,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByCph" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from sgdxx
+        where cph = #{cph,jdbcType=VARCHAR}
     </select>
 </mapper>
