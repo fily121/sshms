@@ -83,10 +83,11 @@
         <property name="filterChainDefinitions">
             <value>
                 /static/** = anon
+                /sendMessage/** = anon
                 /user/login.do=anon
-		        /user/getVerifyCodeImage.do=anon
-		        /logout.do = logout
-				/** = user
+		/user/getVerifyCodeImage.do=anon
+		/logout.do = logout
+		/** = user
             </value>
         </property>
     </bean>

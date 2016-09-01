@@ -21,15 +21,15 @@
              <property name="trimStrings" value="true" />
          </javaModelGenerator>
          <!-- 生成的SQL映射文件包名和位置，这里配置将生成的SQL映射文件放在com.liyi.test.mapping这个包下 -->
-         <sqlMapGenerator targetPackage="cn.com.sinoi.zyqyh.vo" targetProject="I:\java\">
+         <sqlMapGenerator targetPackage="cn.com.sinoi.zyqyh.vo" targetProject="d:\java\">
              <property name="enableSubPackages" value="true" />
          </sqlMapGenerator>
          <!-- 生成DAO的包名和位置，这里配置将生成的dao类放在com.liyi.test.mapping这个包下 -->
-         <javaClientGenerator type="XMLMAPPER" targetPackage="cn.com.sinoi.zyqyh.dao" targetProject="I:\java\">
+         <javaClientGenerator type="XMLMAPPER" targetPackage="cn.com.sinoi.zyqyh.dao" targetProject="d:\java\">
              <property name="enableSubPackages" value="true" />
          </javaClientGenerator>
          <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-         <table tableName="message" domainObjectName="Message" enableCountByExample="false" enableUpdateByExample="false"
+         <table tableName="p_order" domainObjectName="Order" enableCountByExample="false" enableUpdateByExample="false"
                 enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
      </context>
 </generatorConfiguration>

@@ -29,4 +29,8 @@ public interface UserMapper {
     User selectByUserName(String userName);
 
     List<UserDetail> findAllForPage(Map<String, Object> param);
+
+    User selectByWechatNo(String wechatNo);
+
+    User selectByOpenId(String fromUserName);
 }

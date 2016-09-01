@@ -25,4 +25,8 @@ public interface IUserService extends IBaseService<User> {
     Pagination<User> findByCondication(SearchParams params) throws Exception;
 
     List<UserDetail> findAllForPage(int page, int rows, String searchKey);
+
+    User selectByWechatNo(String 微信号);
+
+    User selectByOpenId(String fromUserName);
 }

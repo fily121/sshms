@@ -41,17 +41,17 @@ var sgdwManage = function () {
                                 }
                             }
                         },
-                        {field: 'ext1', title: '队长名', width: 120, formatter: function (value, rows, index) {
+                        {field: 'name', title: '队长名', width: 120, formatter: function (value, rows, index) {
                                 if (rows.user) {
-                                    return rows.user.ext1;
+                                    return rows.user.name;
                                 } else {
                                     return '';
                                 }
                             }
                         },
-                        {field: 'ext2', title: '队长微信号', width: 120, formatter: function (value, rows, index) {
+                        {field: 'wechatNo', title: '队长微信号', width: 120, formatter: function (value, rows, index) {
                                 if (rows.user) {
-                                    return rows.user.ext2;
+                                    return rows.user.wechatNo;
                                 } else {
                                     return '';
                                 }

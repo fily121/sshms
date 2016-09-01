@@ -18,10 +18,10 @@
     <div class="input_area">
         <select class="easyui-combogrid" name="duizhang" id="duizhang" style="width:95%" data-options="label:'队长信息',required:true,idField:'userId',
                 value:'${sgdxx.duizhang}',
-                textField:'ext1',url:'data/system/getAllUser.do',columns: [[
+                textField:'name',url:'data/system/getAllUser.do',columns: [[
                 {field:'userId',hidden:true},
-                {field:'ext1',title:'姓名',width:80},
-                {field:'ext2',title:'微信号',width:120}]],fitColumns: true">
+                {field:'name',title:'姓名',width:80},
+                {field:'wechatNo',title:'微信号',width:120}]],fitColumns: true">
         </select>
     </div>
     <div class="input_area" style="margin-top:20px;">

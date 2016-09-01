@@ -82,7 +82,7 @@ public class UserController {
         String resultPageURL = "index";
         try {
             User loginUser = ShiroUtils.getUserBySubject(userService);
-            session.setAttribute("userName", loginUser.getExt1());
+            session.setAttribute("userName", loginUser.getName());
             session.setAttribute("menuId", "0");
         } catch (Exception e) {
             logger.error(e.getMessage());

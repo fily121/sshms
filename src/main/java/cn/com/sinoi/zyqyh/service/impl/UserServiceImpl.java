@@ -74,4 +74,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         param.put("searchKey", searchKey);
         return userMapper.findAllForPage(param);
     }
+
+    @Override
+    public User selectByWechatNo(String 微信号) {
+        return userMapper.selectByWechatNo(微信号);
+    }
+
+    @Override
+    public User selectByOpenId(String fromUserName) {
+        return userMapper.selectByOpenId(fromUserName);
+    }
 }

@@ -12,14 +12,14 @@
         <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
         <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
         <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
-        <result column="EXT3" property="ext3" jdbcType="VARCHAR" />
-        <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
-        <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
+        <result column="openid" property="openid" jdbcType="VARCHAR" />
+        <result column="wechatNo" property="wechatNo" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
         USER_ID, USER_NAME, USER_PWD, IS_GUEST, IS_LOCKED, ROLE_ID, ORG_ID, CREATE_DATE, 
-        UPDATE_DATE, CREATE_USER, EXT3, EXT2, EXT1, REMARK
+        UPDATE_DATE, CREATE_USER, openid, wechatNo, name, REMARK
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select 
@@ -35,13 +35,13 @@
         insert into p_user (USER_ID, USER_NAME, USER_PWD, 
         IS_GUEST, IS_LOCKED, ROLE_ID, 
         ORG_ID, CREATE_DATE, UPDATE_DATE, 
-        CREATE_USER, EXT3, EXT2, 
-        EXT1, REMARK)
+        CREATE_USER, openid, wechatNo, 
+        name, REMARK)
         values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
         #{isGuest,jdbcType=INTEGER}, #{isLocked,jdbcType=INTEGER}, #{roleId,jdbcType=VARCHAR}, 
         #{orgId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
-        #{createUser,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
-        #{ext1,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+        #{createUser,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{wechatNo,jdbcType=VARCHAR}, 
+        #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.User" >
         insert into p_user
@@ -76,14 +76,14 @@
             <if test="createUser != null" >
                 CREATE_USER,
             </if>
-            <if test="ext3 != null" >
-                EXT3,
+            <if test="openid != null" >
+                openid,
             </if>
-            <if test="ext2 != null" >
-                EXT2,
+            <if test="wechatNo != null" >
+                wechatNo,
             </if>
-            <if test="ext1 != null" >
-                EXT1,
+            <if test="name != null" >
+                name,
             </if>
             <if test="remark != null" >
                 REMARK,
@@ -120,14 +120,14 @@
             <if test="createUser != null" >
                 #{createUser,jdbcType=VARCHAR},
             </if>
-            <if test="ext3 != null" >
-                #{ext3,jdbcType=VARCHAR},
+            <if test="openid != null" >
+                #{openid,jdbcType=VARCHAR},
             </if>
-            <if test="ext2 != null" >
-                #{ext2,jdbcType=VARCHAR},
+            <if test="wechatNo != null" >
+                #{wechatNo,jdbcType=VARCHAR},
             </if>
-            <if test="ext1 != null" >
-                #{ext1,jdbcType=VARCHAR},
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
             </if>
             <if test="remark != null" >
                 #{remark,jdbcType=VARCHAR},
@@ -164,14 +164,14 @@
             <if test="createUser != null" >
                 CREATE_USER = #{createUser,jdbcType=VARCHAR},
             </if>
-            <if test="ext3 != null" >
-                EXT3 = #{ext3,jdbcType=VARCHAR},
+            <if test="openid != null" >
+                openid = #{openid,jdbcType=VARCHAR},
             </if>
-            <if test="ext2 != null" >
-                EXT2 = #{ext2,jdbcType=VARCHAR},
+            <if test="wechatNo != null" >
+                wechatNo = #{wechatNo,jdbcType=VARCHAR},
             </if>
-            <if test="ext1 != null" >
-                EXT1 = #{ext1,jdbcType=VARCHAR},
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="remark != null" >
                 REMARK = #{remark,jdbcType=VARCHAR},
@@ -190,9 +190,9 @@
         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
         CREATE_USER = #{createUser,jdbcType=VARCHAR},
-        EXT3 = #{ext3,jdbcType=VARCHAR},
-        EXT2 = #{ext2,jdbcType=VARCHAR},
-        EXT1 = #{ext1,jdbcType=VARCHAR},
+        openid = #{openid,jdbcType=VARCHAR},
+        wechatNo = #{wechatNo,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
         REMARK = #{remark,jdbcType=VARCHAR}
         where USER_ID = #{userId,jdbcType=VARCHAR}
     </update>
@@ -212,7 +212,7 @@
     <select id="findAllForPage" resultMap="UserDetail_resultMap" parameterType="java.util.Map">
         select 
         a.USER_ID, a.USER_NAME, a.USER_PWD, a.IS_GUEST, a.IS_LOCKED, a.ROLE_ID, a.ORG_ID, a.CREATE_DATE, 
-        a.UPDATE_DATE, a.CREATE_USER, a.EXT3, a.EXT2, a.EXT1, a.REMARK, b.sgdmc, d.ROLE_NAME
+        a.UPDATE_DATE, a.CREATE_USER, a.openid, a.wechatNo, a.name, a.REMARK, b.sgdmc, d.ROLE_NAME
         from p_user a left join sgdxx b on a.ORG_ID = b.id
         left join role d on a.ROLE_ID = d.ROLE_ID
         where a.USER_NAME != 'admin'
@@ -220,7 +220,7 @@
             AND (
                 a.USER_NAME LIKE concat('%',#{searchKey},'%')
             OR d.ROLE_NAME LIKE concat('%',#{searchKey},'%')
-            OR a.EXT1 LIKE concat('%',#{searchKey},'%')
+            OR a.name LIKE concat('%',#{searchKey},'%')
             )
         </if>
         limit #{limit1}, #{limit2}
@@ -231,6 +231,20 @@
         <include refid="Base_Column_List" />
         from p_user
         where USER_NAME = #{userName,jdbcType=VARCHAR}
+    </select>
+  
+    <select id="selectByWechatNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from p_user
+        where wechatNo = #{wechatNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from p_user
+        where openid, = #{openid,,jdbcType=VARCHAR}
     </select>
   
     <select id="findByCondication" resultMap="BaseResultMap" parameterType="cn.com.sinoi.zyqyh.utils.SearchParams" >

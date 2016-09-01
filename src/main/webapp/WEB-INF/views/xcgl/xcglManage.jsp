@@ -34,7 +34,7 @@
                                 }
                             },
                             {field: 'duizhangMc', title: '队长名称', width: 120, formatter: function (value, row, index) {
-                                    return row.user.ext1;
+                                    return row.user.name;
                                 }
                             },
                             {field: 'detail', title: '详情', width: 240, align: 'left', formatter: function (value, row, index) {

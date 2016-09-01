@@ -20,8 +20,10 @@
         </div>
     </section>
     
-    <div id="userManageDialog" style="display:none;padding: 10px;">
-        
+    <div id="newOrderDialog" style="display:none;padding: 10px;">
+        <form id="orderForm" name="orderForm" method="post" action="baseManage/newOrder.do" enctype="multipart/form-data">
+            
+        </form>
     </div>
 </body>
 </html>

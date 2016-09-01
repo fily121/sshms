@@ -42,9 +42,9 @@ var userManage = function () {
                             }
                         },
                         {field: 'roleName', title: '角色名', width: 120},
-                        {field: 'ext1', title: '姓名', width: 120, formatter: function (value, rows, index) {
+                        {field: 'name', title: '姓名', width: 120, formatter: function (value, rows, index) {
                                 if (rows.user) {
-                                    return rows.user.ext1;
+                                    return rows.user.name;
                                 } else {
                                     return '';
                                 }

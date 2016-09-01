@@ -20,8 +20,20 @@
     <!-- 引入配置文件 -->  
     <bean id="propertyConfigurer"  
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
-        <property name="location" value="classpath:jdbc.properties" />  
+        <property name="locations">  
+            <list>  
+                <value>classpath:jdbc.properties</value>  
+            </list>  
+        </property>  
     </bean>  
+    <bean id="readProperties"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:application.properties</value>
+            </list>
+        </property>
+    </bean>
   
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="${driver}" />  
@@ -66,13 +78,13 @@
   
     <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->  
     <bean id="txManager"
-              class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
     <!-- spring declarative transaction management -->
     <aop:config>
         <aop:pointcut id="fooServiceMethods"
-                              expression="execution(* cn.com.sinoi.zyqyh.service.impl.*.*(..))" />
+                      expression="execution(* cn.com.sinoi.zyqyh.service.impl.*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceMethods" />
     </aop:config>
     <tx:advice id="txAdvice" transaction-manager="txManager">

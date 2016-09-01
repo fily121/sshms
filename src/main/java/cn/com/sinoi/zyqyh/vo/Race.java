@@ -15,11 +15,11 @@ public class Race {
 
     private String remark;
 
-    private String ext2;
+    private String wechatNo;
 
-    private String ext1;
+    private String name;
 
-    private String ext3;
+    private String openid;
 
     public String getRaceId() {
         return raceId;
@@ -69,27 +69,27 @@ public class Race {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public String getExt2() {
-        return ext2;
+    public String getWechatNo() {
+        return wechatNo;
     }
 
-    public void setExt2(String ext2) {
-        this.ext2 = ext2 == null ? null : ext2.trim();
+    public void setWechatNo(String wechatNo) {
+        this.wechatNo = wechatNo == null ? null : wechatNo.trim();
     }
 
-    public String getExt1() {
-        return ext1;
+    public String getName() {
+        return name;
     }
 
-    public void setExt1(String ext1) {
-        this.ext1 = ext1 == null ? null : ext1.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public String getExt3() {
-        return ext3;
+    public String getopenid() {
+        return openid;
     }
 
-    public void setExt3(String ext3) {
-        this.ext3 = ext3 == null ? null : ext3.trim();
+    public void setopenid(String openid) {
+        this.openid = openid == null ? null : openid.trim();
     }
 }

@@ -25,7 +25,7 @@
         <input class="easyui-combobox" name="orgId"  value="${user.orgId}" id="orgId" style="width:95%" data-options="label:'所属施工队',valueField:'id',textField:'sgdmc',url:'data/system/getAllSgd.do'">
     </div>
     <div class="input_area">
-        <input class="easyui-textbox" name="ext1"  value="${user.ext1}"  id="ext1" style="width:95%" data-options="label:'姓名'" validType="maxLength[20]">
+        <input class="easyui-textbox" name="name"  value="${user.name}"  id="name" style="width:95%" data-options="label:'姓名'" validType="maxLength[20]">
     </div>
     <div style="text-align:center;padding:5px 0;float:left;margin:0 auto;width:750px;">
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="userManage.submitForm()" style="width:80px">提交</a>

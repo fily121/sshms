@@ -20,23 +20,23 @@ public enum FilePathEnum {
     /**
      * 订单管理
      */
-    订单管理("upload.ddgl.path"),
+    订单管理("ddgl/"),
     /**
      * 规章制度
      */
-    规章制度("upload.gzzd.path"),
+    规章制度("gzzd/"),
     /**
      * 材料管理
      */
-    材料管理("upload.clgl.path"),
+    材料管理(" clgl/"),
     /**
      * 施工队伍
      */
-    施工队伍("upload.sgdgl.path"),
+    施工队伍("sgdgl/"),
     /**
      * 现场管理
      */
-    现场管理("upload.xcgl.path");
+    现场管理("xcgl/");
 
     private final String pathPropertity;
 

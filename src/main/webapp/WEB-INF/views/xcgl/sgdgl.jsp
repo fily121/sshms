@@ -40,7 +40,11 @@
                 $("#messageList").append(autoMessage);
                 $("#editArea").text('');
             }
+            var isSend = false;
             function test() {
+                if(isSend) {
+                    return;
+                }
                 var msg = $("#editArea").html();
                 if (msg === '&nbsp;') {
                     Message.alert("发送消息不能为空。");
@@ -55,6 +59,9 @@
                     data = eval("(" + data + ")");
                     if (data === 'true') {
                         ShowMessage.sendMessageAuto('${gcdId}', msg, date.Format('yyyy-M-DD HH:mm:ss'));
+                        $("#editArea").text('');
+                        isSend = true;
+                        setTimeout(setTimeout(function(){isSend = false;}, 500));
                     } else {
                         Message.alert("消息发送失败。请重试");
                     }
@@ -94,6 +101,9 @@
                     }
                 });
                 $("#datetime").datebox('setValue', '${datetime}');
+                $("#editArea").keypress(function(){
+                    isSend = false;
+                });
             });
             function reloadPage(datetime) {
                 var href = window.location.href;

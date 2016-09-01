@@ -124,7 +124,7 @@
         <include refid="Base_Column_List" />
         ,
         <include refid="Blob_Column_List" />,
-        user.EXT1 userFullName, sgdxx.sgdmc, DATE_FORMAT(time,'%Y-%m-%d %H:%i:%s') as formattedTime
+        user.name userFullName, sgdxx.sgdmc, DATE_FORMAT(time,'%Y-%m-%d %H:%i:%s') as formattedTime
         from  message left join p_user user on message.fromUser = user.USER_ID
         left join sgdxx on message.toSgdId = sgdxx.id
         <where >

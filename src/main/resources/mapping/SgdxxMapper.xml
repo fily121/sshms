@@ -20,7 +20,7 @@
     </select>
     <select id="findAll" resultMap="BaseResultMap" >
         select
-        <include refid="Base_Column_List" />, b.EXT1
+        <include refid="Base_Column_List" />, b.name
         from sgdxx a left join p_user b on a.duizhang = b.USER_ID
     </select>
     <resultMap id="ResultMap_Detail" type="cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail">
@@ -29,7 +29,7 @@
         <association property="sgdxx" resultMap="BaseResultMap"/>
     </resultMap>
     <select id="findAllForPage" resultMap="ResultMap_Detail" parameterType="java.util.Map">
-        select b.EXT1 duizhangMc,
+        select b.name duizhangMc,
         <include refid="Base_Column_List" />, <include refid="cn.com.sinoi.zyqyh.dao.UserMapper.Base_Column_List" />
         from sgdxx a left join p_user b on a.duizhang = b.USER_ID
         limit #{limit1}, #{limit2}
