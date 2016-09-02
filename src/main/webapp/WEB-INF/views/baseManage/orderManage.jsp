@@ -5,6 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>订单管理</title>
+        <script type="text/javascript" src="static/js/baseManage/orderManage.js"></script>
     </head>
     <body>
     <section>
@@ -19,10 +20,10 @@
             <a href="javascript:userManage.deleteUser();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
         </div>
     </section>
-    
+
     <div id="newOrderDialog" style="display:none;padding: 10px;">
         <form id="orderForm" name="orderForm" method="post" action="baseManage/newOrder.do" enctype="multipart/form-data">
-            
+
         </form>
     </div>
 </body>

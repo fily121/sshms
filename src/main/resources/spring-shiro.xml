@@ -84,6 +84,7 @@
             <value>
                 /static/** = anon
                 /sendMessage/** = anon
+                /data/testLocation.do = anon
                 /user/login.do=anon
 		/user/getVerifyCodeImage.do=anon
 		/logout.do = logout

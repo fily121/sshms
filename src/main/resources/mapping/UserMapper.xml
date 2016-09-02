@@ -218,7 +218,7 @@
         where a.USER_NAME != 'admin'
         <if test="searchKey  != null">
             AND (
-                a.USER_NAME LIKE concat('%',#{searchKey},'%')
+            a.USER_NAME LIKE concat('%',#{searchKey},'%')
             OR d.ROLE_NAME LIKE concat('%',#{searchKey},'%')
             OR a.name LIKE concat('%',#{searchKey},'%')
             )
@@ -244,7 +244,7 @@
         select 
         <include refid="Base_Column_List" />
         from p_user
-        where openid, = #{openid,,jdbcType=VARCHAR}
+        where openid = #{openid, jdbcType=VARCHAR}
     </select>
   
     <select id="findByCondication" resultMap="BaseResultMap" parameterType="cn.com.sinoi.zyqyh.utils.SearchParams" >

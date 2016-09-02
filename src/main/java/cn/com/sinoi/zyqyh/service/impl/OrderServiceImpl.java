@@ -6,7 +6,7 @@ import cn.com.sinoi.zyqyh.vo.Order;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-@Service("permissionService")
+@Service("orderService")
 public class OrderServiceImpl extends BaseServiceImpl<Order> implements IOrderService {
 
     @Override

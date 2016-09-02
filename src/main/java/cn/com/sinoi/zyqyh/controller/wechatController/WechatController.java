@@ -2,7 +2,7 @@ package cn.com.sinoi.zyqyh.controller.wechatController;
 
 import cn.com.sinoi.wechat.encryption.AesException;
 import cn.com.sinoi.wechat.encryption.WXBizMsgCrypt;
-import cn.com.sinoi.zyqyh.service.CoreService;
+import cn.com.sinoi.zyqyh.service.IWechatService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -41,7 +41,7 @@ public class WechatController {
     private String secret;
 
     @Autowired
-    private CoreService wechatService;
+    private IWechatService wechatService;
 
     @RequestMapping(value = "sendMessage.do", method = RequestMethod.GET)
     public void sendMessage(HttpServletRequest request, HttpServletResponse response) throws IOException {

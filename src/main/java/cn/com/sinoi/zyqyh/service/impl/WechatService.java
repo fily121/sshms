@@ -1,7 +1,10 @@
-package cn.com.sinoi.zyqyh.service;
+package cn.com.sinoi.zyqyh.service.impl;
 
 import cn.com.sinoi.wechat.msg.MessageUtil;
 import cn.com.sinoi.wechat.msg.Resp.TextMessage;
+import cn.com.sinoi.zyqyh.service.IMessageService;
+import cn.com.sinoi.zyqyh.service.IUserService;
+import cn.com.sinoi.zyqyh.service.IWechatService;
 import cn.com.sinoi.zyqyh.vo.Message;
 import cn.com.sinoi.zyqyh.vo.User;
 import java.util.Date;
@@ -17,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @date 2014.10.16
  */
 @Service("wechatService")
-public class CoreService {
+public class WechatService implements IWechatService {
 
     @Autowired
     IUserService userService;

@@ -39,6 +39,10 @@
     <listener>
         <listener-class>org.directwebremoting.servlet.DwrListener</listener-class>
     </listener>
+    
+    <listener> 
+        <listener-class>cn.com.sinoi.zyqyh.system.UdpListener</listener-class> 
+    </listener>
 
     <!-- Spring MVC servlet -->
     <servlet>
