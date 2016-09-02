@@ -108,10 +108,10 @@
         from sgdxx
         where sgdmc = #{sgdmc,jdbcType=VARCHAR}
     </select>
-    <select id="selectByCph" resultMap="BaseResultMap" parameterType="java.lang.String" >
-        select 
-        <include refid="Base_Column_List" />
-        from sgdxx
-        where cph = #{cph,jdbcType=VARCHAR}
+    <select id="selectByCph" resultMap="ResultMap_Detail" parameterType="java.lang.String" >
+        select b.name duizhangMc,
+        <include refid="Base_Column_List" />, <include refid="cn.com.sinoi.zyqyh.dao.UserMapper.Base_Column_List" />
+        from sgdxx a left join p_user b on a.duizhang = b.USER_ID
+        where a.cph = #{cph,jdbcType=VARCHAR}
     </select>
 </mapper>

@@ -24,5 +24,5 @@ public interface ISgdxxService extends IBaseService<Sgdxx> {
 
     Sgdxx selectBySgdmc(String sgdmc);
 
-    Sgdxx selectByCph(String sgdmc);
+    SgdxxDetail selectByCph(String cph);
 }

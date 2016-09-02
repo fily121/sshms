@@ -80,7 +80,7 @@ public class SgdxxServiceImpl extends BaseServiceImpl<Sgdxx> implements ISgdxxSe
     }
 
     @Override
-    public Sgdxx selectByCph(String cph) {
+    public SgdxxDetail selectByCph(String cph) {
         return this.sgdxxMapper.selectByCph(cph);
     }
 

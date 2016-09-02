@@ -86,8 +86,8 @@ public class BaseDataController {
                     result.put("message", "施工队名称已存在。");
                     return result;
                 }
-                existSgdxx = sgdxxService.selectByCph(sgdxx.getCph());
-                if (existSgdxx != null) {
+                SgdxxDetail existSgdxxDetail = sgdxxService.selectByCph(sgdxx.getCph());
+                if (existSgdxxDetail != null) {
                     result.put("code", "false");
                     result.put("message", "施工队车牌号已存在。");
                     return result;

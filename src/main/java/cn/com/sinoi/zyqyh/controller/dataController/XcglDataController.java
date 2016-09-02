@@ -1,7 +1,9 @@
 package cn.com.sinoi.zyqyh.controller.dataController;
 
 import cn.com.sinoi.zyqyh.service.IMessageService;
+import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.vo.Message;
+import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -33,6 +35,8 @@ public class XcglDataController {
     private static final Logger logger = Logger.getLogger(XcglDataController.class);
     @Autowired
     IMessageService messageService;
+    @Autowired
+    ISgdxxService sgdxxService;
 
     /**
      * 接受浏览器的消息
@@ -54,5 +58,29 @@ public class XcglDataController {
         message.setTime(datetime.toDate());
         messageService.insert(message);
         return "true";
+    }
+
+    /**
+     * 接受浏览器的消息
+     *
+     * @return
+     */
+    @RequestMapping(value = "getCheduiXX.do", method = RequestMethod.POST)
+    @ResponseBody
+    public String getCheduiXX(String cph) {
+        SgdxxDetail sgdxx = sgdxxService.selectByCph(cph);
+        if (sgdxx == null || sgdxx.getSgdxx() == null) {
+            return "根据车牌号没有找到车队信息。";
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append("施工队名称：");
+        builder.append(sgdxx.getSgdxx().getSgdmc());
+        builder.append("<br/>");
+        builder.append("施工队长：");
+        builder.append(sgdxx.getUser().getName());
+        builder.append("<br/>");
+        builder.append("施工队详情：");
+        builder.append(sgdxx.getSgdxx().getDetail());
+        return builder.toString();
     }
 }

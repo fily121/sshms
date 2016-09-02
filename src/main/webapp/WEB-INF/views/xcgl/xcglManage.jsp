@@ -41,7 +41,7 @@
                                     return row.sgdxx.detail;
                                 }
                             },
-                            {field: 'detail', title: '车牌号', width: 240, align: 'left', formatter: function (value, row, index) {
+                            {field: 'cph', title: '车牌号', width: 240, align: 'left', formatter: function (value, row, index) {
                                     return row.sgdxx.cph;
                                 }
                             },

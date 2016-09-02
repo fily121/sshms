@@ -27,5 +27,5 @@ public interface SgdxxMapper {
 
     Sgdxx selectBySgdmc(String sgdmc);
 
-    Sgdxx selectByCph(String cph);
+    SgdxxDetail selectByCph(String cph);
 }

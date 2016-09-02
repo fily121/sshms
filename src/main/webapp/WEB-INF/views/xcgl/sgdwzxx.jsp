@@ -30,38 +30,59 @@
                 map.enableScrollWheelZoom(true);
             });
             var chedui = {};
+            var cheduiContent = {};
+            var cheduiContentWithTime = {};
+            var cheduiXX = {};
             var opts = {
-                        width : 250,     // 信息窗口宽度
-                        height: 80,     // 信息窗口高度
-                        title : "信息窗口" , // 信息窗口标题
-                        enableMessage:true//设置允许信息窗发送短息
+                width: 250, // 信息窗口宽度
+                height: 120, // 信息窗口高度
+                title: "施工队信息", // 信息窗口标题
+                enableMessage: true//设置允许信息窗发送短息
                    };
             // 用经纬度设置地图中心点
             function showLocation(经度, 纬度, 车牌号, dateTime) {
-                if (经度 !== '' && 纬度 !=='' && 经度 !== null && 纬度 !==null) {
+                if (经度 !== '' && 纬度 !== '' && 经度 !== null && 纬度 !== null) {
                     map.clearOverlays();
                     var new_point = new BMap.Point(经度, 纬度);
                     chedui[车牌号] = new_point;
-
-                    for (var cph in chedui) {
-                        var point = chedui[cph];  // 创建标注
-                        var marker = new BMap.Marker(point);  // 创建标注
-                        map.addOverlay(marker);              // 将标注添加到地图中
-                        map.panTo(new_point);
-                        var content = "地址：北京市东城区正义路甲5号";
-                        marker.addEventListener("click", function (e) {
-                            openInfo(content, e);
-                        }
-                        );
+                    if (!cheduiContent[车牌号]) {
+                        getContent(车牌号, dateTime, new_point);
+                    } else {
+                        dingwei(车牌号, dateTime, new_point);
                     }
+                    
                 }
             }
-            function openInfo(content,e){
+            function openInfo(e) {
 		var p = e.target;
 		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
-		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
-		map.openInfoWindow(infoWindow,point); //开启信息窗口
+                var cph = cheduiXX[point.lng+"_"+point.lat];
+                var infoWindow = new BMap.InfoWindow(cheduiContentWithTime[cph], opts);  // 创建信息窗口对象 
+                map.openInfoWindow(infoWindow, point); //开启信息窗口
 	}
+
+            function getContent(车牌号, dateTime, new_point) {
+                $.post('<%= basePath%>data/xcgl/getCheduiXX.do', {cph: 车牌号}, function(data){
+                    cheduiContent[车牌号] = eval("("+data+")");
+                    dingwei(车牌号, dateTime, new_point);
+                });
+            }
+            
+            function dingwei(车牌号, dateTime, new_point){
+                var content = cheduiContent[车牌号] + "<br/>定位时间："+dateTime;
+                cheduiContentWithTime[车牌号] = content;
+                for (var cph in chedui) {
+                    var point = chedui[cph];  // 创建标注
+                    var marker = new BMap.Marker(point);  // 创建标注
+                    cheduiXX[point.lng+"_"+point.lat] = cph;
+                    marker.addEventListener("click", function (e) {
+                        openInfo(e);
+                    }
+                    );
+                    map.addOverlay(marker);              // 将标注添加到地图中
+                    map.panTo(new_point);
+                }
+            }
         </script> 
     </head>
     <body>
