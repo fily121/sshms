@@ -207,8 +207,8 @@ public class SystemDataController {
         Attachment attachment = attachmentService.findbyId(attachmentId);
         if (attachment == null) {
             response.getWriter().print("附件id:" + attachmentId + ",对应的文件数据库中不存在。");
+            return;
         }
-
-        UrlDownloadFile.downLoadFileLocal(path + attachment.getUri(), response, false);
+        UrlDownloadFile.downLoadFileLocal(path + attachment.getUri() + "/" + attachment.getFileName(), response, false);
     }
 }

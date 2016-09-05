@@ -62,7 +62,25 @@
                 var cph = cheduiXX[point.lng + "_" + point.lat];
                 geoc.getLocation(point, function(rs){
 			var addComp = rs.addressComponents;
-                        var infoWindow = new BMap.InfoWindow(cheduiContentWithTime[cph]+"<br/>当前地址："+addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber, opts);  // 创建信息窗口对象 
+                        var content = cheduiContentWithTime[cph] + "<br/>当前地址：";
+                        if (!addComp.province) {
+                            content = content + "当前地点没有定位信息。";
+                        } else {
+                            content = content + addComp.province；
+                            if (addComp.city) {
+                                content = content + "，" + addComp.city；
+                                if (addComp.district){
+                                    content = content + "，" + addComp.district；
+                                    if (addComp.street){
+                                        content = content + "，" + addComp.street；
+                                        if (addComp.streetNumber){
+                                            content = content + "，" + addComp.streetNumber；
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        var infoWindow = new BMap.InfoWindow(content, opts); // 创建信息窗口对象 
                         map.openInfoWindow(infoWindow, point); //开启信息窗口
 		});
                 
