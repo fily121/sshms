@@ -247,6 +247,16 @@
             <artifactId>joda-time</artifactId>
             <version>2.9.4</version>
         </dependency>
+        <dependency>
+            <groupId>weixin-java-mp</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>weixin-java-common</groupId>
+            <artifactId>weixin-java-common</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>zyqyh</finalName>

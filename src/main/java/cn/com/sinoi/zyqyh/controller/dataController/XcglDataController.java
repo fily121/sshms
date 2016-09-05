@@ -2,14 +2,20 @@ package cn.com.sinoi.zyqyh.controller.dataController;
 
 import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
+import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.vo.Message;
+import cn.com.sinoi.zyqyh.vo.User;
 import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
+import cn.com.sinoi.zyqyh.weixin.MessageUtil;
+import cn.com.sinoi.zyqyh.weixin.WeixinUtil;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +42,14 @@ public class XcglDataController {
     @Autowired
     IMessageService messageService;
     @Autowired
+    IUserService userService;
+    @Autowired
     ISgdxxService sgdxxService;
+
+    @Value("#{readProperties['wechat.corpId']}")
+    private String corpId;
+    @Value("#{readProperties['wechat.secret']}")
+    private String secret;
 
     /**
      * 接受浏览器的消息
@@ -50,13 +63,24 @@ public class XcglDataController {
             return "false";
         }
         Subject currentUser = SecurityUtils.getSubject();
+        String userName = ((UsernamePasswordToken) currentUser.getPrincipal()).getUsername();
         Message message = new Message();
         message.setId(java.util.UUID.randomUUID().toString());
         message.setContent(msg);
         message.setTosgdid(gcdId);
-        message.setFromuser(((UsernamePasswordToken) currentUser.getPrincipal()).getUsername());
+        message.setFromuser(userName);
         message.setTime(datetime.toDate());
         messageService.insert(message);
+        String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
+
+        try {
+            User user = userService.selectByUserName(userName);
+            String jsonString = MessageUtil.getBangdingMessage(user.getOpenid(), "操作隐患提醒", "操作提醒", msg);
+            WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(XcglDataController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return "true";
     }
 

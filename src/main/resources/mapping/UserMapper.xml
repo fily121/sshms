@@ -237,7 +237,7 @@
         select 
         <include refid="Base_Column_List" />
         from p_user
-        where wechatNo = #{wechatNo,jdbcType=VARCHAR}
+        where wechatNo = #{wechatNo,jdbcType=VARCHAR} limit 1;
     </select>
 
     <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >

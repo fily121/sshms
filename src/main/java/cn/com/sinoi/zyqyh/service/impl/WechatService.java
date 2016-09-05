@@ -1,16 +1,26 @@
 package cn.com.sinoi.zyqyh.service.impl;
 
-import cn.com.sinoi.wechat.msg.MessageUtil;
-import cn.com.sinoi.wechat.msg.Resp.TextMessage;
+import cn.com.sinoi.zyqyh.definition.FilePathEnum;
+import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.service.IWechatService;
+import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
+import cn.com.sinoi.zyqyh.vo.Attachment;
 import cn.com.sinoi.zyqyh.vo.Message;
 import cn.com.sinoi.zyqyh.vo.User;
+import cn.com.sinoi.zyqyh.weixin.MessageUtil;
+import cn.com.sinoi.zyqyh.weixin.WeixinUtil;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Map;
+import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import org.apache.commons.lang.StringUtils;
+import org.directwebremoting.Browser;
+import org.directwebremoting.ScriptBuffer;
+import org.directwebremoting.ScriptSession;
+import org.directwebremoting.ScriptSessionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,54 +36,64 @@ public class WechatService implements IWechatService {
     IUserService userService;
     @Autowired
     IMessageService messageService;
+    @Autowired
+    IAttachmentService attachmentService;
+
+    private static final java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private static final java.text.DateFormat format2 = new java.text.SimpleDateFormat("yyyy-MM-dd");
+    private static final java.text.DateFormat format3 = new java.text.SimpleDateFormat("hh_mm_ss_S");
+
+    private static final String DOWNLOAD_URL = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
+
+    @Value("#{readProperties['wechat.corpId']}")
+    private String corpId;
+    @Value("#{readProperties['wechat.secret']}")
+    private String secret;
+    @Value("#{readProperties['upload.file.path']}")
+    private String path;
 
     /**
      * 处理微信发来的请求
      *
      * @param request
-     * @return xml
      */
-    public String processRequest(String request) {
+    public void processRequest(WxMpXmlMessage request) {
         // xml格式的消息数据
-        String respXml = null;
         // 默认返回的文本消息内容
-        String respContent = "消息已接收。";
+        String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
         try {
-            // 调用parseXml方法解析请求消息
-            Map<String, String> requestMap = MessageUtil.parseXml(request);
             // 发送方帐号
-            String fromUserName = requestMap.get("FromUserName");
-            // 开发者微信号
-            String toUserName = requestMap.get("ToUserName");
+            String openId = request.getFromUserName();
             // 消息类型
-            String msgType = requestMap.get("MsgType");
-
-            // 回复文本消息
-            TextMessage textMessage = new TextMessage();
-            textMessage.setToUserName(fromUserName);
-            textMessage.setFromUserName(toUserName);
+            String msgType = request.getMsgType();
             Date date = new Date();
-            textMessage.setCreateTime(date.getTime());
-            textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-
+            String first = "";
+            String keyword1 = "";
+            String keyword2 = "";
             // 文本消息
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
                 // 消息类型
-                String content = requestMap.get("Content");
-                if (StringUtils.isNotEmpty(content) && content.matches("^绑定微信号\\(.*")) {
-                    String 微信号 = content.substring(6, content.indexOf(")"));
+                String content = request.getContent();
+                if (StringUtils.isNotEmpty(content) && content.matches("^bd\\(.*")) {
+                    String 微信号 = content.substring(3, content.indexOf(")"));
                     User user = userService.selectByWechatNo(微信号);
+                    first = "您好，正在绑定微信号铁通工程管理平台。";
+                    keyword1 = 微信号;
                     if (user == null) {
-                        respContent = "微信号没有录入到系统，请联系管理员。";
+                        keyword2 = "微信号没有录入到系统，请联系管理员。";
                     } else {
-                        user.setOpenid(fromUserName);
-                        userService.save(user);
-                        respContent = "微信号录入成功。";
+                        user.setOpenid(openId);
+                        userService.update(user);
+                        keyword2 = "微信号绑定成功。";
+                        if (StringUtils.isEmpty(user.getOrgId())) {
+                            keyword2 = keyword2 + "(您没有设置施工队，请联系管理员。)";
+                        }
                     }
                 } else {
-                    User user = userService.selectByOpenId(fromUserName);
+                    User user = userService.selectByOpenId(openId);
                     if (user == null) {
-                        respContent = "未绑定微信号，请回复以下消息到服务号来绑定：绑定微信号(您的微信号)。";
+                        first = "您好，需要绑定微信号到铁通工程管理平台。";
+                        keyword2 = "未绑定微信号，请回复以下消息到服务号来绑定：bd(您的微信号)。";
                     } else {
                         Message message = new Message();
                         message.setContent(content);
@@ -82,44 +102,71 @@ public class WechatService implements IWechatService {
                         message.setTime(date);
                         message.setTosgdid(user.getOrgId());
                         messageService.insert(message);
+
+                        if (org.apache.commons.lang3.StringUtils.isEmpty(message.getContent())) {
+                            return;
+                        }
+                        final String gcdId = user.getOrgId();
+                        final String autoMessage = message.getContent();
+                        final String dateTime = format1.format(date);
+                        sendToBrowers(gcdId, autoMessage, dateTime);
+                        return;
                     }
                 }
 
             } // 图片消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
-                String picUrl = requestMap.get("PicUrl");
-                String mediaId = requestMap.get("MediaId");
-                User user = userService.selectByOpenId(fromUserName);
+                String mediaId = request.getMediaId();
+                User user = userService.selectByOpenId(openId);
                 if (user == null) {
-                    respContent = "未绑定微信号，请回复以下消息到服务号来绑定：绑定微信号(您的微信号)。";
+                    first = "您好，正在需要绑定微信号到<铁通工程管理平台>。";
+                    keyword2 = "未绑定微信号，请回复以下消息到服务号来绑定：bd(您的微信号)。";
                 } else {
                     Message message = new Message();
-                    message.setContent("<img src=" + picUrl + "/>");
+                    message.setContent("<img src=" + DOWNLOAD_URL.replace("ACCESS_TOKEN", access_token).replace("MEDIA_ID", mediaId) + "/>");
                     message.setFromuser(user.getUserId());
                     message.setId(java.util.UUID.randomUUID().toString());
                     message.setTime(date);
                     message.setTosgdid(user.getOrgId());
+
+                    if (org.apache.commons.lang3.StringUtils.isEmpty(message.getContent())) {
+                        return;
+                    }
+                    final String gcdId = user.getOrgId();
+                    final String autoMessage = message.getContent();
+                    final String dateTime = format1.format(date);
+                    sendToBrowers(gcdId, autoMessage, dateTime);
+                    String uri = FilePathEnum.现场管理.getPath() + user.getOrgId() + "/" + format2.format(date);
+                    UrlDownloadFile.downLoadFromUrl(DOWNLOAD_URL.replace("ACCESS_TOKEN", access_token).replace("MEDIA_ID", mediaId),
+                            format3.format(date) + ".jpg",
+                            path + uri);
+                    Attachment attachment = new Attachment();
+                    String attachmentId = java.util.UUID.randomUUID().toString();
+                    attachment.setId(attachmentId);
+                    attachment.setUri(uri);
+                    attachmentService.save(attachment);
+                    message.setAttachmentid(attachmentId);
                     messageService.insert(message);
+                    return;
                 }
             } // 语音消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
-                respContent = "您发送的是语音消息！";
+                return;
             } // 视频消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
-                respContent = "您发送的是视频消息！";
+                return;
             } // 地理位置消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
-                respContent = "您发送的是地理位置消息！";
+                return;
             } // 链接消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
-                respContent = "您发送的是链接消息！";
+                return;
             } // 事件推送
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
                 // 事件类型
-                String eventType = requestMap.get("Event");
+                String eventType = request.getEvent();
                 // 关注
                 if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
-                    respContent = "谢谢您的关注！";
                 } // 取消关注
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
                     // TODO 取消订阅后用户不会再收到公众账号发送的消息，因此不需要回复
@@ -133,19 +180,38 @@ public class WechatService implements IWechatService {
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
                     // TODO 处理菜单点击事件
                     // 事件KEY值，与创建自定义菜单时指定的KEY值对应
-                    String eventKey = requestMap.get("EventKey");
-                    System.out.println("EventKey=" + eventKey);
-                    respContent = "点击的菜单KEY:" + eventKey;
                 }
+                return;
             }
-            // 设置文本消息的内容
-            textMessage.setContent(respContent);
-            // 将文本消息对象转换成xml
-            respXml = MessageUtil.textMessageToXml(textMessage);
+            String jsonString = MessageUtil.getBangdingMessage(openId, first, keyword1, keyword2);
+            WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return respXml;
+    }
+
+    private void sendToBrowers(final String gcdId, final String autoMessage, final String dateTime) {
+        Browser.withAllSessionsFiltered(new ScriptSessionFilter() {
+            public boolean match(ScriptSession session) {
+                if (session.getAttribute("gcdId") == null) {
+                    return false;
+                } else {
+                    return (session.getAttribute("gcdId")).equals(gcdId);
+                }
+            }
+        }, new Runnable() {
+            private ScriptBuffer script = new ScriptBuffer();
+
+            public void run() {
+                script.appendCall("showMessage", autoMessage, dateTime);
+                Collection<ScriptSession> sessions = Browser
+                        .getTargetSessions();
+                for (ScriptSession scriptSession : sessions) {
+                    scriptSession.addScript(script);
+                }
+            }
+        });
     }
 
 }

@@ -1,6 +1,8 @@
 package cn.com.sinoi.zyqyh.service;
 
+import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+
 public interface IWechatService {
 
-    String processRequest(String Msg);
+    void processRequest(WxMpXmlMessage Msg);
 }
