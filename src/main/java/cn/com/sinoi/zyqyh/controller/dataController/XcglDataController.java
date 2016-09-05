@@ -8,6 +8,8 @@ import cn.com.sinoi.zyqyh.vo.User;
 import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
 import cn.com.sinoi.zyqyh.weixin.MessageUtil;
 import cn.com.sinoi.zyqyh.weixin.WeixinUtil;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -91,10 +93,13 @@ public class XcglDataController {
      */
     @RequestMapping(value = "getCheduiXX.do", method = RequestMethod.POST)
     @ResponseBody
-    public String getCheduiXX(String cph) {
+    public Map<String, String> getCheduiXX(String cph) {
+        Map<String, String> result = new HashMap<>();
         SgdxxDetail sgdxx = sgdxxService.selectByCph(cph);
         if (sgdxx == null || sgdxx.getSgdxx() == null) {
-            return "根据车牌号没有找到车队信息。";
+            result.put("sgdxx", "根据车牌号没有找到车队信息。");
+            result.put("sgdId", "");
+            return result;
         }
         StringBuilder builder = new StringBuilder();
         builder.append("施工队名称：");
@@ -105,6 +110,8 @@ public class XcglDataController {
         builder.append("<br/>");
         builder.append("施工队详情：");
         builder.append(sgdxx.getSgdxx().getDetail());
-        return builder.toString();
+        result.put("sgdxx", builder.toString());
+        result.put("sgdId", sgdxx.getSgdxx().getId());
+        return result;
     }
 }

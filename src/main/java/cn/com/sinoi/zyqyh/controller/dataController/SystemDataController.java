@@ -1,15 +1,19 @@
 package cn.com.sinoi.zyqyh.controller.dataController;
 
 import cn.com.sinoi.zyqyh.controller.SystemController;
+import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IPermissionService;
 import cn.com.sinoi.zyqyh.service.IRoleService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.utils.PageModel;
 import cn.com.sinoi.zyqyh.utils.ShiroUtils;
+import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
+import cn.com.sinoi.zyqyh.vo.Attachment;
 import cn.com.sinoi.zyqyh.vo.Permission;
 import cn.com.sinoi.zyqyh.vo.Role;
 import cn.com.sinoi.zyqyh.vo.User;
 import cn.com.sinoi.zyqyh.vo.relate.UserDetail;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +47,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SystemDataController {
 
     private static final Logger logger = Logger.getLogger(SystemDataController.class);
+    @Value("#{readProperties['upload.file.path']}")
+    private String path;
 
     @Autowired
     IPermissionService permissionService;
@@ -51,6 +58,9 @@ public class SystemDataController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IAttachmentService attachmentService;
 
     @RequestMapping("getMenuList.do")
     @ResponseBody
@@ -175,5 +185,30 @@ public class SystemDataController {
             java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
+    }
+
+    @RequestMapping(value = "deleteUser.do", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteUser(String userId) {
+        try {
+            userService.delete(userId);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Boolean.TRUE.toString();
+    }
+
+    @RequestMapping(value = "downloadFile.do", method = RequestMethod.POST)
+    @ResponseBody
+    public void downloadFile(String attachmentId, HttpServletResponse response) throws IOException, Exception {
+        if (StringUtils.isEmpty(attachmentId)) {
+            return;
+        }
+        Attachment attachment = attachmentService.findbyId(attachmentId);
+        if (attachment == null) {
+            response.getWriter().print("附件id:" + attachmentId + ",对应的文件数据库中不存在。");
+        }
+
+        UrlDownloadFile.downLoadFileLocal(path + attachment.getUri(), response, false);
     }
 }

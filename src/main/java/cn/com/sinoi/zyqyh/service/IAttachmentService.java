@@ -4,6 +4,8 @@ import cn.com.sinoi.zyqyh.vo.Attachment;
 
 public interface IAttachmentService extends IBaseService<Attachment> {
 
-    public void save(Attachment attachment);
+    void save(Attachment attachment);
+
+    Attachment findbyId(String attachmentId);
 
 }

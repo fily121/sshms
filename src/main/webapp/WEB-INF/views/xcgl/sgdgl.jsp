@@ -9,6 +9,13 @@
     <head>  
         <base href="<%=basePath%>">  
         <title>施工队联系</title>  
+        <script type="text/javascript"  src="<%= basePath%>static/js/jquery.js"></script>
+        <script type="text/javascript"  src="<%= basePath%>static/js/plugins/easyUi/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="<%= basePath%>static/js/plugins/easyUi/locale/easyui-lang-zh_CN.js"></script>
+        <script type="text/javascript" src="<%= basePath%>static/js/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="<%= basePath%>static/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="<%= basePath%>static/js/plugins/easyUi/themes/metro-green/easyui.css" />
+        <link rel="stylesheet" type="text/css" href="<%= basePath%>static/js/plugins/easyUi/themes/icon.css" />
         <script type="text/javascript"  src="<%= basePath%>static/js/gcdtx.js"></script>
         <script type='text/javascript' src='<%= basePath%>dwr/engine.js'></script>  
         <script type='text/javascript' src='<%= basePath%>dwr/util.js'></script>  
@@ -31,6 +38,10 @@
                     '</div>';
             //通过该方法与后台交互，确保推送时能找到指定用户  
             function onPageLoad() {
+                var gcdId = '${gcdId}';
+                if (!gcdId) {
+                    return;
+                }
                 MessagePush.onPageLoad('${gcdId}');
             }
             //推送信息  
@@ -42,7 +53,7 @@
             }
             var isSend = false;
             function test() {
-                if(isSend) {
+                if (isSend) {
                     return;
                 }
                 var msg = $("#editArea").html();
@@ -51,18 +62,23 @@
                     return;
                 }
                 var date = new Date();
+                ajaxLoading();
                 $.post('data/xcgl/reciveMessage.do', {
                     msg: msg,
                     datetime: date.Format('yyyy/M/DD HH:mm:ss'),
-                    gcdId:'${gcdId}'
+                    gcdId: '${gcdId}'
                 }, function (data) {
                     data = eval("(" + data + ")");
                     if (data === 'true') {
                         ShowMessage.sendMessageAuto('${gcdId}', msg, date.Format('yyyy-M-DD HH:mm:ss'));
                         $("#editArea").text('');
                         isSend = true;
-                        setTimeout(setTimeout(function(){isSend = false;}, 500));
+                        setTimeout(setTimeout(function () {
+                            isSend = false;
+                        }, 500));
+                        ajaxLoadEnd();
                     } else {
+                         ajaxLoadEnd();
                         Message.alert("消息发送失败。请重试");
                     }
                 })
@@ -94,21 +110,30 @@
                 $('#datetime').datebox({
                     onSelect: function (date) {
                         var y = date.getFullYear();
-                        var m = (date.getMonth()+1)>9?(date.getMonth()+1):'0'+(date.getMonth()+1);
-                        var d = date.getDate()>9?date.getDate():'0'+date.getDate();
-                        var datetime = y+'-'+m+'-'+d;
+                        var m = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+                        var d = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+                        var datetime = y + '-' + m + '-' + d;
                         reloadPage(datetime);
                     }
                 });
                 $("#datetime").datebox('setValue', '${datetime}');
-                $("#editArea").keypress(function(){
+                $("#editArea").keypress(function () {
                     isSend = false;
                 });
             });
             function reloadPage(datetime) {
                 var href = window.location.href;
-                href = href.replace(/\&.+\&?/g,'');
+                href = href.replace(/\&.+\&?/g, '');
                 window.location.href = href + "&datetime=" + datetime;
+            }
+
+            function ajaxLoading() {
+                $("<div class=\"datagrid-mask\"></div>").css({display: "block", width: "100%", height: $(window).height()}).appendTo("body");
+                $("<div class=\"datagrid-mask-msg\"></div>").html("正在处理，请稍候。。。").appendTo("body").css({display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2});
+            }
+            function ajaxLoadEnd() {
+                $(".datagrid-mask").remove();
+                $(".datagrid-mask-msg").remove();
             }
         </script>  
     </head>  
@@ -118,16 +143,18 @@
             <div class="main_inner clearfix">  
                 <div class="txpanel"></div>  
                 <div id="chatArea" class="box chat">  
+                    <c:if test="${time}" >
                     <div class="box_hd"><input type="text" id='datetime' value="" class="easyui-datebox" /></div>  
+                    </c:if>
                     <div class="box_bd" id="messageList">  
                         <c:forEach items="${messageList}" var="message">
                             <div class="message <c:if test="${message.fromuser eq userName}">me</c:if>">  
-                                <div class="content">  
-                                    <div class="nickname"><span class="time">${message.formattedTime}</span></div>  
+                                    <div class="content">  
+                                        <div class="nickname"><span class="time">${message.formattedTime}</span></div>  
                                     <div class="bubble bubble_primary <c:if test="${message.fromuser eq userName}">right</c:if><c:if test="${message.fromuser ne userName}">left</c:if>">  
-                                        <div class="bubble_cont">  
-                                            <div class="plain">  
-                                                <pre>${message.content}</pre>  
+                                            <div class="bubble_cont">  
+                                                <div class="plain">  
+                                                        <pre>${message.content}</pre>  
                                             </div>  
                                         </div>  
                                     </div>  

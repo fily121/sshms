@@ -1,9 +1,20 @@
 package cn.com.sinoi.zyqyh.vo;
 
 public class Attachment {
+
     private String id;
 
     private String uri;
+
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public String getId() {
         return id;

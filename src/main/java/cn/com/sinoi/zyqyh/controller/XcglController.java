@@ -89,6 +89,7 @@ public class XcglController {
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(XcglController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        model.addAttribute("time", true);
         return "xcgl/sgdgl";
     }
 

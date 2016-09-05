@@ -122,31 +122,29 @@ public class WechatService implements IWechatService {
                     first = "您好，正在需要绑定微信号到<铁通工程管理平台>。";
                     keyword2 = "未绑定微信号，请回复以下消息到服务号来绑定：bd(您的微信号)。";
                 } else {
-                    Message message = new Message();
-                    message.setContent("<img src=" + DOWNLOAD_URL.replace("ACCESS_TOKEN", access_token).replace("MEDIA_ID", mediaId) + "/>");
-                    message.setFromuser(user.getUserId());
-                    message.setId(java.util.UUID.randomUUID().toString());
-                    message.setTime(date);
-                    message.setTosgdid(user.getOrgId());
-
-                    if (org.apache.commons.lang3.StringUtils.isEmpty(message.getContent())) {
-                        return;
-                    }
-                    final String gcdId = user.getOrgId();
-                    final String autoMessage = message.getContent();
-                    final String dateTime = format1.format(date);
-                    sendToBrowers(gcdId, autoMessage, dateTime);
+                    String attachmentId = java.util.UUID.randomUUID().toString();
                     String uri = FilePathEnum.现场管理.getPath() + user.getOrgId() + "/" + format2.format(date);
                     UrlDownloadFile.downLoadFromUrl(DOWNLOAD_URL.replace("ACCESS_TOKEN", access_token).replace("MEDIA_ID", mediaId),
                             format3.format(date) + ".jpg",
                             path + uri);
+                    Message message = new Message();
+                    message.setContent("<img src='data/system/downloadFile.do?attachmentId='" + attachmentId + "/>");
+                    message.setFromuser(user.getUserId());
+                    message.setId(java.util.UUID.randomUUID().toString());
+                    message.setTime(date);
+                    message.setTosgdid(user.getOrgId());
+                    final String gcdId = user.getOrgId();
+                    final String autoMessage = message.getContent();
+                    final String dateTime = format1.format(date);
+
                     Attachment attachment = new Attachment();
-                    String attachmentId = java.util.UUID.randomUUID().toString();
                     attachment.setId(attachmentId);
                     attachment.setUri(uri);
+                    attachment.setFileName(format3.format(date) + ".jpg");
                     attachmentService.save(attachment);
                     message.setAttachmentid(attachmentId);
                     messageService.insert(message);
+                    sendToBrowers(gcdId, autoMessage, dateTime);
                     return;
                 }
             } // 语音消息

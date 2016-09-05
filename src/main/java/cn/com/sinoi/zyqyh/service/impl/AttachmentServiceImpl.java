@@ -28,4 +28,9 @@ public class AttachmentServiceImpl extends BaseServiceImpl<Attachment> implement
     public void save(Attachment attachment) {
         attachmentMapper.insert(attachment);
     }
+
+    @Override
+    public Attachment findbyId(String attachmentId) {
+        return attachmentMapper.selectByPrimaryKey(attachmentId);
+    }
 }

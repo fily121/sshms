@@ -4,9 +4,10 @@
   <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Attachment" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="uri" property="uri" jdbcType="VARCHAR" />
+    <result column="fileName" property="fileName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, uri
+    id, uri, fileName
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -19,8 +20,8 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Attachment" >
-    insert into attachment (id, uri)
-    values (#{id,jdbcType=VARCHAR}, #{uri,jdbcType=VARCHAR})
+    insert into attachment (id, uri, fileName)
+    values (#{id,jdbcType=VARCHAR}, #{uri,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Attachment" >
     insert into attachment
@@ -39,6 +40,9 @@
       <if test="uri != null" >
         #{uri,jdbcType=VARCHAR},
       </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Attachment" >
@@ -47,12 +51,15 @@
       <if test="uri != null" >
         uri = #{uri,jdbcType=VARCHAR},
       </if>
+      <if test="fileName != null" >
+        uri = #{fileName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Attachment" >
     update attachment
-    set uri = #{uri,jdbcType=VARCHAR}
+    set uri = #{uri,jdbcType=VARCHAR}, fileName = #{fileName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

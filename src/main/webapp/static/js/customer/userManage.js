@@ -83,11 +83,22 @@ var userManage = function () {
             }
         },
         deleteUser: function () {
-            Message.confirm("确认删除该用户吗？", function () {
+            var row = $('#datagrid').datagrid("getSelected");
+            if (!row) {
+                Message.alert("请选择一条数据进行删除。");
+                return;
+            }
 
+            var userId = row.user.userId;
+            Message.confirm("确认删除该用户吗？", function () {
+                $.post('data/system/deleteUser.do', {userId: userId}, function () {
+                    Message.alert("删除成功。");
+                })
             });
         },
-        importUser: function () {},
+        importUser: function () {
+            
+        },
         submitForm: function () {
             submitForm('#userManageForm', function () {
                 $('#userManageDialog').dialog('close');

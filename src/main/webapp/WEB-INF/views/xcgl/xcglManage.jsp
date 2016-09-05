@@ -53,7 +53,7 @@
                 });
             });
             function openLocation() {
-                 window.open ("<%= basePath%>div/xcgl/sgdwzxx.do", "_blank", "height=768, width=1024, toolbar= no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,top=100,left=300")
+                 window.open ("<%= basePath%>div/xcgl/sgdlianxi.do", "_blank", "height=768, width=1024, toolbar= no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,top=100,left=300")
             }
         </script>
     <section>

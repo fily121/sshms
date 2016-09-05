@@ -34,11 +34,13 @@
             var cheduiContentWithTime = {};
             var cheduiXX = {};
             var opts = {
-                width: 250, // 信息窗口宽度
-                height: 120, // 信息窗口高度
+                width: 350, // 信息窗口宽度
+                height: 350, // 信息窗口高度
                 title: "施工队信息", // 信息窗口标题
                 enableMessage: true//设置允许信息窗发送短息
-                   };
+            };
+            
+            var geoc = new BMap.Geocoder();
             // 用经纬度设置地图中心点
             function showLocation(经度, 纬度, 车牌号, dateTime) {
                 if (经度 !== '' && 纬度 !== '' && 经度 !== null && 纬度 !== null) {
@@ -50,31 +52,42 @@
                     } else {
                         dingwei(车牌号, dateTime, new_point);
                     }
-                    
+
                 }
             }
+            
             function openInfo(e) {
-		var p = e.target;
-		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
-                var cph = cheduiXX[point.lng+"_"+point.lat];
-                var infoWindow = new BMap.InfoWindow(cheduiContentWithTime[cph], opts);  // 创建信息窗口对象 
-                map.openInfoWindow(infoWindow, point); //开启信息窗口
-	}
-
+                var p = e.target;
+                var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+                var cph = cheduiXX[point.lng + "_" + point.lat];
+                geoc.getLocation(point, function(rs){
+			var addComp = rs.addressComponents;
+                        var infoWindow = new BMap.InfoWindow(cheduiContentWithTime[cph]+"<br/>当前地址："+addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber, opts);  // 创建信息窗口对象 
+                        map.openInfoWindow(infoWindow, point); //开启信息窗口
+		});
+                
+                parent.setSgdIdToLianxi(cphToSgdId[cph]);
+            }
+            var cphToSgdId = {};
             function getContent(车牌号, dateTime, new_point) {
-                $.post('<%= basePath%>data/xcgl/getCheduiXX.do', {cph: 车牌号}, function(data){
-                    cheduiContent[车牌号] = eval("("+data+")");
+                $.post('<%= basePath%>data/xcgl/getCheduiXX.do', {cph: 车牌号}, function (data) {
+                    data = eval("(" + data + ")");
+                    cheduiContent[车牌号] = data.sgdxx;
+                    var sgdId = data.sgdId;
+                    if (!cphToSgdId[车牌号] && sgdId) {
+                        cphToSgdId[车牌号] = sgdId;
+                    }
                     dingwei(车牌号, dateTime, new_point);
                 });
             }
-            
-            function dingwei(车牌号, dateTime, new_point){
-                var content = cheduiContent[车牌号] + "<br/>定位时间："+dateTime;
+
+            function dingwei(车牌号, dateTime, new_point) {
+                var content = cheduiContent[车牌号] + "<br/>定位时间：" + dateTime;
                 cheduiContentWithTime[车牌号] = content;
                 for (var cph in chedui) {
                     var point = chedui[cph];  // 创建标注
                     var marker = new BMap.Marker(point);  // 创建标注
-                    cheduiXX[point.lng+"_"+point.lat] = cph;
+                    cheduiXX[point.lng + "_" + point.lat] = cph;
                     marker.addEventListener("click", function (e) {
                         openInfo(e);
                     }

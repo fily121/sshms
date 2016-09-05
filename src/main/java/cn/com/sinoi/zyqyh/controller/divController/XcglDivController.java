@@ -1,11 +1,23 @@
 package cn.com.sinoi.zyqyh.controller.divController;
 
+import cn.com.sinoi.zyqyh.controller.XcglController;
 import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.service.IUserService;
+import cn.com.sinoi.zyqyh.utils.ShiroUtils;
+import cn.com.sinoi.zyqyh.vo.User;
+import cn.com.sinoi.zyqyh.vo.relate.MessageExt;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -44,5 +56,48 @@ public class XcglDivController {
     @RequestMapping("sgdwzxx.do")
     public String xcglManage() {
         return "xcgl/sgdwzxx";
+    }
+
+    /**
+     * 施工队位置信息
+     *
+     * @return
+     */
+    @RequestMapping("sgdlianxi.do")
+    public String sgdlianxi() {
+        return "xcgl/sgdlianxi";
+    }
+
+    /**
+     * 现场联系
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping("xclx.do")
+    public String xclx(Model model, String id, String datetime) {
+        model.addAttribute("gcdId", id);
+        List<String> userIdList = sgdxxService.findUserIdByGcdId(id);
+        model.addAttribute("userIdList", userIdList);
+        User user = ShiroUtils.getUserBySubject(userService);
+        if (user != null) {
+            model.addAttribute("userName", user.getUserName());
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("tosgdid", id);
+        Date now = new Date();
+        if (StringUtils.isEmpty(datetime)) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            datetime = dateFormat.format(now);
+        }
+        map.put("time", datetime);
+        model.addAttribute("datetime", datetime);
+        try {
+            List<MessageExt> messageList = messageService.findRelateByCondition(map);
+            model.addAttribute("messageList", messageList);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(XcglController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "xcgl/sgdgl";
     }
 }
