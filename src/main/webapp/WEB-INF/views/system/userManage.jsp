@@ -29,8 +29,14 @@
     
     <div id="importUser" style="display: none; padding: 20px;">
         <a href="data/system/downloadFile.do?attachmentId=1">下载模板文件</a>
-        <form method="post" id="importUserForm" action="baseManage/newOrder.do" enctype="multipart/form-data">
-            
+         <br/>
+            <br/>
+            <br/>
+        <form method="post" id="importUserForm" action="data/system/uploadUserFile.do" enctype="multipart/form-data">
+            <input type="file" name="userFile"/>
+            <div style="text-align:center;padding:5px 0;float:left;margin:0 auto;width:380px;">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="userManage.submitFileForm()" style="width:80px">提交</a>
+            </div>
         </form>
     </div>
 </body>

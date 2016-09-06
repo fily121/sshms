@@ -76,11 +76,9 @@ var userManage = function () {
             $('#userManageDialog').dialog('open');
         },
         searchUser: function (searchKey) {
-            if (!searchKey) {
-                $('#datagrid').datagrid('load', {
-                    searchKey: searchKey
-                });
-            }
+            $('#datagrid').datagrid('load', {
+                searchKey: searchKey
+            });
         },
         deleteUser: function () {
             var row = $('#datagrid').datagrid("getSelected");
@@ -97,13 +95,30 @@ var userManage = function () {
             });
         },
         importUser: function () {
-            
+            $('#importUser').dialog({
+                title: '导入用户',
+                width: 433,
+                height: 321,
+                closed: true,
+                cache: false,
+                modal: true
+            });
+            $('#importUser').dialog('open');
         },
         submitForm: function () {
             submitForm('#userManageForm', function () {
                 $('#userManageDialog').dialog('close');
                 $('#datagrid').datagrid('reload');
 
+            });
+        },
+        submitFileForm: function () {
+            $("#importUserForm").form('submit', {
+                success: function (data) {
+                    if (data) {
+                        ustc.slideMsg(data, 50000);
+                    }
+                }
             });
         },
         clearForm: function () {

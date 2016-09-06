@@ -6,6 +6,7 @@ import cn.com.sinoi.zyqyh.utils.Pagination;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.User;
 import cn.com.sinoi.zyqyh.vo.relate.UserDetail;
+import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +72,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         Map<String, Object> param = new HashMap<>();
         param.put("limit1", (page - 1) * rows);
         param.put("limit2", rows);
-        param.put("searchKey", searchKey);
+        param.put("searchKey", StringUtils.isEmpty(searchKey) ? null : searchKey);
         return userMapper.findAllForPage(param);
     }
 

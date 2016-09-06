@@ -216,7 +216,7 @@
         from p_user a left join sgdxx b on a.ORG_ID = b.id
         left join role d on a.ROLE_ID = d.ROLE_ID
         where a.USER_NAME != 'admin'
-        <if test="searchKey  != null">
+        <if test="searchKey != null">
             AND (
             a.USER_NAME LIKE concat('%',#{searchKey},'%')
             OR d.ROLE_NAME LIKE concat('%',#{searchKey},'%')
