@@ -204,7 +204,7 @@ public class SystemDataController {
 
     @RequestMapping(value = "downloadFile.do")
     @ResponseBody
-    public void downloadFile(String attachmentId, HttpServletResponse response) throws IOException, Exception {
+    public void downloadFile(String attachmentId, HttpServletResponse response, String fileName) throws IOException, Exception {
         if (StringUtils.isEmpty(attachmentId)) {
             return;
         }
@@ -213,7 +213,11 @@ public class SystemDataController {
             response.getWriter().print("附件id:" + attachmentId + ",对应的文件数据库中不存在。");
             return;
         }
-        UrlDownloadFile.downLoadFileLocal(path + attachment.getUri() + "/" + attachment.getFileName(), response, false);
+        if (StringUtils.isNotEmpty(fileName)) {
+            UrlDownloadFile.downLoadFileLocal(path + attachment.getUri() + "/" + fileName, response, false);
+        } else {
+            UrlDownloadFile.downLoadFileLocal(path + attachment.getUri() + "/" + attachment.getFileName(), response, false);
+        }
     }
 
     @RequestMapping(value = "uploadUserFile.do", method = RequestMethod.POST)

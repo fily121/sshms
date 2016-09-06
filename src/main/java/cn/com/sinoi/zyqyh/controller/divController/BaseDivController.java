@@ -1,12 +1,17 @@
 package cn.com.sinoi.zyqyh.controller.divController;
 
+import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IOrderService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
+import cn.com.sinoi.zyqyh.vo.Attachment;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
+import java.io.File;
 import java.util.logging.Level;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +38,10 @@ public class BaseDivController {
     ISgdxxService sgdxxService;
     @Autowired
     IOrderService orderService;
+    @Autowired
+    IAttachmentService attachmentService;
+    @Value("#{readProperties['upload.file.path']}")
+    private String path;
 
     @RequestMapping("addModifyOrder.do")
     public String addModifyOrder(String id, Model model) {
@@ -40,6 +49,14 @@ public class BaseDivController {
             try {
                 OrderDetail order = orderService.selectByOrderId(id);
                 model.addAttribute("order", order);
+                String attachmentId = order.getOrder().getAttachmentId();
+                if (StringUtils.isNotEmpty(attachmentId)) {
+                    Attachment atta = attachmentService.findbyId(attachmentId);
+                    File file = new File(path + atta.getUri());
+                    if (file.exists()) {
+                        model.addAttribute("files", file.listFiles());
+                    }
+                }
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
             }

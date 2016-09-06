@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <style type="text/css">
     .input_area{
@@ -21,9 +22,17 @@
     <div class="input_area">
         <textarea class="easyui-textbox" name="remark"  value="${order.order.remark}"  id="remark" style="width:95%" data-options="label:'备注'" validType="maxLength[200]"></textarea>
     </div>
-    <a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加文件</a>
+    <a id="btn" href="javascript: orderManage.addFile();" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加文件</a>
     <div class="input_area">
-        <input type="file" id="file1" name="uploadFile"/>
+        <input type="file" id="file_1" name="uploadFile"/>
+        <div id="fileDiv">
+            <c:forEach items="${files}" var="file">
+            <div>
+                <a href="data/system/downloadFile?fileName=${file.name}&attachmentId=${order.order.attachmentId}">${file.name}</a>
+                <a id="btn" href="javascript: orderManage.deleteFile(this, '${order.order.attachmentId}', '${file.name}');" class="easyui-linkbutton" data-options="iconCls:'icon-add'">删除文件</a>
+            </div>
+            </c:forEach>
+        </div>
     </div>
     <div style="text-align:center;padding:5px 0;float:left;margin:0 auto;width:750px;">
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="orderManage.submitForm()" style="width:80px">提交</a>

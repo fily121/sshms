@@ -94,6 +94,19 @@ var orderManage = function () {
                 $('#datagrid').datagrid('reload');
             });
         },
+        addFile: function () {
+            var fileDiv = '<div>'
+                + '<input type="file" name="uploadFile"/>'
+                + '<a id="btn" href="javascript: orderManage.deleteFile(this);" class="easyui-linkbutton" data-options="iconCls:\'icon-add\'">删除文件</a>'
+                +'</div>';
+            $("#fileDiv").append(fileDiv);
+        },
+        deleteFile: function (thisLink) {
+            Message.confirm("确认要删除这个文件吗？", function(){
+                $.post('data/baseManage/deleteFile',{})
+                $(thisLink).parent().remove();
+            })
+        },
         clearForm: function () {
             clearForm('#orderManageForm');
         }
