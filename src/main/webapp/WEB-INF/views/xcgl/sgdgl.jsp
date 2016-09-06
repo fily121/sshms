@@ -53,6 +53,11 @@
             }
             var isSend = false;
             function test() {
+                var sgdId = '${gcdId}';
+                if (!sgdId) {
+                    Message.alert("请选择需要联系的施工队。");
+                    return;
+                }
                 if (isSend) {
                     return;
                 }
@@ -91,22 +96,10 @@
                     $(".box_ft_bd").addClass('hide');
                 });
                 //定义回车事件
-                if (document.addEventListener) {//如果是Firefox
-                    document.addEventListener("keypress", fireFoxHandler, true);
-                } else {
-                    document.attachEvent("onkeypress", ieHandler);
-                }
-
-                function fireFoxHandler(evt) {
-                    if (evt.keyCode === 13) {
-                        $("#btn_send")[0].click();
-                    }
-                }
-                function ieHandler(evt) {
-                    if (evt.keyCode === 13) {
-                        $("#btn_send")[0].click();
-                    }
-                }
+                $(document).keypress(function(e) {
+                    if (e.ctrlKey && e.which === 13)
+                    $("#btn_send")[0].click();
+                })
                 $('#datetime').datebox({
                     onSelect: function (date) {
                         var y = date.getFullYear();
