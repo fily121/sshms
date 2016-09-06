@@ -15,16 +15,14 @@
         <table class="easyui-datagrid" title="订单列表" style="width:auto;height:600px;" id="datagrid">
         </table>
         <div id="tb" style="display:none">
-            <a href="javascript:userManage.addModifyUser(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
-            <a href="javascript:userManage.addModifyUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
-            <a href="javascript:userManage.deleteUser();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+            <a href="javascript:orderManage.addModifyOrder(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建订单</a>
+            <a href="javascript:orderManage.addModifyOrder();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <span><input type="text" name="searchKey" id="searchKey"/><a href="javascript: orderManage.searchOrder($('#searchKey').val());" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">检索</a></span>
         </div>
     </section>
 
-    <div id="newOrderDialog" style="display:none;padding: 10px;">
-        <form id="orderForm" name="orderForm" method="post" action="baseManage/newOrder.do" enctype="multipart/form-data">
-
-        </form>
+    <div id="orderManageDialog" style="display:none;padding: 10px;">
+       
     </div>
 </body>
 </html>

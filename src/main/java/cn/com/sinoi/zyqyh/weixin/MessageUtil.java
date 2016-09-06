@@ -99,14 +99,43 @@ public class MessageUtil {
         name.setColor("#000000");
         name.setValue(keyword1);
         m.put("keyword1", name);
+        TemplateData orderNo = new TemplateData();
+        orderNo.setColor("#000000");
+        orderNo.setValue(keyword2);
+        m.put("keyword2", orderNo);
+        temp.setData(m);
+        String jsonString = JSONObject.fromObject(temp).toString();
+        return jsonString;
+    }
+
+    public static String getYichangMessage(String openId, String 操作隐患提醒, String 操作提醒, String msg) {
+        String templateId = "0-h-oQhOuVh5fpPkMvALNti9DtJnZpEZEc5eNWE_ThY";
+        WxTemplate temp = new WxTemplate();
+        temp.setUrl("");
+        temp.setTouser(openId);
+        temp.setTopcolor("#000000");
+        temp.setTemplate_id(templateId);
+        Map<String, TemplateData> m = new HashMap<>();
+        TemplateData firstTemp = new TemplateData();
+        firstTemp.setColor("#000000");
+        firstTemp.setValue(操作隐患提醒);
+        m.put("first", firstTemp);
+        TemplateData name = new TemplateData();
+        name.setColor("#000000");
+        name.setValue(操作提醒);
+        m.put("keyword1", name);
         TemplateData wuliu = new TemplateData();
         wuliu.setColor("#000000");
         wuliu.setValue("N行");
         m.put("wuliu", wuliu);
         TemplateData orderNo = new TemplateData();
         orderNo.setColor("#000000");
-        orderNo.setValue(keyword2);
+        orderNo.setValue(操作提醒);
         m.put("keyword2", orderNo);
+        TemplateData message = new TemplateData();
+        orderNo.setColor("#000000");
+        orderNo.setValue(msg);
+        m.put("remark", message);
         temp.setData(m);
         String jsonString = JSONObject.fromObject(temp).toString();
         return jsonString;

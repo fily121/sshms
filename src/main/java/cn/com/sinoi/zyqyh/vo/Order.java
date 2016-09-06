@@ -3,6 +3,9 @@ package cn.com.sinoi.zyqyh.vo;
 import java.util.Date;
 
 public class Order {
+
+    private static final java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
     private String orderId;
 
     private String orderName;
@@ -24,6 +27,17 @@ public class Order {
     private String ext2;
 
     private String ext3;
+
+    private String formattedCreateDate;
+
+    public String getFormattedCreateDate() {
+
+        return format1.format(createDate);
+    }
+
+    public void setFormattedCreateDate(String formattedCreateDate) {
+        this.formattedCreateDate = formattedCreateDate;
+    }
 
     public String getOrderId() {
         return orderId;

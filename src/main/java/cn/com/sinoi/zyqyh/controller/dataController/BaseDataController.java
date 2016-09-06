@@ -2,9 +2,12 @@ package cn.com.sinoi.zyqyh.controller.dataController;
 
 import cn.com.sinoi.zyqyh.controller.SystemController;
 import cn.com.sinoi.zyqyh.controller.divController.SystemDivController;
+import cn.com.sinoi.zyqyh.service.IOrderService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.utils.PageModel;
+import cn.com.sinoi.zyqyh.vo.Order;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
+import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
 import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,6 +45,9 @@ public class BaseDataController {
 
     @Autowired
     ISgdxxService sgdxxService;
+
+    @Autowired
+    IOrderService orderService;
 
     @RequestMapping("getSgdList.do")
     @ResponseBody
@@ -127,6 +133,24 @@ public class BaseDataController {
         List<Sgdxx> result = Collections.EMPTY_LIST;
         try {
             result = sgdxxService.findAll();
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "addModifyOrder.do", method = RequestMethod.POST)
+    @ResponseBody
+    public void addModifyOrder(Order order) {
+
+    }
+
+    @RequestMapping(value = "getOrderList.do", method = RequestMethod.POST)
+    @ResponseBody
+    public List<OrderDetail> getOrderList(Integer page, Integer rows, String searchKey) {
+        List<OrderDetail> result = Collections.EMPTY_LIST;
+        try {
+            result = orderService.findAllForPage(page, rows, searchKey);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,60 +1,66 @@
-var userManage = function () {
+var orderManage = function () {
     return {
         init: function () {
             $('#datagrid').datagrid({
-                url: 'data/system/getUserList.do',
-                method: 'get',
+                url: 'data/baseManage/getOrderList.do',
+                method: 'post',
                 toolbar: '#tb',
                 singleSelect: true,
                 pagination: true,
-                title: '人员列表',
+                title: '订单列表',
                 columns: [[
-                        {field: 'userId', width: 80, hidden: true, formatter: function (value, rows, index) {
-                                if (rows.user) {
-                                    return rows.user.userId;
+                        {field: 'orderId', hidden: true, formatter: function (value, rows, index) {
+                                if (rows.order) {
+                                    return rows.order.orderId;
                                 } else {
                                     return '';
                                 }
                             }
                         },
-                        {field: 'orgId', width: 80, hidden: true, formatter: function (value, rows, index) {
-                                if (rows.user) {
-                                    return rows.user.orgId;
+                        {field: 'attachmentId', hidden: true, formatter: function (value, rows, index) {
+                                if (rows.order) {
+                                    return rows.order.attachmentId;
                                 } else {
                                     return '';
                                 }
                             }
                         },
-                        {field: 'roleId', width: 80, hidden: true, formatter: function (value, rows, index) {
-                                if (rows.user) {
-                                    return rows.user.roleId;
+                        {field: 'orderName', width: 120, title: '订单名称', formatter: function (value, rows, index) {
+                                if (rows.order) {
+                                    return rows.order.orderName;
                                 } else {
                                     return '';
                                 }
                             }
                         },
-                        {field: 'userName', title: '用户名', width: 120, formatter: function (value, rows, index) {
-                                if (rows.user) {
-                                    return rows.user.userName;
+                        {field: 'formattedCreateDate', width: 80, title: '创建日期', formatter: function (value, rows, index) {
+                                if (rows.order) {
+                                    return rows.order.formattedCreateDate;
                                 } else {
                                     return '';
                                 }
                             }
                         },
-                        {field: 'roleName', title: '角色名', width: 120},
-                        {field: 'name', title: '姓名', width: 120, formatter: function (value, rows, index) {
-                                if (rows.user) {
-                                    return rows.user.name;
+                        {field: 'remark', title: '备注', width: 220, formatter: function (value, rows, index) {
+                                if (rows.order) {
+                                    return rows.order.remark;
                                 } else {
                                     return '';
                                 }
                             }
                         },
-                        {field: 'sgdmc', title: '所属施工队', width: 240, align: 'left'}
+                        {field: 'sgdmc', title: '施工队名称', width: 120, formatter: function (value, rows, index) {
+                                if (rows.sgdxx) {
+                                    return rows.sgdxx.sgdmc;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        }
                     ]]
             });
         },
-        addModifyUser: function (isAdd) {
+        addModifyOrder: function (isAdd) {
             var userId = '';
             if (!isAdd) {
                 var row = $('#datagrid').datagrid("getSelected");
@@ -62,44 +68,37 @@ var userManage = function () {
                     Message.alert("请选择一条数据进行修改。");
                     return;
                 }
-                userId = row.user.userId;
+                orderId = row.order.orderId;
             }
-            $('#userManageDialog').dialog({
-                title: '增加用户',
+            $('#orderManageDialog').dialog({
+                title: '创建订单',
                 width: 800,
                 height: 400,
                 closed: true,
                 cache: false,
-                href: 'div/system/addModifyUser.do?userId=' + userId,
+                href: 'div/baseManage/addModifyOrder.do?id=' + orderId,
                 modal: true
             });
-            $('#userManageDialog').dialog('open');
+            $('#orderManageDialog').dialog('open');
         },
-        searchUser: function (searchKey) {
+        searchOrder: function (searchKey) {
             if (!searchKey) {
                 $('#datagrid').datagrid('load', {
                     searchKey: searchKey
                 });
             }
         },
-        deleteUser: function () {
-            Message.confirm("确认删除该用户吗？", function () {
-
-            });
-        },
-        importUser: function () {},
         submitForm: function () {
-            submitForm('#userManageForm', function () {
-                $('#userManageDialog').dialog('close');
+            submitForm('#orderManageForm', function () {
+                $('#orderManageDialog').dialog('close');
                 $('#datagrid').datagrid('reload');
-
             });
         },
         clearForm: function () {
-            clearForm('#userManageForm');
+            clearForm('#orderManageForm');
         }
     };
 }();
 $(function () {
-    userManage.init();
+    orderManage.init();
 });

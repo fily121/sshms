@@ -1,164 +1,191 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.sinoi.zyqyh.dao.OrderMapper" >
-  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Order" >
-    <id column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
-    <result column="ORDER_NAME" property="orderName" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
-    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
-    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
-    <result column="SGDID" property="sgdid" jdbcType="VARCHAR" />
-    <result column="attachment_id" property="attachmentId" jdbcType="VARCHAR" />
-    <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
-    <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
-    <result column="EXT3" property="ext3" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    ORDER_ID, ORDER_NAME, CREATE_DATE, UPDATE_DATE, CREATE_USER, REMARK, SGDID, attachment_id, 
-    EXT1, EXT2, EXT3
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from p_order
-    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from p_order
-    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
-    insert into p_order (ORDER_ID, ORDER_NAME, CREATE_DATE, 
-      UPDATE_DATE, CREATE_USER, REMARK, 
-      SGDID, attachment_id, EXT1, 
-      EXT2, EXT3)
-    values (#{orderId,jdbcType=VARCHAR}, #{orderName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{updateDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{sgdid,jdbcType=VARCHAR}, #{attachmentId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
-      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
-    insert into p_order
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        ORDER_ID,
-      </if>
-      <if test="orderName != null" >
-        ORDER_NAME,
-      </if>
-      <if test="createDate != null" >
-        CREATE_DATE,
-      </if>
-      <if test="updateDate != null" >
-        UPDATE_DATE,
-      </if>
-      <if test="createUser != null" >
-        CREATE_USER,
-      </if>
-      <if test="remark != null" >
-        REMARK,
-      </if>
-      <if test="sgdid != null" >
-        SGDID,
-      </if>
-      <if test="attachmentId != null" >
-        attachment_id,
-      </if>
-      <if test="ext1 != null" >
-        EXT1,
-      </if>
-      <if test="ext2 != null" >
-        EXT2,
-      </if>
-      <if test="ext3 != null" >
-        EXT3,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        #{orderId,jdbcType=VARCHAR},
-      </if>
-      <if test="orderName != null" >
-        #{orderName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUser != null" >
-        #{createUser,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="sgdid != null" >
-        #{sgdid,jdbcType=VARCHAR},
-      </if>
-      <if test="attachmentId != null" >
-        #{attachmentId,jdbcType=VARCHAR},
-      </if>
-      <if test="ext1 != null" >
-        #{ext1,jdbcType=VARCHAR},
-      </if>
-      <if test="ext2 != null" >
-        #{ext2,jdbcType=VARCHAR},
-      </if>
-      <if test="ext3 != null" >
-        #{ext3,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
-    update p_order
-    <set >
-      <if test="orderName != null" >
-        ORDER_NAME = #{orderName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
+    <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Order" >
+        <id column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+        <result column="ORDER_NAME" property="orderName" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+        <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+        <result column="SGDID" property="sgdid" jdbcType="VARCHAR" />
+        <result column="attachment_id" property="attachmentId" jdbcType="VARCHAR" />
+        <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
+        <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
+        <result column="EXT3" property="ext3" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        ORDER_ID, ORDER_NAME, CREATE_DATE, UPDATE_DATE, CREATE_USER, REMARK, SGDID, attachment_id, 
+        EXT1, EXT2, EXT3
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from p_order
+        where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByOrderId" resultMap="OrderDetail_resultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />,
+        <include refid="cn.com.sinoi.zyqyh.dao.SgdxxMapper.Base_Column_List" />
+        from p_order a left join sgdxx b on a.SGDID = b.id
+        where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from p_order
+        where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
+        insert into p_order (ORDER_ID, ORDER_NAME, CREATE_DATE, 
+        UPDATE_DATE, CREATE_USER, REMARK, 
+        SGDID, attachment_id, EXT1, 
+        EXT2, EXT3)
+        values (#{orderId,jdbcType=VARCHAR}, #{orderName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+        #{sgdid,jdbcType=VARCHAR}, #{attachmentId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+        #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
+        insert into p_order
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="orderId != null" >
+                ORDER_ID,
+            </if>
+            <if test="orderName != null" >
+                ORDER_NAME,
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE,
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE,
+            </if>
+            <if test="createUser != null" >
+                CREATE_USER,
+            </if>
+            <if test="remark != null" >
+                REMARK,
+            </if>
+            <if test="sgdid != null" >
+                SGDID,
+            </if>
+            <if test="attachmentId != null" >
+                attachment_id,
+            </if>
+            <if test="ext1 != null" >
+                EXT1,
+            </if>
+            <if test="ext2 != null" >
+                EXT2,
+            </if>
+            <if test="ext3 != null" >
+                EXT3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="orderId != null" >
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="orderName != null" >
+                #{orderName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null" >
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="sgdid != null" >
+                #{sgdid,jdbcType=VARCHAR},
+            </if>
+            <if test="attachmentId != null" >
+                #{attachmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null" >
+                #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null" >
+                #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null" >
+                #{ext3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
+        update p_order
+        <set >
+            <if test="orderName != null" >
+                ORDER_NAME = #{orderName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null" >
+                CREATE_USER = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="sgdid != null" >
+                SGDID = #{sgdid,jdbcType=VARCHAR},
+            </if>
+            <if test="attachmentId != null" >
+                attachment_id = #{attachmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null" >
+                EXT1 = #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null" >
+                EXT2 = #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null" >
+                EXT3 = #{ext3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
+        update p_order
+        set ORDER_NAME = #{orderName,jdbcType=VARCHAR},
         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null" >
         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUser != null" >
         CREATE_USER = #{createUser,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
         REMARK = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="sgdid != null" >
         SGDID = #{sgdid,jdbcType=VARCHAR},
-      </if>
-      <if test="attachmentId != null" >
         attachment_id = #{attachmentId,jdbcType=VARCHAR},
-      </if>
-      <if test="ext1 != null" >
         EXT1 = #{ext1,jdbcType=VARCHAR},
-      </if>
-      <if test="ext2 != null" >
         EXT2 = #{ext2,jdbcType=VARCHAR},
-      </if>
-      <if test="ext3 != null" >
-        EXT3 = #{ext3,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
-    update p_order
-    set ORDER_NAME = #{orderName,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
-      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
-      CREATE_USER = #{createUser,jdbcType=VARCHAR},
-      REMARK = #{remark,jdbcType=VARCHAR},
-      SGDID = #{sgdid,jdbcType=VARCHAR},
-      attachment_id = #{attachmentId,jdbcType=VARCHAR},
-      EXT1 = #{ext1,jdbcType=VARCHAR},
-      EXT2 = #{ext2,jdbcType=VARCHAR},
-      EXT3 = #{ext3,jdbcType=VARCHAR}
-    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
-  </update>
+        EXT3 = #{ext3,jdbcType=VARCHAR}
+        where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+    </update>
+  
+    <resultMap id="OrderDetail_resultMap" type="cn.com.sinoi.zyqyh.vo.relate.OrderDetail" >
+      <id column="ORDER_ID" />
+      <association property="order" resultMap="BaseResultMap" />
+      <association property="sgdxx" resultMap="cn.com.sinoi.zyqyh.dao.SgdxxMapper.BaseResultMap" />
+    </resultMap>
+    <select id="findAllForPage" resultMap="OrderDetail_resultMap" parameterType="java.util.Map" >
+        select 
+        <include refid="Base_Column_List" />,
+        <include refid="cn.com.sinoi.zyqyh.dao.SgdxxMapper.Base_Column_List" />
+        from p_order a left join sgdxx b on a.SGDID = b.id
+        <if test="searchKey != null">
+            AND (
+            a.ORDER_NAME LIKE concat('%',#{searchKey},'%')
+            OR a.REMARK LIKE concat('%',#{searchKey},'%')
+            )
+        </if>
+        limit #{limit1}, #{limit2}
+    </select>
+  
 </mapper>

@@ -1,8 +1,9 @@
 package cn.com.sinoi.zyqyh.controller.divController;
 
-import cn.com.sinoi.zyqyh.controller.divController.SystemDivController;
+import cn.com.sinoi.zyqyh.service.IOrderService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
+import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,21 @@ public class BaseDivController {
     private static final Logger logger = Logger.getLogger(BaseDivController.class);
     @Autowired
     ISgdxxService sgdxxService;
+    @Autowired
+    IOrderService orderService;
+
+    @RequestMapping("addModifyOrder.do")
+    public String addModifyOrder(String id, Model model) {
+        if (org.apache.commons.lang3.StringUtils.isNotEmpty(id)) {
+            try {
+                OrderDetail order = orderService.selectByOrderId(id);
+                model.addAttribute("order", order);
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return "baseManage/addModifyOrder";
+    }
 
     @RequestMapping("addModifySgdxx.do")
     public String addModifySgdw(String id, Model model) {

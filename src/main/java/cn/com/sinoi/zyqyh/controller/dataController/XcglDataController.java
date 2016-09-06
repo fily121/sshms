@@ -4,6 +4,7 @@ import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.vo.Message;
+import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.User;
 import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
 import cn.com.sinoi.zyqyh.weixin.MessageUtil;
@@ -76,8 +77,9 @@ public class XcglDataController {
         String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
 
         try {
-            User user = userService.selectByUserName(userName);
-            String jsonString = MessageUtil.getBangdingMessage(user.getOpenid(), "操作隐患提醒", "操作提醒", msg);
+            Sgdxx sgdxx = sgdxxService.selectByPrimaryKey(gcdId);
+            User user = userService.selectById(sgdxx.getDuizhang());
+            String jsonString = MessageUtil.getYichangMessage(user.getOpenid(), "操作隐患提醒", "操作提醒", msg);
             WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(XcglDataController.class.getName()).log(Level.SEVERE, null, ex);

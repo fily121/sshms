@@ -232,7 +232,7 @@ public class SystemDataController {
                 errorMessage.append((i + 1) + "行有空字段。<br/>");
             } else {
                 user.setUserName(str[1]);
-                user.setUserPwd(str[2]);
+                user.setUserPwd(StringUtils.isEmpty(str[2]) ? "123456" : str[2]);
                 user.setName(str[3]);
                 user.setWechatNo(str[4]);
                 if (StringUtils.isEmpty(user.getUserName())) {
@@ -258,7 +258,7 @@ public class SystemDataController {
         if (StringUtils.isEmpty(errorMessage.toString())) {
             if (userList.isEmpty()) {
                 errorMessage.append("导入文件为空。");
-                return errorMessage.toString();
+                return "<font color=red>" + errorMessage.toString() + "</font>";
             }
 
             for (User user : userList) {
@@ -266,9 +266,9 @@ public class SystemDataController {
                 userService.save(user);
             }
             errorMessage.append("导入用户成功。");
-            return errorMessage.toString();
+            return "<font color=red>" + errorMessage.toString() + "</font>";
         }
 
-        return errorMessage.toString();
+        return "<font color=red>" + errorMessage.toString() + "</font>";
     }
 }
