@@ -66,15 +66,15 @@
                         if (!addComp.province) {
                             content = content + "当前地点没有定位信息。";
                         } else {
-                            content = content + addComp.province；
+                            content = content + addComp.province;
                             if (addComp.city) {
-                                content = content + "，" + addComp.city；
+                                content = content + "，" + addComp.city;
                                 if (addComp.district){
-                                    content = content + "，" + addComp.district；
+                                    content = content + "，" + addComp.district;
                                     if (addComp.street){
-                                        content = content + "，" + addComp.street；
+                                        content = content + "，" + addComp.street;
                                         if (addComp.streetNumber){
-                                            content = content + "，" + addComp.streetNumber；
+                                            content = content + "，" + addComp.streetNumber;
                                         }
                                     }
                                 }
