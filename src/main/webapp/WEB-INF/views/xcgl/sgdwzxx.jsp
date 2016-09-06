@@ -26,7 +26,7 @@
                 dwr.engine.setNotifyServerOnPageUnload(true);
                 // 百度地图API功能
                 map = new BMap.Map("allmap");
-                map.centerAndZoom(new BMap.Point(116.331398, 39.897445), 11);
+                map.centerAndZoom(new BMap.Point(116.5955, 31.7613), 11);
                 map.enableScrollWheelZoom(true);
             });
             var chedui = {};
