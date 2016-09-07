@@ -25,7 +25,7 @@ var orderManage = function () {
                                 }
                             }
                         },
-                        {field: 'orderName', width: 120, title: '订单名称', formatter: function (value, rows, index) {
+                        {field: 'orderName', width: 220, title: '订单名称', formatter: function (value, rows, index) {
                                 if (rows.order) {
                                     return rows.order.orderName;
                                 } else {
@@ -33,7 +33,7 @@ var orderManage = function () {
                                 }
                             }
                         },
-                        {field: 'formattedCreateDate', width: 80, title: '创建日期', formatter: function (value, rows, index) {
+                        {field: 'formattedCreateDate', width: 150, title: '创建日期', formatter: function (value, rows, index) {
                                 if (rows.order) {
                                     return rows.order.formattedCreateDate;
                                 } else {
@@ -104,7 +104,7 @@ var orderManage = function () {
         deleteFile: function (thisLink, attachmentId, fileName) {
             Message.confirm("确认要删除这个文件吗？文件删除回立即生效。", function(){
                 if (attachmentId) {
-                    $.post('data/baseManage/deleteFile',{attachmentId:attachmentId,fileName:fileName});
+                    $.post('data/baseManage/deleteFile.do',{attachmentId:attachmentId,fileName:fileName});
                 }
                 $(thisLink).parent().remove();
             });

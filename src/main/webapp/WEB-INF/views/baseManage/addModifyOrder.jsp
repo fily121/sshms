@@ -17,7 +17,7 @@
         <input class="easyui-textbox" name="formattedCreateDate" id="formattedCreateDate" value="${order.order.formattedCreateDate}" style="width:95%" data-options="label:'创建日期', disabled:true">
     </div>
     <div class="input_area">
-        <input class="easyui-combobox" name="sgdid"  value="${order.order.sgdid}" id="sgdid" style="width:95%" data-options="label:'所属施工队',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do'">
+        <input class="easyui-combobox" name="sgdid"  value="${order.order.sgdid}" id="sgdid" style="width:95%" data-options="label:'所属施工队',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do',required:true">
     </div>
     <div class="input_area">
         <textarea class="easyui-textbox" name="remark"  value="${order.order.remark}"  id="remark" style="width:95%" data-options="label:'备注'" validType="maxLength[200]"></textarea>
@@ -28,8 +28,8 @@
         <div id="fileDiv">
             <c:forEach items="${files}" var="file">
             <div>
-                <a href="data/system/downloadFile?fileName=${file.name}&attachmentId=${order.order.attachmentId}">${file.name}</a>
-                <a onclick="javascript: orderManage.deleteFile(this, '${order.order.attachmentId}', '${file.name}');"  href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add'">删除文件</a>
+                <a href="data/system/downloadFile.do?fileName=${file.name}&attachmentId=${order.order.attachmentId}">${file.name}</a>
+                <a onclick="javascript: orderManage.deleteFile(this, '${order.order.attachmentId}', '${file.name}');"  href="javascript:void(0);">删除文件</a>
             </div>
             </c:forEach>
         </div>

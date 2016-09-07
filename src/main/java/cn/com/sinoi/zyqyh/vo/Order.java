@@ -28,15 +28,12 @@ public class Order {
 
     private String ext3;
 
-    private String formattedCreateDate;
-
     public String getFormattedCreateDate() {
-
-        return format1.format(createDate);
-    }
-
-    public void setFormattedCreateDate(String formattedCreateDate) {
-        this.formattedCreateDate = formattedCreateDate;
+        if (createDate != null) {
+            return format1.format(createDate);
+        } else {
+            return "";
+        }
     }
 
     public String getOrderId() {

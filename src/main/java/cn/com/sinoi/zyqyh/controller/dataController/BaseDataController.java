@@ -169,7 +169,9 @@ public class BaseDataController {
                 Attachment atta = attachmentService.findbyId(order.getAttachmentId());
                 try {
                     for (MultipartFile file : uploadFile) {
-                        UrlDownloadFile.copyFileToPath(file.getInputStream(), path + atta.getUri(), file.getName());
+                        if (file.getSize() != 0) {
+                            UrlDownloadFile.copyFileToPath(file.getInputStream(), path + atta.getUri(), file.getOriginalFilename());
+                        }
                     }
                 } catch (IOException ex) {
                     java.util.logging.Logger.getLogger(BaseDataController.class.getName()).log(Level.SEVERE, null, ex);
@@ -179,11 +181,11 @@ public class BaseDataController {
             } else {
                 order.setOrderId(java.util.UUID.randomUUID().toString());
                 Date date = new Date();
-                String uri = FilePathEnum.订单管理.getPath() + format2.format(date);
+                String uri = FilePathEnum.订单管理.getPath() + format2.format(date) + "/" + order.getOrderId();
                 try {
                     for (MultipartFile file : uploadFile) {
                         if (file.getSize() != 0) {
-                            UrlDownloadFile.copyFileToPath(file.getInputStream(), path + uri, file.getName());
+                            UrlDownloadFile.copyFileToPath(file.getInputStream(), path + uri, file.getOriginalFilename());
                         }
                     }
                 } catch (IOException ex) {
@@ -194,6 +196,7 @@ public class BaseDataController {
                 atta.setUri(uri);
                 attachmentService.save(atta);
                 order.setAttachmentId(atta.getId());
+                order.setCreateDate(date);
                 orderService.insert(order);
             }
             result.put("code", "true");
@@ -212,15 +215,14 @@ public class BaseDataController {
             Attachment att = attachmentService.findbyId(attachmentId);
             if (att != null) {
                 File file = new File(path + att.getUri() + "/" + (StringUtils.isNotEmpty(fileName) ? fileName : att.getFileName()));
-                file.deleteOnExit();
+                file.delete();
             }
         }
     }
 
     @RequestMapping(value = "getOrderList.do", method = RequestMethod.POST)
     @ResponseBody
-    public List<OrderDetail> getOrderList(Integer page, Integer rows, String searchKey
-    ) {
+    public List<OrderDetail> getOrderList(Integer page, Integer rows, String searchKey) {
         List<OrderDetail> result = Collections.EMPTY_LIST;
         try {
             result = orderService.findAllForPage(page, rows, searchKey);
