@@ -29,7 +29,7 @@
             <c:forEach items="${files}" var="file">
             <div>
                 <a href="data/system/downloadFile.do?fileName=${file.name}&attachmentId=${order.order.attachmentId}">${file.name}</a>
-                <a onclick="javascript: orderManage.deleteFile(this, '${order.order.attachmentId}', '${file.name}');"  href="javascript:void(0);">删除文件</a>
+                <a onclick="javascript: orderManage.deleteFile(this, '${order.order.attachmentId}', '${file.name}', '${order.order.sgdid}', '${order.order.orderName}', '${order.order.orderId}');"  href="javascript:void(0);">删除文件</a>
             </div>
             </c:forEach>
         </div>

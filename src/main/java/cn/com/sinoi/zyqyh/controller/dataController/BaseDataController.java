@@ -15,6 +15,8 @@ import cn.com.sinoi.zyqyh.vo.Order;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
 import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
+import cn.com.sinoi.zyqyh.weixin.MessageUtil;
+import cn.com.sinoi.zyqyh.weixin.WeixinUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -64,8 +66,13 @@ public class BaseDataController {
     @Autowired
     IAttachmentService attachmentService;
 
+    @Value("#{readProperties['wechat.corpId']}")
+    private String corpId;
+    @Value("#{readProperties['wechat.secret']}")
+    private String secret;
+
+    private static final java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     private static final java.text.DateFormat format2 = new java.text.SimpleDateFormat("yyyy-MM-dd");
-    private static final java.text.DateFormat format3 = new java.text.SimpleDateFormat("hh_mm_ss_S");
 
     @Value("#{readProperties['upload.file.path']}")
     private String path;
@@ -183,6 +190,9 @@ public class BaseDataController {
     public Map<String, String> addModifyOrder(Order order, @RequestParam(value = "uploadFile", required = false) MultipartFile[] uploadFile, HttpServletResponse response) {
         Map<String, String> result = new HashMap<>();
         if (order != null) {
+            List<String> openIds = sgdxxService.findOpenIdByGcdId(order.getSgdid());
+            String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
+            String dateTime = format1.format(new Date());
             response.setContentType("text/html;charset=UTF-8");
             String msg = "订单创建成功。";
             if (StringUtils.isNotEmpty(order.getOrderId())) {
@@ -196,8 +206,14 @@ public class BaseDataController {
                 } catch (IOException ex) {
                     java.util.logging.Logger.getLogger(BaseDataController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                OrderDetail oldOrderDetail = orderService.selectByOrderId(order.getOrderId());
+                String oldOrderName = oldOrderDetail.getOrder().getOrderName();
                 orderService.updateByPrimaryKeySelective(order);
                 msg = "订单修改成功。";
+                for (String openId : openIds) {
+                    String jsonString = MessageUtil.getOrderMessage(openId, "订单有变更，原订单名：" + oldOrderName, dateTime, order.getOrderName(), order.getOrderId(), "您的订单有变更，请登录系统查看。", "");
+                    WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
+                }
             } else {
                 order.setOrderId(java.util.UUID.randomUUID().toString());
                 Date date = new Date();
@@ -218,6 +234,10 @@ public class BaseDataController {
                 order.setAttachmentId(atta.getId());
                 order.setCreateDate(date);
                 orderService.insert(order);
+                for (String openId : openIds) {
+                    String jsonString = MessageUtil.getOrderMessage(openId, "新的订单", dateTime, order.getOrderName(), order.getOrderId(), "您有新的订单，请登录系统查看。", "");
+                    WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
+                }
             }
             result.put("code", "true");
             result.put("message", msg);
@@ -230,15 +250,24 @@ public class BaseDataController {
 
     @RequestMapping(value = "deleteFile.do", method = RequestMethod.POST)
     @ResponseBody
-    public void deleteFile(String attachmentId, String fileName) {
+    public void deleteFile(String attachmentId, String fileName, String sgdId, String orderName, String orderId) {
         if (StringUtils.isNotEmpty(attachmentId)) {
             Attachment att = attachmentService.findbyId(attachmentId);
             if (att != null) {
                 File file = new File(path + att.getUri() + "/" + (StringUtils.isNotEmpty(fileName) ? fileName : att.getFileName()));
                 file.delete();
+                List<String> openIds = sgdxxService.findOpenIdByGcdId(sgdId);
+                String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
+                String dateTime = format1.format(new Date());
+                for (String openId : openIds) {
+                    String jsonString = MessageUtil.getOrderMessage(openId, 订单变更通知, dateTime, orderName, orderId, 订单有变化文件删除, "");
+                    WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
+                }
             }
         }
     }
+    private static final String 订单有变化文件删除 = "订单有变化（文件删除）， 请登录后台查看。";
+    private static final String 订单变更通知 = "订单变更通知";
 
     @RequestMapping(value = "getOrderList.do", method = RequestMethod.POST)
     @ResponseBody

@@ -62,8 +62,8 @@ public class SgdxxServiceImpl extends BaseServiceImpl<Sgdxx> implements ISgdxxSe
     }
 
     @Override
-    public List<String> findUserIdByGcdId(String id) {
-        return sgdxxMapper.findUserIdByGcdId();
+    public List<String> findOpenIdByGcdId(String id) {
+        return sgdxxMapper.findOpenIdByGcdId();
     }
 
     @Override

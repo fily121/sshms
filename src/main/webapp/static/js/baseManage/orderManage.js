@@ -56,6 +56,10 @@ var orderManage = function () {
                                     return '';
                                 }
                             }
+                        },
+                        {field: 'ckxq', title: '操作', width: 120, formatter: function (value, rows, index) {
+                                return '<a href="javascript:orderManage.showDetail(' + rows.order.orderId + ');">查看详情</a>';
+                            }
                         }
                     ]]
             });
@@ -96,21 +100,24 @@ var orderManage = function () {
         },
         addFile: function () {
             var fileDiv = '<div>'
-                + '<input type="file" name="uploadFile"/>'
-                + '<a  onclick="orderManage.deleteFile(this);" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:\'icon-add\'">删除文件</a>'
-                +'</div>';
+                    + '<input type="file" name="uploadFile"/>'
+                    + '<a  onclick="orderManage.deleteFile(this);" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:\'icon-add\'">删除文件</a>'
+                    + '</div>';
             $("#fileDiv").append(fileDiv);
         },
-        deleteFile: function (thisLink, attachmentId, fileName) {
-            Message.confirm("确认要删除这个文件吗？文件删除回立即生效。", function(){
+        deleteFile: function (thisLink, attachmentId, fileName, sgdId, orderName, orderId) {
+            Message.confirm("确认要删除这个文件吗？文件删除回立即生效。", function () {
                 if (attachmentId) {
-                    $.post('data/baseManage/deleteFile.do',{attachmentId:attachmentId,fileName:fileName});
+                    $.post('data/baseManage/deleteFile.do', {attachmentId: attachmentId, fileName: fileName, sgdId: sgdId, orderName: orderName, orderId: orderId});
                 }
                 $(thisLink).parent().remove();
             });
         },
         clearForm: function () {
             clearForm('#orderManageForm');
+        },
+        showDetail: function (orderId) {
+            window.open ("<%= basePath%>div/baseManage/orderDetail.do?orderId="+orderId, "_blank", "height=768, width=1024, toolbar= no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,top=100,left=300")
         }
     };
 }();

@@ -131,13 +131,12 @@
         </script>  
     </head>  
     <body>   
-        <input type="hidden" id='userId' value="${userIdList}" />
         <div class="main">
             <div class="main_inner clearfix">  
                 <div class="txpanel"></div>  
                 <div id="chatArea" class="box chat">  
                     <c:if test="${time}" >
-                    <div class="box_hd"><input type="text" id='datetime' value="" class="easyui-datebox" /></div>  
+                    <div class="box_hd"><input type="text" id='datetime' value="" /></div>  
                     </c:if>
                     <div class="box_bd" id="messageList">  
                         <c:forEach items="${messageList}" var="message">

@@ -21,7 +21,7 @@ public interface SgdxxMapper {
 
     int updateByPrimaryKey(Sgdxx record);
 
-    List<String> findUserIdByGcdId();
+    List<String> findOpenIdByGcdId();
 
     List<SgdxxDetail> findAllForPage(Map<String, Integer> param);
 

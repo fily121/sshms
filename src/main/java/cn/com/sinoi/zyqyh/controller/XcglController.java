@@ -68,8 +68,6 @@ public class XcglController {
     @RequestMapping("xclx.do")
     public String xclx(Model model, String id, String datetime) {
         model.addAttribute("gcdId", id);
-        List<String> userIdList = sgdxxService.findUserIdByGcdId(id);
-        model.addAttribute("userIdList", userIdList);
         User user = ShiroUtils.getUserBySubject(userService);
         if (user != null) {
             model.addAttribute("userName", user.getUserName());

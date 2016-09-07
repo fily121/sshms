@@ -124,10 +124,6 @@ public class MessageUtil {
         name.setColor("#000000");
         name.setValue(操作提醒);
         m.put("keyword1", name);
-        TemplateData wuliu = new TemplateData();
-        wuliu.setColor("#000000");
-        wuliu.setValue("N行");
-        m.put("wuliu", wuliu);
         TemplateData orderNo = new TemplateData();
         orderNo.setColor("#000000");
         orderNo.setValue(操作提醒);
@@ -135,6 +131,39 @@ public class MessageUtil {
         TemplateData message = new TemplateData();
         orderNo.setColor("#000000");
         orderNo.setValue(msg);
+        m.put("remark", message);
+        temp.setData(m);
+        String jsonString = JSONObject.fromObject(temp).toString();
+        return jsonString;
+    }
+
+    public static String getOrderMessage(String openId, String first, String keyword1, String keyword2, String keyword3, String remark, String url) {
+        String templateId = "8kDiD9vSDYwXDWvUGJuJKL_p-QBsKrVLWci7MTDBcgY";
+        WxTemplate temp = new WxTemplate();
+        temp.setUrl(url);
+        temp.setTouser(openId);
+        temp.setTopcolor("#000000");
+        temp.setTemplate_id(templateId);
+        Map<String, TemplateData> m = new HashMap<>();
+        TemplateData firstTemp = new TemplateData();
+        firstTemp.setColor("#000000");
+        firstTemp.setValue(first);
+        m.put("first", firstTemp);
+        TemplateData name = new TemplateData();
+        name.setColor("#000000");
+        name.setValue(keyword1);
+        m.put("keyword1", name);
+        TemplateData orderNo = new TemplateData();
+        orderNo.setColor("#000000");
+        orderNo.setValue(keyword2);
+        m.put("keyword2", orderNo);
+        TemplateData key3 = new TemplateData();
+        key3.setColor("#000000");
+        key3.setValue(keyword3);
+        m.put("keyword3", key3);
+        TemplateData message = new TemplateData();
+        message.setColor("#000000");
+        message.setValue(remark);
         m.put("remark", message);
         temp.setData(m);
         String jsonString = JSONObject.fromObject(temp).toString();

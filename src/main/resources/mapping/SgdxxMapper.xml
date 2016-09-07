@@ -34,9 +34,9 @@
         from sgdxx a left join p_user b on a.duizhang = b.USER_ID
         limit #{limit1}, #{limit2}
     </select>
-    <select id="findUserIdByGcdId" resultType="java.lang.String" parameterType="java.lang.String">
+    <select id="findOpenIdByGcdId" resultType="java.lang.String" parameterType="java.lang.String">
         select
-        USER_ID
+        openid
         from p_user where org_id=#{id,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

@@ -52,7 +52,7 @@ public class BaseDivController {
                 String attachmentId = order.getOrder().getAttachmentId();
                 if (StringUtils.isNotEmpty(attachmentId)) {
                     Attachment atta = attachmentService.findbyId(attachmentId);
-                    File file = new File(path + atta.getUri());
+                    File file = new File(path + atta.getUri() + "/" + order.getOrder().getOrderId());
                     if (file.exists()) {
                         model.addAttribute("files", file.listFiles());
                     }
@@ -75,5 +75,10 @@ public class BaseDivController {
             }
         }
         return "system/addModifySgdxx";
+    }
+
+    @RequestMapping("orderDetail.do")
+    public String orderDetail(String id, Model model) {
+        return "baseManage/orderDetail";
     }
 }

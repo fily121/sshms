@@ -18,7 +18,7 @@ public interface ISgdxxService extends IBaseService<Sgdxx> {
 
     int updateByPrimaryKey(Sgdxx record);
 
-    List<String> findUserIdByGcdId(String id);
+    List<String> findOpenIdByGcdId(String id);
 
     List<SgdxxDetail> findAllForPage(int page, int rows);
 
