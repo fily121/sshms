@@ -24,6 +24,26 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class UrlDownloadFile {
 
+    public static void copyFileToPath(InputStream inputStream, String savePath, String fileName) throws IOException {
+        //获取自己数组
+        byte[] getData = readInputStream(inputStream);
+
+        //文件保存位置
+        File saveDir = new File(savePath);
+        if (!saveDir.exists()) {
+            saveDir.mkdirs();
+        }
+        File file = new File(saveDir + File.separator + fileName);
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(getData);
+        if (fos != null) {
+            fos.close();
+        }
+        if (inputStream != null) {
+            inputStream.close();
+        }
+    }
+
     /**
      * 从网络Url中下载文件
      *

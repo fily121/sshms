@@ -22,7 +22,7 @@
         <input class="easyui-passwordbox" name="password3" id="passwordNew2" style="width:95%" data-options="label:'确认密码:'"  validType="equals['#passwordNew1']">
     </div>
     <div class="input_area">
-        <input class="easyui-combobox" name="orgId"  value="${user.orgId}" id="orgId" style="width:95%" data-options="label:'所属施工队',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do'">
+        <input class="easyui-combobox" name="orgId"  value="${user.orgId}" id="orgId" style="width:95%" data-options="label:'所属施工队',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do',required:true">
     </div>
     <div class="input_area">
         <input class="easyui-textbox" name="name"  value="${user.name}"  id="name" style="width:95%" data-options="label:'姓名'" validType="maxLength[20]">

@@ -61,7 +61,7 @@ var orderManage = function () {
             });
         },
         addModifyOrder: function (isAdd) {
-            var userId = '';
+            var orderId = '';
             if (!isAdd) {
                 var row = $('#datagrid').datagrid("getSelected");
                 if (!row) {
@@ -97,15 +97,17 @@ var orderManage = function () {
         addFile: function () {
             var fileDiv = '<div>'
                 + '<input type="file" name="uploadFile"/>'
-                + '<a id="btn" href="javascript: orderManage.deleteFile(this);" class="easyui-linkbutton" data-options="iconCls:\'icon-add\'">删除文件</a>'
+                + '<a  onclick="orderManage.deleteFile(this);" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:\'icon-add\'">删除文件</a>'
                 +'</div>';
             $("#fileDiv").append(fileDiv);
         },
-        deleteFile: function (thisLink) {
-            Message.confirm("确认要删除这个文件吗？", function(){
-                $.post('data/baseManage/deleteFile',{})
+        deleteFile: function (thisLink, attachmentId, fileName) {
+            Message.confirm("确认要删除这个文件吗？文件删除回立即生效。", function(){
+                if (attachmentId) {
+                    $.post('data/baseManage/deleteFile',{attachmentId:attachmentId,fileName:fileName});
+                }
                 $(thisLink).parent().remove();
-            })
+            });
         },
         clearForm: function () {
             clearForm('#orderManageForm');

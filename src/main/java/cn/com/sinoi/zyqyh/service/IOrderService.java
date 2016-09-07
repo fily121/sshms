@@ -11,4 +11,8 @@ public interface IOrderService extends IBaseService<Order> {
     Order selectByPrimaryKey(String id);
 
     OrderDetail selectByOrderId(String id);
+
+    void updateByPrimaryKeySelective(Order order);
+
+    void insert(Order order);
 }

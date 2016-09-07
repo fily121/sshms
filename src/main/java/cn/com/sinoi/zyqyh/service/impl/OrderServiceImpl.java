@@ -46,4 +46,14 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements IOrderSe
     public OrderDetail selectByOrderId(String id) {
         return orderMapper.selectByOrderId(id);
     }
+
+    @Override
+    public void updateByPrimaryKeySelective(Order order) {
+        orderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    @Override
+    public void insert(Order order) {
+        orderMapper.insert(order);
+    }
 }

@@ -8,7 +8,7 @@
         width:350px
     }
 </style>
-<form id="orderForm" name="orderManageForm" method="post" action="data/baseManage/addModifyOrder.do" enctype="multipart/form-data">
+<form id="orderManageForm" method="post" action="data/baseManage/addModifyOrder.do" enctype="multipart/form-data">
     <div class="input_area" style="margin-top:20px;">
         <input name="orderId" value="${order.order.orderId}" type="hidden"/>
         <input class="easyui-textbox" name="orderName" id="orderName" value="${order.order.orderName}" style="width:95%" data-options="label:'订单名称',required:true" validType="maxLength[20]">
@@ -29,7 +29,7 @@
             <c:forEach items="${files}" var="file">
             <div>
                 <a href="data/system/downloadFile?fileName=${file.name}&attachmentId=${order.order.attachmentId}">${file.name}</a>
-                <a id="btn" href="javascript: orderManage.deleteFile(this, '${order.order.attachmentId}', '${file.name}');" class="easyui-linkbutton" data-options="iconCls:'icon-add'">删除文件</a>
+                <a onclick="javascript: orderManage.deleteFile(this, '${order.order.attachmentId}', '${file.name}');"  href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add'">删除文件</a>
             </div>
             </c:forEach>
         </div>
@@ -38,5 +38,4 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="orderManage.submitForm()" style="width:80px">提交</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="orderManage.clearForm()" style="width:80px">清空</a>
     </div>
-</form>
 </form>
