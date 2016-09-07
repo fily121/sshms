@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.sinoi.zyqyh.dao.CllqGlMapper" >
+    <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.CllqGl" >
+        <id column="cllqgl_id" property="id" jdbcType="VARCHAR" />
+        <result column="cllqgl_lqclh" property="lqclh" jdbcType="VARCHAR" />
+        <result column="cllqgl_lqtime" property="lqtime" jdbcType="VARCHAR" />
+        <result column="cllqgl_lqsl" property="lqsl" jdbcType="DECIMAL" />
+        <result column="cllqgl_sysl" property="sysl" jdbcType="DECIMAL" />
+        <result column="cllqgl_lqdw" property="lqdw" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id as cllqgl_id, 
+        lqclh as cllqgl_lqclh, 
+        lqtime as cllqgl_lqtime, 
+        lqsl as cllqgl_lqsl, 
+        sysl as cllqgl_sysl, 
+        lqdw as cllqgl_lqdw
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from cllqgl
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from cllqgl
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.CllqGl" >
+        insert into cllqgl (id, lqclh, lqtime, 
+        lqsl, sysl, lqdw)
+        values (#{id,jdbcType=VARCHAR}, #{lqclh,jdbcType=VARCHAR}, #{lqtime,jdbcType=VARCHAR}, 
+        #{lqsl,jdbcType=DECIMAL}, #{sysl,jdbcType=DECIMAL}, #{lqdw,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.CllqGl" >
+        insert into cllqgl
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="lqclh != null" >
+                lqclh,
+            </if>
+            <if test="lqtime != null" >
+                lqtime,
+            </if>
+            <if test="lqsl != null" >
+                lqsl,
+            </if>
+            <if test="sysl != null" >
+                sysl,
+            </if>
+            <if test="lqdw != null" >
+                lqdw,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="lqclh != null" >
+                #{lqclh,jdbcType=VARCHAR},
+            </if>
+            <if test="lqtime != null" >
+                #{lqtime,jdbcType=VARCHAR},
+            </if>
+            <if test="lqsl != null" >
+                #{lqsl,jdbcType=DECIMAL},
+            </if>
+            <if test="sysl != null" >
+                #{sysl,jdbcType=DECIMAL},
+            </if>
+            <if test="lqdw != null" >
+                #{lqdw,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.CllqGl" >
+        update cllqgl
+        <set >
+            <if test="lqclh != null" >
+                lqclh = #{lqclh,jdbcType=VARCHAR},
+            </if>
+            <if test="lqtime != null" >
+                lqtime = #{lqtime,jdbcType=VARCHAR},
+            </if>
+            <if test="lqsl != null" >
+                lqsl = #{lqsl,jdbcType=DECIMAL},
+            </if>
+            <if test="sysl != null" >
+                sysl = #{sysl,jdbcType=DECIMAL},
+            </if>
+            <if test="lqdw != null" >
+                lqdw = #{lqdw,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.CllqGl" >
+        update cllqgl
+        set lqclh = #{lqclh,jdbcType=VARCHAR},
+        lqtime = #{lqtime,jdbcType=VARCHAR},
+        lqsl = #{lqsl,jdbcType=DECIMAL},
+        sysl = #{sysl,jdbcType=DECIMAL},
+        lqdw = #{lqdw,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+  
+    <select id="findAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from cllqgl
+    </select>
+  
+    <select id="findAllForPage" resultMap="ResultMap_Detail" parameterType="java.util.Map">
+        select *
+        from (select <include refid="Base_Column_List" /> from cllqgl) a 
+        left join (select <include refid="cn.com.sinoi.zyqyh.dao.ClxxMapper.Base_Column_List" /> from clxx) b on a.cllqgl_lqclh = b.clxx_id
+        left join (select <include refid="cn.com.sinoi.zyqyh.dao.SgdxxMapper.Base_Column_List" /> from sgdxx) c on a.cllqgl_lqdw = c.id
+        limit #{limit1}, #{limit2}
+    </select>
+    
+    <resultMap id="ResultMap_Detail" type="cn.com.sinoi.zyqyh.vo.relate.ClglDetail">
+        <id column="cllqgl_id" property="cllqGl.id" jdbcType="VARCHAR"/>
+        <association property="cllqGl" resultMap="BaseResultMap"/>
+        <association property="clxx" resultMap="cn.com.sinoi.zyqyh.dao.ClxxMapper.BaseResultMap"/>
+        <association property="sgdxx" resultMap="cn.com.sinoi.zyqyh.dao.SgdxxMapper.BaseResultMap"/>
+    </resultMap>
+</mapper>

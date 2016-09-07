@@ -4,11 +4,13 @@ import cn.com.sinoi.zyqyh.controller.SystemController;
 import cn.com.sinoi.zyqyh.controller.divController.SystemDivController;
 import cn.com.sinoi.zyqyh.definition.FilePathEnum;
 import cn.com.sinoi.zyqyh.service.IAttachmentService;
+import cn.com.sinoi.zyqyh.service.IClglService;
 import cn.com.sinoi.zyqyh.service.IOrderService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.utils.PageModel;
 import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
 import cn.com.sinoi.zyqyh.vo.Attachment;
+import cn.com.sinoi.zyqyh.vo.Clxx;
 import cn.com.sinoi.zyqyh.vo.Order;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
@@ -67,6 +69,7 @@ public class BaseDataController {
 
     @Value("#{readProperties['upload.file.path']}")
     private String path;
+    IClglService clglService;
 
     @RequestMapping("getSgdList.do")
     @ResponseBody
@@ -152,6 +155,23 @@ public class BaseDataController {
         List<Sgdxx> result = Collections.EMPTY_LIST;
         try {
             result = sgdxxService.findAll();
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    /**
+     * 获取所有材料信息。
+     *
+     * @return
+     */
+    @RequestMapping(value = "getAllClxx.do", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Clxx> getAllClxx() {
+        List<Clxx> result = Collections.EMPTY_LIST;
+        try {
+            result = clglService.findAllClxx();
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
         }
