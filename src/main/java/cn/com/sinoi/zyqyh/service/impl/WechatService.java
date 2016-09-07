@@ -128,7 +128,9 @@ public class WechatService implements IWechatService {
                             format3.format(date) + ".jpg",
                             path + uri);
                     Message message = new Message();
-                    message.setContent("<img src='data/system/downloadFile.do?attachmentId='" + attachmentId + "/>");
+                    String src = "data/system/downloadFile.do?attachmentId=" + attachmentId;
+                    message.setContent("<a href='javascript:;' onclick='showImage(this)'>"
+                            + "<img style='width:400px;height:300px' src='" + src + "'/></a>");
                     message.setFromuser(user.getUserId());
                     message.setId(java.util.UUID.randomUUID().toString());
                     message.setTime(date);

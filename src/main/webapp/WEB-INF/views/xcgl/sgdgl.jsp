@@ -21,6 +21,7 @@
         <script type='text/javascript' src='<%= basePath%>dwr/util.js'></script>  
         <script type="text/javascript" src="<%= basePath%>dwr/interface/MessagePush.js"></script>  
         <script type='text/javascript' src='<%= basePath%>dwr/interface/ShowMessage.js'></script>
+        <script type='text/javascript' src='<%= basePath%>static/js/plugins/lightbox.js'></script>
         <link rel="stylesheet" type="text/css" href="<%= basePath%>/static/css/gcdtx.css" />
         <script type="text/javascript">
             var messageMeUiStart = '<div class="message me">' +
@@ -66,6 +67,7 @@
                     Message.alert("发送消息不能为空。");
                     return;
                 }
+                $("#editArea").text('');
                 var date = new Date();
                 ajaxLoading();
                 $.post('data/xcgl/reciveMessage.do', {
@@ -127,6 +129,9 @@
             function ajaxLoadEnd() {
                 $(".datagrid-mask").remove();
                 $(".datagrid-mask-msg").remove();
+            }
+            function showImage(thisLink) {
+                var src = $(thisLink).children("img").attr("src");
             }
         </script>  
     </head>  
