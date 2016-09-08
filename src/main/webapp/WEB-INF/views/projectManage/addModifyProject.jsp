@@ -26,8 +26,8 @@
         <div id="fileDiv">
             <c:forEach items="${files}" var="file">
             <div>
-                <a href="data/system/downloadFile.do?fileName=${file.name}&attachmentId=${project.project.attachmentId}">${file.name}</a>
-                <a onclick="javascript: projectManage.deleteFile(this, '${project.project.attachmentId}', '${file.name}');"  href="javascript:void(0);">删除文件</a>
+                <a href="data/system/downloadFile.do?fileName=${file.name}&attachmentId=${project.attachmentId}">${file.name}</a>
+                <a onclick="javascript: projectManage.deleteFile(this, '${project.attachmentId}', '${file.name}');"  href="javascript:void(0);">删除文件</a>
             </div>
             </c:forEach>
         </div>

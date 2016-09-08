@@ -3,7 +3,7 @@ var userManage = function () {
         init: function () {
             $('#datagrid').datagrid({
                 url: 'data/system/getUserList.do',
-                method: 'get',
+                method: 'post',
                 toolbar: '#tb',
                 singleSelect: true,
                 pagination: true,
@@ -88,7 +88,10 @@ var userManage = function () {
             }
 
             var userId = row.user.userId;
-            Message.confirm("确认删除该用户吗？", function () {
+            Message.confirm("确认删除该用户吗？", function (confirmed) {
+                if (!confirmed) {
+                    return;
+                }
                 $.post('data/system/deleteUser.do', {userId: userId}, function () {
                     Message.alert("删除成功。");
                 })

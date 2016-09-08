@@ -82,7 +82,7 @@ public class SystemDataController {
         return null;
     }
 
-    @RequestMapping("getUserList.do")
+    @RequestMapping(value = "getUserList.do", method = RequestMethod.POST)
     @ResponseBody
     public PageModel<UserDetail> getUserList(Integer page, Integer rows, String searchKey) {
         if (page == null || page == 0) {

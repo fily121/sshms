@@ -5,6 +5,7 @@ import cn.com.sinoi.zyqyh.controller.divController.SystemDivController;
 import cn.com.sinoi.zyqyh.definition.FilePathEnum;
 import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IClglService;
+import cn.com.sinoi.zyqyh.service.IOrderProjectService;
 import cn.com.sinoi.zyqyh.service.IOrderService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMD;
@@ -14,6 +15,7 @@ import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
 import cn.com.sinoi.zyqyh.vo.Attachment;
 import cn.com.sinoi.zyqyh.vo.Clxx;
 import cn.com.sinoi.zyqyh.vo.Order;
+import cn.com.sinoi.zyqyh.vo.OrderProjectKey;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
 import cn.com.sinoi.zyqyh.vo.relate.SgdxxDetail;
@@ -71,6 +73,9 @@ public class BaseDataController {
     @Autowired
     IClglService clglService;
 
+    @Autowired
+    IOrderProjectService orderProjectService;
+
     @Value("#{readProperties['wechat.corpId']}")
     private String corpId;
     @Value("#{readProperties['wechat.secret']}")
@@ -79,7 +84,7 @@ public class BaseDataController {
     @Value("#{readProperties['upload.file.path']}")
     private String path;
 
-    @RequestMapping("getSgdList.do")
+    @RequestMapping(value = "getSgdList.do", method = RequestMethod.POST)
     @ResponseBody
     public PageModel<SgdxxDetail> getSgdList(Integer page, Integer rows, String searchKey) {
         if (page == null || page == 0) {
@@ -188,7 +193,7 @@ public class BaseDataController {
 
     @RequestMapping(value = "addModifyOrder.do", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> addModifyOrder(Order order, @RequestParam(value = "uploadFile", required = false) MultipartFile[] uploadFile, HttpServletResponse response) {
+    public Map<String, String> addModifyOrder(Order order, @RequestParam(value = "uploadFile", required = false) MultipartFile[] uploadFile, HttpServletResponse response, String guanlianProject) {
         Map<String, String> result = new HashMap<>();
         if (order != null) {
             List<String> openIds = sgdxxService.findOpenIdByGcdId(order.getSgdid());
@@ -240,6 +245,16 @@ public class BaseDataController {
                     WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
                 }
             }
+            if (StringUtils.isNotEmpty(guanlianProject)) {
+                orderProjectService.deleteByOrderId(order.getOrderId());
+                String[] projectIds = guanlianProject.split(",");
+                for (String projectId : projectIds) {
+                    OrderProjectKey key = new OrderProjectKey();
+                    key.setOrderId(order.getOrderId());
+                    key.setProjectId(projectId);
+                    orderProjectService.save(key);
+                }
+            }
             result.put("code", "true");
             result.put("message", msg);
             return result;
@@ -254,8 +269,8 @@ public class BaseDataController {
     public void deleteFile(String attachmentId, String fileName, String sgdId, String orderName, String orderId) {
         if (StringUtils.isNotEmpty(attachmentId)) {
             Attachment att = attachmentService.findbyId(attachmentId);
-            if (att != null) {
-                File file = new File(path + att.getUri() + "/" + (StringUtils.isNotEmpty(fileName) ? fileName : att.getFileName()));
+            if (att != null && StringUtils.isNotEmpty(fileName)) {
+                File file = new File(path + att.getUri() + "/" + fileName);
                 file.delete();
                 List<String> openIds = sgdxxService.findOpenIdByGcdId(sgdId);
                 String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();

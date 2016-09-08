@@ -52,7 +52,7 @@
                     $(autoMessage).addClass("me");
                     $(autoMessage).children(".bubble_primary").addClass("right");
                 } else {
-                    $(autoMessage).children(".bubble_primary").addClass("left");
+                    $(autoMessage).children(".bubble_primary").addClass("left").addClass("bubble_default").removeClass("bubble_primary");
                     $("#messageList").append($(autoMessage));
                     $("#editArea").text('');
                 }

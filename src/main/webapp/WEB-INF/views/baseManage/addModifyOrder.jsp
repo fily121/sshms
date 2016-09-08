@@ -28,6 +28,29 @@
     <div class="input_area">
         <input class="easyui-textbox" name="remark"  value="${order.order.remark}"  id="remark" style="width:95%" data-options="label:'备注'" validType="maxLength[200]"/>
     </div>
+    <div>
+        <select id="guanlianProject" class="easyui-combogrid" name="guanlianProject" style="width:400px"
+        data-options="
+            panelWidth:600,
+            value:${projectIds},
+            label:'关联工程',
+            idField:'projectId',
+            textField:'projectName',
+            editable:false,
+            multiple:true,
+            url: 'data/projectManage/getProjectList.do?all=true',
+            columns:[[
+                {field: 'projectId', checkbox: true},
+                {field: 'projectName', title: '工程名', width: 200},
+                {field: 'formattedCreateDate', title: '创建时间', width: 140},
+                {field: 'projectDetail', title: '详情', width: 400}
+            ]]
+        "></select>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div style="clear:both"></div>
     <a id="btn" href="javascript: orderManage.addFile();" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加文件</a>
     <div class="input_area">
         <input type="file" id="file_1" name="uploadFile"/>

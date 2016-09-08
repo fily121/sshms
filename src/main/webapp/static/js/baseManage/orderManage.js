@@ -86,11 +86,9 @@ var orderManage = function () {
             $('#orderManageDialog').dialog('open');
         },
         searchOrder: function (searchKey) {
-            if (!searchKey) {
-                $('#datagrid').datagrid('load', {
-                    searchKey: searchKey
-                });
-            }
+            $('#datagrid').datagrid('load', {
+                searchKey: searchKey
+            });
         },
         submitForm: function () {
             submitForm('#orderManageForm', function () {
@@ -106,7 +104,10 @@ var orderManage = function () {
             $("#fileDiv").append(fileDiv);
         },
         deleteFile: function (thisLink, attachmentId, fileName, sgdId, orderName, orderId) {
-            Message.confirm("确认要删除这个文件吗？文件删除会立即生效。", function () {
+            Message.confirm("确认要删除这个文件吗？文件删除会立即生效。", function (y) {
+                if (!y) {
+                    return;
+                }
                 if (attachmentId) {
                     $.post('data/baseManage/deleteFile.do', {attachmentId: attachmentId, fileName: fileName, sgdId: sgdId, orderName: orderName, orderId: orderId});
                 }
@@ -116,8 +117,8 @@ var orderManage = function () {
         clearForm: function () {
             clearForm('#orderManageForm');
         },
-        showDetail: function (orderId) {
-            window.open ("<%= basePath%>div/baseManage/orderDetail.do?orderId="+orderId, "_blank", "height=768, width=1024, toolbar= no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,top=100,left=300")
+        showDetail: function (orderId, basePath) {
+            window.open("div/baseManage/orderDetail.do?orderId=" + orderId, "_blank", "height=768, width=1024, toolbar= no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,top=100,left=300");
         }
     };
 }();

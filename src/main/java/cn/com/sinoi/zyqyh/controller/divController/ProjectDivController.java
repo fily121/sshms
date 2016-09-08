@@ -8,8 +8,8 @@ import java.io.File;
 import java.util.logging.Level;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +37,9 @@ public class ProjectDivController {
     @Autowired
     private IAttachmentService attachmentService;
 
+    @Value("#{readProperties['upload.file.path']}")
+    private String path;
+
     @RequestMapping("addModifyProject.do")
     public String addModifyProject(String id, Model model) {
         if (org.apache.commons.lang3.StringUtils.isNotEmpty(id)) {
@@ -46,7 +49,7 @@ public class ProjectDivController {
                 String attachmentId = project.getAttachmentId();
                 if (StringUtils.isNotEmpty(attachmentId)) {
                     Attachment atta = attachmentService.findbyId(attachmentId);
-                    File file = new File(path + atta.getUri() + "/" + project.getProjectId());
+                    File file = new File(path + atta.getUri());
                     if (file.exists()) {
                         model.addAttribute("files", file.listFiles());
                     }

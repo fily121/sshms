@@ -103,6 +103,7 @@
     ,
     <include refid="Blob_Column_List" />
     from project
+    order by create_time desc
   </select>
   <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Project">
     update project
@@ -124,6 +125,7 @@
             OR project_detail LIKE concat('%',#{searchKey},'%')
             )
         </if>
+        order by create_time desc
         limit #{limit1}, #{limit2}
   </select>
   

@@ -1,12 +1,14 @@
 package cn.com.sinoi.zyqyh.controller.divController;
 
 import cn.com.sinoi.zyqyh.service.IAttachmentService;
+import cn.com.sinoi.zyqyh.service.IOrderProjectService;
 import cn.com.sinoi.zyqyh.service.IOrderService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.vo.Attachment;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
 import java.io.File;
+import java.util.List;
 import java.util.logging.Level;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -43,12 +45,18 @@ public class BaseDivController {
     @Value("#{readProperties['upload.file.path']}")
     private String path;
 
+    @Autowired
+    IOrderProjectService orderProjectService;
+
     @RequestMapping("addModifyOrder.do")
     public String addModifyOrder(String id, Model model) {
         if (org.apache.commons.lang3.StringUtils.isNotEmpty(id)) {
             try {
                 OrderDetail order = orderService.selectByOrderId(id);
+                List<String> projectIds = orderProjectService.selectProjectIdByOrderId(id);
                 model.addAttribute("order", order);
+                String projectIdArray = projectIds.toString().replaceAll("\\[", "\\['").replaceAll("\\]", "'\\]").replaceAll("\\,", "'\\,'").replaceAll(" ", "");
+                model.addAttribute("projectIds", projectIdArray);
                 String attachmentId = order.getOrder().getAttachmentId();
                 if (StringUtils.isNotEmpty(attachmentId)) {
                     Attachment atta = attachmentService.findbyId(attachmentId);

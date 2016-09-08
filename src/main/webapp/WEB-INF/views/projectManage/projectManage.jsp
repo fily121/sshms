@@ -18,6 +18,7 @@
             <a href="javascript:projectManage.addModifyProject(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
             <a href="javascript:projectManage.addModifyProject();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
             <a href="javascript:projectManage.deleteProject();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+            <span><input type="text" name="searchKey" id="searchKey"/><a href="javascript: projectManage.searchProject($('#searchKey').val());" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">检索</a></span>
         </div>
     </section>
     

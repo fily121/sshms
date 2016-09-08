@@ -3,7 +3,7 @@ var projectManage = function () {
         init: function () {
             $('#datagrid').datagrid({
                 url: 'data/projectManage/getProjectList.do',
-                method: 'get',
+                method: 'post',
                 toolbar: '#tb',
                 singleSelect: true,
                 pagination: true,
@@ -49,11 +49,14 @@ var projectManage = function () {
                 return;
             }
 
-            var userId = row.user.userId;
-            Message.confirm("确认删除该工程吗？", function () {
-                $.post('data/projectManage/deleteProject.do', {id: userId}, function () {
-                    Message.alert("删除成功。");
-                })
+            var projectId = row.projectId;
+            Message.confirm("确认删除该工程吗？文件会一并删除。", function (y) {
+                if (y) {
+                    $.post('data/projectManage/deleteProject.do', {id: projectId}, function () {
+                        Message.alert("删除成功。");
+                        $('#datagrid').datagrid('reload');
+                    })
+                }
             });
         },
         addFile: function () {
@@ -64,7 +67,10 @@ var projectManage = function () {
             $("#fileDiv").append(fileDiv);
         },
         deleteFile: function (thisLink, attachmentId, fileName) {
-            Message.confirm("确认要删除这个文件吗？文件删除会立即生效。", function () {
+            Message.confirm("确认要删除这个文件吗？文件删除会立即生效。", function (confirmed) {
+                if (!confirmed) {
+                    return;
+                }
                 if (attachmentId) {
                     $.post('data/projectManage/deleteFile.do', {attachmentId: attachmentId, fileName: fileName});
                 }
@@ -75,7 +81,6 @@ var projectManage = function () {
             submitForm('#projectManageForm', function () {
                 $('#projectManageDialog').dialog('close');
                 $('#datagrid').datagrid('reload');
-
             });
         },
         clearForm: function () {

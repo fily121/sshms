@@ -5,6 +5,7 @@ import cn.com.sinoi.zyqyh.controller.divController.SystemDivController;
 import cn.com.sinoi.zyqyh.definition.FilePathEnum;
 import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IProjectService;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMD;
 import cn.com.sinoi.zyqyh.utils.PageModel;
 import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
 import cn.com.sinoi.zyqyh.vo.Attachment;
@@ -29,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMD;
 
 /**
  * <p>
@@ -59,9 +59,9 @@ public class ProjectDataController {
     @Autowired
     private IAttachmentService attachmentService;
 
-    @RequestMapping("getProjectList.do")
+    @RequestMapping(value = "getProjectList.do", method = RequestMethod.POST)
     @ResponseBody
-    public PageModel<Project> getProjectList(Integer page, Integer rows, String searchKey) {
+    public PageModel<Project> getProjectList(Integer page, Integer rows, String searchKey, Boolean all) {
         if (page == null || page == 0) {
             page = 1;
         }
@@ -70,7 +70,11 @@ public class ProjectDataController {
         }
         List<Project> projectList = null;
         try {
-            projectList = projectService.findAllForPage(page, rows, searchKey);
+            if (all != null && all) {
+                projectList = projectService.findAll();
+            } else {
+                projectList = projectService.findAllForPage(page, rows, searchKey);
+            }
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -177,7 +181,7 @@ public class ProjectDataController {
     public void deleteFile(String attachmentId, String fileName) {
         if (StringUtils.isNotEmpty(attachmentId)) {
             Attachment att = attachmentService.findbyId(attachmentId);
-            if (att != null) {
+            if (att != null && StringUtils.isNotEmpty(fileName)) {
                 File file = new File(path + att.getUri() + "/" + (StringUtils.isNotEmpty(fileName) ? fileName : att.getFileName()));
                 file.delete();
             }
