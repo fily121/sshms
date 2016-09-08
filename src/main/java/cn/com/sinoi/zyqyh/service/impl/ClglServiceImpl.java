@@ -75,12 +75,32 @@ public class ClglServiceImpl extends BaseServiceImpl<CllqGl> implements IClglSer
         Map<String, Integer> param = new HashMap<>();
         param.put("limit1", (page - 1) * rows);
         param.put("limit2", rows);
-        return cllqglMapper.findAllForPage(param);
+        return this.cllqglMapper.findAllForPage(param);
     }
 
     @Override
     public List<Clxx> findAllClxx() {
-        return clxxMapper.findAll();
+        return this.clxxMapper.findAll();
+    }
+
+    @Override
+    public Clxx selectClxxByPrimaryKey(String id) {
+        return this.clxxMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int deleteClxxByPrimaryKey(String id) {
+        return this.clxxMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int insertClxx(Clxx clxx) {
+        return this.clxxMapper.insert(clxx);
+    }
+
+    @Override
+    public int updateClxxByPrimaryKeySelective(Clxx clxx) {
+        return this.clxxMapper.updateByPrimaryKeySelective(clxx);
     }
 
 }

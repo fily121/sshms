@@ -5,6 +5,7 @@ import cn.com.sinoi.zyqyh.controller.divController.SystemDivController;
 import cn.com.sinoi.zyqyh.service.IClglService;
 import cn.com.sinoi.zyqyh.utils.PageModel;
 import cn.com.sinoi.zyqyh.vo.CllqGl;
+import cn.com.sinoi.zyqyh.vo.Clxx;
 import cn.com.sinoi.zyqyh.vo.relate.ClglDetail;
 import java.util.HashMap;
 import java.util.List;
@@ -91,15 +92,64 @@ public class CllqglDataController {
     }
 
     /**
+     * 删除材料。
+     *
+     * @param id 材料ID
+     * @param model
+     * @return 删除成功或者失败
+     */
+    @RequestMapping("deleteClxx.do")
+    @ResponseBody
+    public boolean deleteClxx(String id, Model model) {
+        try {
+            clglService.deleteClxxByPrimaryKey(id);
+            return true;
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    /**
+     * 增加修改材料。
+     *
+     * @param clxx
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "addModifyClxx.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> addModifyClxx(Clxx clxx, HttpServletResponse response) {
+        response.setContentType("text/html;charset=UTF-8");
+        Map<String, String> result = new HashMap<>();
+        try {
+            if (StringUtils.isEmpty(clxx.getId())) {
+                clxx.setId(java.util.UUID.randomUUID().toString());
+                clglService.insertClxx(clxx);
+                result.put("code", "true");
+                result.put("message", "保存成功。");
+            } else {
+                clglService.updateClxxByPrimaryKeySelective(clxx);
+                result.put("code", "true");
+                result.put("message", "修改成功。");
+            }
+        } catch (Exception ex) {
+            result.put("code", "false");
+            result.put("message", ex.getMessage());
+        }
+        return result;
+    }
+
+    /**
      * 根据页码和每页的记录数，取得材料领取记录。
      *
      * @param page 页码
      * @param rows 每页的记录数
      * @return
      */
-    @RequestMapping(value = "getClList.do", method = RequestMethod.POST)
+    @RequestMapping(value = "getClglDetailList.do", method = RequestMethod.POST)
     @ResponseBody
-    public PageModel<ClglDetail> getClList(Integer page, Integer rows) {
+    public PageModel<ClglDetail> getClglDetailList(Integer page, Integer rows) {
         if (page == null || page == 0) {
             page = 1;
         }

@@ -7,6 +7,12 @@
         width:350px
     }
 </style>
+<script>
+    $(function () {
+        easyuiExt.initCombobox();
+    });
+</script>
+
 <form action="data/system/addModifyUser.do" method="post" id="userManageForm">
     <div class="input_area" style="margin-top:20px;">
         <input name="userId" value="${user.userId}" type="hidden"/>

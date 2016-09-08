@@ -15,22 +15,24 @@
                 return date <= now;
             }
         });
+        easyuiExt.initCombobox();
     });
 </script>
 
 <form action="data/cllqgl/addModifyCllqgl.do" method="post" id="cllqglManageForm">
     <div class="input_area" style="margin-top:20px;">
         <input name="id" value="${cllqGl.id}" type="hidden"/>
-        <input class="easyui-combobox" name="lqclh" id="lqclh" value="${cllqGl.lqclh}" style="width:95%" data-options="label:'材料名称',required:true,valueField:'id',textField:'clmc',url:'data/baseManage/getAllClxx.do'">
+        <input class="easyui-combobox" name="lqclh" id="lqclh" value="${cllqGl.lqclh}" style="width:95%"
+               data-options="label:'材料名称',required:true,valueField:'id',textField:'clmc',url:'data/baseManage/getAllClxx.do'">
     </div>
     <div class="input_area" style="margin-top:20px;">
-        <input class="easyui-datebox" name="lqtime" id="lqtime" value="${cllqGl.lqtime}" style="width:95%" data-options="label:'领取日期'">
+        <input class="easyui-datebox" name="lqtime" id="lqtime" value="${cllqGl.lqtime}" style="width:95%" data-options="label:'领取日期',editable:false">
     </div>
     <div class="input_area" style="margin-top:20px;">
         <input class="easyui-numberbox" name="lqsl" id="lqsl" value="${cllqGl.lqsl}" style="width:95%" data-options="label:'领取数量',precision:2,required:true,min:0"/>
     </div>
     <div class="input_area" style="margin-top:20px;">
-        <input class="easyui-numberbox" name="sysl" id="sysl" value="${cllqGl.sysl}" style="width:95%" data-options="required:true,precision:2,label:'使用数量',min:0">
+        <input class="easyui-numberbox" name="sysl" id="sysl" value="${cllqGl.sysl}" style="width:95%" data-options="required:true,precision:2,label:'使用数量',min:0" validType="smallthan['#lqsl', '使用数量', '领取数量']">
     </div>
     <div class="input_area" style="margin-top:20px;">
         <input class="easyui-combobox" name="lqdw" id="lqdw" value="${cllqGl.lqdw}" style="width:95%" data-options="required:true,label:'领取队伍',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do'">

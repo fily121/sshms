@@ -45,9 +45,9 @@
     </delete>
     <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
         insert into sgdxx (id, sgdmc, detail,
-        duizhang)
+        duizhang, cph)
         values (#{id,jdbcType=VARCHAR}, #{sgdmc,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR},
-        #{duizhang,jdbcType=VARCHAR})
+        #{duizhang,jdbcType=VARCHAR}, #{cph,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
         insert into sgdxx
@@ -64,6 +64,9 @@
             <if test="duizhang != null" >
                 duizhang,
             </if>
+            <if test="cph != null" >
+                cph,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -77,6 +80,9 @@
             </if>
             <if test="duizhang != null" >
                 #{duizhang,jdbcType=VARCHAR},
+            </if>
+            <if test="cph != null" >
+                #{cph,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -92,6 +98,9 @@
             <if test="duizhang != null" >
                 duizhang = #{duizhang,jdbcType=VARCHAR},
             </if>
+            <if test="cph != null" >
+                cph = #{cph,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
@@ -100,6 +109,7 @@
         set sgdmc = #{sgdmc,jdbcType=VARCHAR},
         detail = #{detail,jdbcType=VARCHAR},
         duizhang = #{duizhang,jdbcType=VARCHAR}
+        cph = #{cph,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
     <select id="selectBySgdmc" resultMap="BaseResultMap" parameterType="java.lang.String" >

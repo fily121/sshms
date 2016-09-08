@@ -66,6 +66,9 @@ public class BaseDataController {
     @Autowired
     IAttachmentService attachmentService;
 
+    @Autowired
+    IClglService clglService;
+
     @Value("#{readProperties['wechat.corpId']}")
     private String corpId;
     @Value("#{readProperties['wechat.secret']}")
@@ -76,7 +79,6 @@ public class BaseDataController {
 
     @Value("#{readProperties['upload.file.path']}")
     private String path;
-    IClglService clglService;
 
     @RequestMapping("getSgdList.do")
     @ResponseBody

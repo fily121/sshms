@@ -10,7 +10,7 @@ var sgdwManage = function () {
                 title: '队伍列表',
                 columns: [[
                         {field: 'id', width: 80, hidden: true, formatter: function (value, rows, index) {
-                                if (rows.user) {
+                                if (rows.sgdxx) {
                                     return rows.sgdxx.id;
                                 } else {
                                     return '';
@@ -18,7 +18,7 @@ var sgdwManage = function () {
                             }
                         },
                         {field: 'duizhang', width: 80, hidden: true, formatter: function (value, rows, index) {
-                                if (rows.user) {
+                                if (rows.sgdxx) {
                                     return rows.sgdxx.duizhang;
                                 } else {
                                     return '';
@@ -26,7 +26,7 @@ var sgdwManage = function () {
                             }
                         },
                         {field: 'sgdmc', title: '施工队名', width: 120, formatter: function (value, rows, index) {
-                                if (rows.user) {
+                                if (rows.sgdxx) {
                                     return rows.sgdxx.sgdmc;
                                 } else {
                                     return '';
@@ -34,7 +34,7 @@ var sgdwManage = function () {
                             }
                         },
                         {field: 'detail', title: '施工队详情', width: 120, formatter: function (value, rows, index) {
-                                if (rows.user) {
+                                if (rows.sgdxx) {
                                     return rows.sgdxx.detail;
                                 } else {
                                     return '';
@@ -52,6 +52,14 @@ var sgdwManage = function () {
                         {field: 'wechatNo', title: '队长微信号', width: 120, formatter: function (value, rows, index) {
                                 if (rows.user) {
                                     return rows.user.wechatNo;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        },
+                        {field: 'cph', title: '车牌号', width: 80, formatter: function (value, rows, index) {
+                                if (rows.sgdxx) {
+                                    return rows.sgdxx.cph;
                                 } else {
                                     return '';
                                 }

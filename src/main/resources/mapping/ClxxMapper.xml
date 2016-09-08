@@ -1,114 +1,76 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.com.sinoi.zyqyh.dao.ClxxMapper" >
-    <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Clxx" >
-        <id column="clxx_id" property="id" jdbcType="VARCHAR" />
-        <result column="clxx_clmc" property="clmc" jdbcType="VARCHAR" />
-        <result column="clxx_cltype" property="cltype" jdbcType="VARCHAR" />
-        <result column="clxx_detail" property="detail" jdbcType="VARCHAR" />
-        <result column="clxx_clgly" property="clgly" jdbcType="VARCHAR" />
-        <result column="clxx_clsy" property="clsy" jdbcType="DECIMAL" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.sinoi.zyqyh.dao.ClxxMapper">
+    <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Clxx">
+        <id column="clxx_id" jdbcType="VARCHAR" property="id" />
+        <result column="clxx_clmc" jdbcType="VARCHAR" property="clmc" />
+        <result column="clxx_detail" jdbcType="VARCHAR" property="detail" />
     </resultMap>
-    <sql id="Base_Column_List" >
-        id as clxx_id, 
-        clmc as clxx_clmc, 
-        cltype as clxx_cltype, 
-        detail as clxx_detail, 
-        clgly as clxx_clgly, 
-        clsy as clxx_clsy
+    <sql id="Base_Column_List">
+        id as clxx_id,
+        clmc as clxx_clmc,
+        detail as clxx_detail
     </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select 
         <include refid="Base_Column_List" />
         from clxx
         where id = #{id,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete from clxx
         where id = #{id,jdbcType=VARCHAR}
     </delete>
-    <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Clxx" >
-        insert into clxx (id, clmc, cltype, 
-        detail, clgly, clsy
+    <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Clxx">
+        insert into clxx (id, clmc, detail
         )
-        values (#{id,jdbcType=VARCHAR}, #{clmc,jdbcType=VARCHAR}, #{cltype,jdbcType=VARCHAR}, 
-        #{detail,jdbcType=VARCHAR}, #{clgly,jdbcType=VARCHAR}, #{clsy,jdbcType=DECIMAL}
+        values (#{id,jdbcType=VARCHAR}, #{clmc,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}
         )
     </insert>
-    <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Clxx" >
+    <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Clxx">
         insert into clxx
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
                 id,
             </if>
-            <if test="clmc != null" >
+            <if test="clmc != null">
                 clmc,
             </if>
-            <if test="cltype != null" >
-                cltype,
-            </if>
-            <if test="detail != null" >
+            <if test="detail != null">
                 detail,
             </if>
-            <if test="clgly != null" >
-                clgly,
-            </if>
-            <if test="clsy != null" >
-                clsy,
-            </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="id != null" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="clmc != null" >
+            <if test="clmc != null">
                 #{clmc,jdbcType=VARCHAR},
             </if>
-            <if test="cltype != null" >
-                #{cltype,jdbcType=VARCHAR},
-            </if>
-            <if test="detail != null" >
+            <if test="detail != null">
                 #{detail,jdbcType=VARCHAR},
-            </if>
-            <if test="clgly != null" >
-                #{clgly,jdbcType=VARCHAR},
-            </if>
-            <if test="clsy != null" >
-                #{clsy,jdbcType=DECIMAL},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Clxx" >
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Clxx">
         update clxx
-        <set >
-            <if test="clmc != null" >
+        <set>
+            <if test="clmc != null">
                 clmc = #{clmc,jdbcType=VARCHAR},
             </if>
-            <if test="cltype != null" >
-                cltype = #{cltype,jdbcType=VARCHAR},
-            </if>
-            <if test="detail != null" >
+            <if test="detail != null">
                 detail = #{detail,jdbcType=VARCHAR},
-            </if>
-            <if test="clgly != null" >
-                clgly = #{clgly,jdbcType=VARCHAR},
-            </if>
-            <if test="clsy != null" >
-                clsy = #{clsy,jdbcType=DECIMAL},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Clxx" >
+    <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Clxx">
         update clxx
         set clmc = #{clmc,jdbcType=VARCHAR},
-        cltype = #{cltype,jdbcType=VARCHAR},
-        detail = #{detail,jdbcType=VARCHAR},
-        clgly = #{clgly,jdbcType=VARCHAR},
-        clsy = #{clsy,jdbcType=DECIMAL}
+        detail = #{detail,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    
+  
     <select id="findAll" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from clxx
     </select>

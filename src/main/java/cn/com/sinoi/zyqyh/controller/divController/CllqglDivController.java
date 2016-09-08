@@ -2,6 +2,7 @@ package cn.com.sinoi.zyqyh.controller.divController;
 
 import cn.com.sinoi.zyqyh.service.IClglService;
 import cn.com.sinoi.zyqyh.vo.CllqGl;
+import cn.com.sinoi.zyqyh.vo.Clxx;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class CllqglDivController {
     IClglService clglService;
 
     @RequestMapping("addModifyCllqgl.do")
-    public String addModifySgdw(String id, Model model) {
+    public String addModifyCllqgl(String id, Model model) {
         if (org.apache.commons.lang3.StringUtils.isNotEmpty(id)) {
             try {
                 CllqGl cllqGl = clglService.selectByPrimaryKey(id);
@@ -41,5 +42,18 @@ public class CllqglDivController {
             }
         }
         return "system/addModifyCllqgl";
+    }
+
+    @RequestMapping("addModifyClxx.do")
+    public String addModifyClxx(String id, Model model) {
+        if (org.apache.commons.lang3.StringUtils.isNotEmpty(id)) {
+            try {
+                Clxx clxx = clglService.selectClxxByPrimaryKey(id);
+                model.addAttribute("clxx", clxx);
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return "system/addModifyClxx";
     }
 }

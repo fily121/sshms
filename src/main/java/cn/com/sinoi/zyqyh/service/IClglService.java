@@ -30,5 +30,13 @@ public interface IClglService extends IBaseService<CllqGl> {
 
     List<ClglDetail> getClglDetailList(Integer page, Integer rows);
 
-    public List<Clxx> findAllClxx();
+    List<Clxx> findAllClxx();
+
+    Clxx selectClxxByPrimaryKey(String id);
+
+    int deleteClxxByPrimaryKey(String id);
+
+    int insertClxx(Clxx clxx);
+
+    int updateClxxByPrimaryKeySelective(Clxx clxx);
 }

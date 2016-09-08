@@ -8,6 +8,12 @@
         width:350px
     }
 </style>
+<script>
+    $(function () {
+        easyuiExt.initCombobox();
+    });
+</script>
+
 <form id="orderManageForm" method="post" action="data/baseManage/addModifyOrder.do" enctype="multipart/form-data">
     <div class="input_area" style="margin-top:20px;">
         <input name="orderId" value="${order.order.orderId}" type="hidden"/>

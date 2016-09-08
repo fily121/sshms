@@ -1,8 +1,10 @@
 var clManage = function () {
     return {
         init: function () {
+            $('#cltb').hide();
+            $('#tb').show();
             $('#datagrid').datagrid({
-                url: 'data/cllqgl/getClList.do',
+                url: 'data/cllqgl/getClglDetailList.do',
                 method: 'post',
                 toolbar: '#tb',
                 singleSelect: true,
@@ -127,7 +129,7 @@ var clManage = function () {
                 }
                 var id = row.cllqGl.id;
                 $.get('data/cllqgl/deleteCllqgl.do?id=' + id, function (data) {
-                    if (data) {
+                    if (data === 'true') {
                         Message.alert("删除成功。");
                         $('#datagrid').datagrid('reload');
                     } else {
@@ -144,6 +146,101 @@ var clManage = function () {
         },
         clearForm: function () {
             clearForm('#cllqglManageForm');
+        }
+    };
+}();
+var clxxManage = function () {
+    return {
+        init: function () {
+            $('#tb').hide();
+            $('#cltb').hide();
+            $('#datagrid').datagrid({
+                url: 'data/baseManage/getAllClxx.do',
+                method: 'post',
+                toolbar: '#cltb',
+                singleSelect: true,
+                pagination: true,
+                title: '材料列表',
+                columns: [[
+                        {field: 'clId', hidden: true, formatter: function (value, rows, index) {
+                                if (rows) {
+                                    return rows.id;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        },
+                        {field: 'clmc', width: 120, title: '材料名称', formatter: function (value, rows, index) {
+                                if (rows) {
+                                    return rows.clmc;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        },
+                        {field: 'detail', width: 220, title: '材料详情', formatter: function (value, rows, index) {
+                                if (rows) {
+                                    return rows.detail;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        }
+                    ]]
+            });
+        },
+        addModifyClxx: function (isAdd) {
+            var id = '';
+            var title = '增加材料';
+            if (!isAdd) {
+                var row = $('#datagrid').datagrid("getSelected");
+                if (!row) {
+                    Message.alert("请选择一条数据进行修改。");
+                    return;
+                }
+                id = row.id;
+                title = '修改材料';
+            }
+            $('#cllqglManageDialog').dialog({
+                title: title,
+                width: 800,
+                height: 400,
+                closed: true,
+                cache: false,
+                href: 'div/cllqgl/addModifyClxx.do?id=' + id,
+                modal: true
+            });
+            $('#cllqglManageDialog').dialog('open');
+        },
+        deleteClxx: function () {
+            var row = $('#datagrid').datagrid("getSelected");
+            if (!row) {
+                Message.alert("请选择一条数据进行删除。");
+                return;
+            }
+            Message.confirm("确认删除该材料吗？", function (confirmed) {
+                if (!confirmed) {
+                    return;
+                }
+                var id = row.id;
+                $.get('data/cllqgl/deleteClxx.do?id=' + id, function (data) {
+                    if (data === 'true') {
+                        Message.alert("删除成功。");
+                        $('#datagrid').datagrid('reload');
+                    } else {
+                        Message.alert("删除失败。");
+                    }
+                });
+            });
+        },
+        submitForm: function () {
+            submitForm('#clxxManageForm', function () {
+                $('#cllqglManageDialog').dialog('close');
+                $('#datagrid').datagrid('reload');
+            });
+        },
+        clearForm: function () {
+            clearForm('#clxxManageForm');
         }
     };
 }();
