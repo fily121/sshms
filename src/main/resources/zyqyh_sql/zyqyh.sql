@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2016-09-06 20:18:39
+Date: 2016-09-07 19:15:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `attachment`;
 CREATE TABLE `attachment` (
   `id` varchar(36) NOT NULL,
   `uri` varchar(100) NOT NULL,
-  `fileName` varchar(255) NOT NULL,
+  `fileName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -30,6 +30,57 @@ CREATE TABLE `attachment` (
 -- Records of attachment
 -- ----------------------------
 INSERT INTO `attachment` VALUES ('1', 'template', 'userImport.xls');
+INSERT INTO `attachment` VALUES ('47c9c7b4-fee9-4c74-a32a-93ac0e0e3831', 'ddgl/2016-09-07', null);
+INSERT INTO `attachment` VALUES ('6a0279c8-3679-441a-a54b-4510d91d9154', 'ddgl/2016-09-07', null);
+INSERT INTO `attachment` VALUES ('6cfe394c-727d-42c9-b9d4-815f9c28135a', 'ddgl/2016-09-07', null);
+INSERT INTO `attachment` VALUES ('aefda677-7da7-484d-b222-6456e5146509', 'ddgl/2016-09-07/3cfa56a7-67a5-4db8-b051-9a6783a88909', null);
+INSERT INTO `attachment` VALUES ('d49b0511-5453-4e9b-9399-713fa2b7a977', 'ddgl/2016-09-07', null);
+
+-- ----------------------------
+-- Table structure for cllqgl
+-- ----------------------------
+DROP TABLE IF EXISTS `cllqgl`;
+CREATE TABLE `cllqgl` (
+  `id` varchar(255) NOT NULL DEFAULT '' COMMENT '领取号',
+  `lqclh` varchar(255) NOT NULL DEFAULT '' COMMENT '领取材料号',
+  `lqtime` varchar(20) DEFAULT '' COMMENT '领取时间',
+  `lqsl` decimal(10,2) DEFAULT '0.00' COMMENT '领取数量',
+  `sysl` decimal(10,2) DEFAULT '0.00' COMMENT '使用数量',
+  `lqdw` varchar(255) NOT NULL DEFAULT '' COMMENT '领取队伍',
+  PRIMARY KEY (`id`),
+  KEY `lqclh` (`lqclh`),
+  KEY `lqdw` (`lqdw`),
+  CONSTRAINT `lqclh` FOREIGN KEY (`lqclh`) REFERENCES `clxx` (`id`),
+  CONSTRAINT `lqdw` FOREIGN KEY (`lqdw`) REFERENCES `sgdxx` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cllqgl
+-- ----------------------------
+INSERT INTO `cllqgl` VALUES ('1', '1', '2016-09-07', '21.22', '21.22', 'fc367d75-8df5-4888-8f03-38f8348695ef');
+
+-- ----------------------------
+-- Table structure for clxx
+-- ----------------------------
+DROP TABLE IF EXISTS `clxx`;
+CREATE TABLE `clxx` (
+  `id` varchar(255) NOT NULL DEFAULT '' COMMENT '材料号',
+  `clmc` varchar(100) NOT NULL DEFAULT '' COMMENT '材料名称',
+  `cltype` varchar(2) NOT NULL DEFAULT '0' COMMENT '材料类型',
+  `detail` varchar(255) DEFAULT NULL COMMENT '材料描述',
+  `clgly` varchar(255) NOT NULL COMMENT '材料管理员',
+  `clsy` decimal(10,2) DEFAULT '0.00' COMMENT '材料总剩余',
+  PRIMARY KEY (`id`),
+  KEY `clgly` (`clgly`),
+  CONSTRAINT `clgly` FOREIGN KEY (`clgly`) REFERENCES `p_user` (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of clxx
+-- ----------------------------
+INSERT INTO `clxx` VALUES ('1', '材料1', '01', '材料详细1', '1', '10000.00');
+INSERT INTO `clxx` VALUES ('2', '材料2', '02', '材料详细2', '2', '20000.00');
+INSERT INTO `clxx` VALUES ('3', '材料3', '03', '材料详细3', '3', '30000.00');
 
 -- ----------------------------
 -- Table structure for message
@@ -3681,7 +3732,12 @@ CREATE TABLE `p_order` (
 INSERT INTO `p_order` VALUES ('1', '订单1', '2016-08-22 19:05:55', null, 'jcz', '备注1', '1', '', '蒋传志', null, null);
 INSERT INTO `p_order` VALUES ('2', '订单2', '2016-08-16 08:07:55', null, 'jcz', '备注2', '2', null, '蒋传志', '', null);
 INSERT INTO `p_order` VALUES ('3', '订单3', '2016-08-23 19:05:55', '2016-08-23 19:09:29', 'jcz', '备注3', '1', '', '蒋传志', '', '');
+INSERT INTO `p_order` VALUES ('3cfa56a7-67a5-4db8-b051-9a6783a88909', '222', '2016-09-07 15:18:45', null, null, '', 'fc367d75-8df5-4888-8f03-38f8348695ef', 'aefda677-7da7-484d-b222-6456e5146509', null, null, null);
 INSERT INTO `p_order` VALUES ('4', '订单4', '2016-08-10 08:07:55', '2016-08-25 19:09:32', 'jcz', '备注4', '2', '', '蒋传志', '', '');
+INSERT INTO `p_order` VALUES ('669eb966-1d09-440f-867e-69d5ba67a90e', '测试订单', null, null, null, '121212', 'fc367d75-8df5-4888-8f03-38f8348695ef', '6cfe394c-727d-42c9-b9d4-815f9c28135a', null, null, null);
+INSERT INTO `p_order` VALUES ('95f61254-2f6c-4c53-b611-7989f4707dd1', '123123', null, null, null, 'sdfsdf', 'fc367d75-8df5-4888-8f03-38f8348695ef', '47c9c7b4-fee9-4c74-a32a-93ac0e0e3831', null, null, null);
+INSERT INTO `p_order` VALUES ('d75db616-cb68-47b7-a66c-6c0f610f51ba', 'ｻdﾌｧsdf', null, null, null, '', '', '6a0279c8-3679-441a-a54b-4510d91d9154', null, null, null);
+INSERT INTO `p_order` VALUES ('f6cc3564-121e-4f4b-9567-10498c552d3e', '测试订单', null, null, null, '121212', 'fc367d75-8df5-4888-8f03-38f8348695ef', 'd49b0511-5453-4e9b-9399-713fa2b7a977', null, null, null);
 
 -- ----------------------------
 -- Table structure for p_org
@@ -3903,7 +3959,9 @@ CREATE TABLE `sgdxx` (
   `detail` varchar(500) DEFAULT NULL,
   `duizhang` varchar(36) NOT NULL,
   `cph` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `duizhang` (`duizhang`),
+  CONSTRAINT `duizhang` FOREIGN KEY (`duizhang`) REFERENCES `p_user` (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

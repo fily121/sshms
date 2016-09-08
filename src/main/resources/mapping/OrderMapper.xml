@@ -179,6 +179,7 @@
         <include refid="Base_Column_List" />,
         <include refid="cn.com.sinoi.zyqyh.dao.SgdxxMapper.Base_Column_List" />
         from p_order a left join sgdxx b on a.SGDID = b.id
+        where 1=1
         <if test="searchKey != null">
             AND (
             a.ORDER_NAME LIKE concat('%',#{searchKey},'%')

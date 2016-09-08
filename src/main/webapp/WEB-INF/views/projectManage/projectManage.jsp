@@ -5,22 +5,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>工程承揽情况</title>
+        <script type="text/javascript" src="static/js/projectManage/projectManage.js"></script>
     </head>
     <body>
     <section>
         <h2>
             <strong style="color: grey;">工程承揽情况</strong>
         </h2>
-        <table class="easyui-datagrid" title="工程承揽" style="width:auto;height:600px;" id="datagrid">
+        <table class="easyui-datagrid" title="工程承揽列表" style="width:auto;height:600px;" id="datagrid">
         </table>
         <div id="tb" style="display:none">
-            <a href="javascript:userManage.addModifyUser(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
-            <a href="javascript:userManage.addModifyUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
-            <a href="javascript:userManage.deleteUser();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+            <a href="javascript:projectManage.addModifyProject(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
+            <a href="javascript:projectManage.addModifyProject();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a href="javascript:projectManage.deleteProject();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
         </div>
     </section>
     
-    <div id="userManageDialog" style="display:none;padding: 10px;">
+    <div id="projectManageDialog" style="display:none;padding: 10px;">
         
     </div>
 </body>

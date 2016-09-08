@@ -23,10 +23,10 @@
         <input class="easyui-textbox" name="formattedCreateDate" id="formattedCreateDate" value="${order.order.formattedCreateDate}" style="width:95%" data-options="label:'创建日期', disabled:true">
     </div>
     <div class="input_area">
-        <input class="easyui-combobox" name="sgdid"  value="${order.order.sgdid}" id="sgdid" style="width:95%" data-options="label:'所属施工队',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do',required:true">
+        <input class="easyui-combobox" name="sgdid"  value="${order.order.sgdid}" id="sgdid" style="width:95%" data-options="label:'所属施工队',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do',required:true"/>
     </div>
     <div class="input_area">
-        <textarea class="easyui-textbox" name="remark"  value="${order.order.remark}"  id="remark" style="width:95%" data-options="label:'备注'" validType="maxLength[200]"></textarea>
+        <input class="easyui-textbox" name="remark"  value="${order.order.remark}"  id="remark" style="width:95%" data-options="label:'备注'" validType="maxLength[200]"/>
     </div>
     <a id="btn" href="javascript: orderManage.addFile();" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加文件</a>
     <div class="input_area">

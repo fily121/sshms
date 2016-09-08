@@ -106,7 +106,7 @@ var orderManage = function () {
             $("#fileDiv").append(fileDiv);
         },
         deleteFile: function (thisLink, attachmentId, fileName, sgdId, orderName, orderId) {
-            Message.confirm("确认要删除这个文件吗？文件删除回立即生效。", function () {
+            Message.confirm("确认要删除这个文件吗？文件删除会立即生效。", function () {
                 if (attachmentId) {
                     $.post('data/baseManage/deleteFile.do', {attachmentId: attachmentId, fileName: fileName, sgdId: sgdId, orderName: orderName, orderId: orderId});
                 }
