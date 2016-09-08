@@ -137,14 +137,10 @@
             }
             function showImage(thisLink) {
                 var src = $(thisLink).children("img").attr("src");
-                var img = new Image();
-                img.src = src;
-                var w = img.offsetWidth;
-                var h = img.offsetHeight;
                 $("#showImageImg").attr("src", src);
                 $('#imagePanel').dialog({
-                    width: w+10,
-                    height: h+10,
+                    width: 800,
+                    height: 600,
                     title: '查看图片'
                 });
                 $('#imagePanel').dialog("open");
