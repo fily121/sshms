@@ -24,7 +24,7 @@
         <script type='text/javascript' src='<%= basePath%>static/js/plugins/lightbox.js'></script>
         <link rel="stylesheet" type="text/css" href="<%= basePath%>/static/css/gcdtx.css" />
         <script type="text/javascript">
-            var messageMeUiStart = '<div class="message me">' +
+            var messageMeUiStart = '<div class="message">' +
                     '<div class="content">' +
                     '<div class="nickname"><span class="time">{time}</span></div>' +
                     '<div class="bubble bubble_primary right">' +
@@ -46,10 +46,13 @@
                 MessagePush.onPageLoad('${gcdId}');
             }
             //推送信息  
-            function showMessage(autoMessage, time) {
+            function showMessage(autoMessage, time, isMe) {
                 autoMessage = messageMeUiStart + autoMessage + messageMeUiEnd;
                 autoMessage = autoMessage.replace('{time}', time);
-                $("#messageList").append(autoMessage);
+                if (isMe) {
+                    $(autoMessage).addClass("me");
+                }
+                $("#messageList").append($(autoMessage));
                 $("#editArea").text('');
             }
             var isSend = false;

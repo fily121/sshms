@@ -29,7 +29,7 @@ public class ShowMessage {
             private ScriptBuffer script = new ScriptBuffer();
 
             public void run() {
-                script.appendCall("showMessage", autoMessage, dateTime);
+                script.appendCall("showMessage", autoMessage, dateTime, true);
                 Collection<ScriptSession> sessions = Browser
                         .getTargetSessions();
                 for (ScriptSession scriptSession : sessions) {

@@ -204,7 +204,7 @@ public class WechatService implements IWechatService {
             private ScriptBuffer script = new ScriptBuffer();
 
             public void run() {
-                script.appendCall("showMessage", autoMessage, dateTime);
+                script.appendCall("showMessage", autoMessage, dateTime, false);
                 Collection<ScriptSession> sessions = Browser
                         .getTargetSessions();
                 for (ScriptSession scriptSession : sessions) {
