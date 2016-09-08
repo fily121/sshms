@@ -195,13 +195,27 @@ $.extend($.fn.validatebox.defaults.rules, {
     },
     bigthan: {
         validator: function (value, param) {
-            return value >= $(param[0]).val();
+            var sl = value.length - $(param[0]).val().length;
+            if(sl < 0){
+                return false;
+            }
+            if(sl === 0){
+                return value >= $(param[0]).val();
+            }
+            return true;
         },
         message: '{1}要不小于{2}。'
     },
     smallthan: {
         validator: function (value, param) {
-            return value <= $(param[0]).val();
+            var sl = value.length - $(param[0]).val().length;
+            if(sl < 0){
+                return true;
+            }
+            if(sl === 0){
+                return value <= $(param[0]).val();
+            }
+            return false;
         },
         message: '{1}要不大于{2}。'
     }

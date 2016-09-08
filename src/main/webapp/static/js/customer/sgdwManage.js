@@ -103,7 +103,7 @@ var sgdwManage = function () {
                 }
                 var id = row.sgdxx.id;
                 $.get('data/baseManage/deleteSgdw.do?id=' + id, function (data) {
-                    if (data) {
+                    if (data === 'true') {
                         Message.alert("删除成功。");
                         $('#datagrid').datagrid('reload');
                     } else {
