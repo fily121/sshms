@@ -138,12 +138,13 @@
             function showImage(thisLink) {
                 var src = $(thisLink).children("img").attr("src");
                 $("#showImageImg").attr("src", src);
-                $('#imagePanel').dialog({
-                    width: 800,
-                    height: 600,
-                    title: '查看图片'
+                $('#imagePanel').window({
+                    width: 1024,
+                    height: 768,
+                    title: '查看图片',
+                    modal:true
                 });
-                $('#imagePanel').dialog("open");
+                $('#imagePanel').window("open");
             }
         </script>  
     </head>  
