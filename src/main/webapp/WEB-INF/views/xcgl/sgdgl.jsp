@@ -27,7 +27,7 @@
             var messageMeUiStart = '<div class="message">' +
                     '<div class="content">' +
                     '<div class="nickname"><span class="time">{time}</span></div>' +
-                    '<div class="bubble bubble_primary right">' +
+                    '<div class="bubble bubble_primary">' +
                     '<div class="bubble_cont">' +
                     '<div class="plain">' +
                     '<pre>';
@@ -51,91 +51,103 @@
                 autoMessage = autoMessage.replace('{time}', time);
                 if (isMe) {
                     $(autoMessage).addClass("me");
+                    $(autoMessage).children(".bubble_primary").addClass("right");
+                } else {
+                    $(autoMessage).children(".bubble_primary").addClass("left");
+                    $("#messageList").append($(autoMessage));
+                    $("#editArea").text('');
                 }
-                $("#messageList").append($(autoMessage));
-                $("#editArea").text('');
-            }
-            var isSend = false;
-            function test() {
-                var sgdId = '${gcdId}';
-                if (!sgdId) {
-                    Message.alert("请选择需要联系的施工队。");
-                    return;
-                }
-                if (isSend) {
-                    return;
-                }
-                var msg = $("#editArea").html();
-                if (msg === '&nbsp;') {
-                    Message.alert("发送消息不能为空。");
-                    return;
-                }
-                $("#editArea").text('');
-                var date = new Date();
-                ajaxLoading();
-                $.post('data/xcgl/reciveMessage.do', {
-                    msg: msg,
-                    datetime: date.Format('yyyy/M/DD HH:mm:ss'),
-                    gcdId: '${gcdId}'
-                }, function (data) {
-                    data = eval("(" + data + ")");
-                    if (data === 'true') {
-                        ShowMessage.sendMessageAuto('${gcdId}', msg, date.Format('yyyy-M-DD HH:mm:ss'));
-                        $("#editArea").text('');
-                        isSend = true;
-                        setTimeout(setTimeout(function () {
-                            isSend = false;
-                        }, 500));
-                        ajaxLoadEnd();
-                    } else {
-                         ajaxLoadEnd();
-                        Message.alert("消息发送失败。请重试");
+                var isSend = false;
+                function test() {
+                    var sgdId = '${gcdId}';
+                    if (!sgdId) {
+                        Message.alert("请选择需要联系的施工队。");
+                        return;
                     }
-                })
-            }
-            $(function () {
-                onPageLoad();
-                dwr.engine.setActiveReverseAjax(true);
-                dwr.engine.setNotifyServerOnPageUnload(true);
-                $(".exp_cont a").click(function () {
-                    $(".box_ft_bd").addClass('hide');
-                });
-                //定义回车事件
-                $(document).keypress(function(e) {
-                    if (e.ctrlKey && e.which === 13)
-                    $("#btn_send")[0].click();
-                })
-                $('#datetime').datebox({
-                    onSelect: function (date) {
-                        var y = date.getFullYear();
-                        var m = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-                        var d = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
-                        var datetime = y + '-' + m + '-' + d;
-                        reloadPage(datetime);
+                    if (isSend) {
+                        return;
                     }
+                    var msg = $("#editArea").html();
+                    if (msg === '&nbsp;') {
+                        Message.alert("发送消息不能为空。");
+                        return;
+                    }
+                    $("#editArea").text('');
+                    var date = new Date();
+                    ajaxLoading();
+                    $.post('data/xcgl/reciveMessage.do', {
+                        msg: msg,
+                        datetime: date.Format('yyyy/M/DD HH:mm:ss'),
+                        gcdId: '${gcdId}'
+                    }, function (data) {
+                        data = eval("(" + data + ")");
+                        if (data === 'true') {
+                            ShowMessage.sendMessageAuto('${gcdId}', msg, date.Format('yyyy-M-DD HH:mm:ss'));
+                            $("#editArea").text('');
+                            isSend = true;
+                            setTimeout(setTimeout(function () {
+                                isSend = false;
+                            }, 500));
+                            ajaxLoadEnd();
+                        } else {
+                            ajaxLoadEnd();
+                            Message.alert("消息发送失败。请重试");
+                        }
+                    })
+                }
+                $(function () {
+                    onPageLoad();
+                    dwr.engine.setActiveReverseAjax(true);
+                    dwr.engine.setNotifyServerOnPageUnload(true);
+                    $(".exp_cont a").click(function () {
+                        $(".box_ft_bd").addClass('hide');
+                    });
+                    //定义回车事件
+                    $(document).keypress(function (e) {
+                        if (e.ctrlKey && e.which === 13)
+                            $("#btn_send")[0].click();
+                    })
+                    $('#datetime').datebox({
+                        onSelect: function (date) {
+                            var y = date.getFullYear();
+                            var m = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+                            var d = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+                            var datetime = y + '-' + m + '-' + d;
+                            reloadPage(datetime);
+                        }
+                    });
+                    $("#datetime").datebox('setValue', '${datetime}');
+                    $("#editArea").keypress(function () {
+                        isSend = false;
+                    });
                 });
-                $("#datetime").datebox('setValue', '${datetime}');
-                $("#editArea").keypress(function () {
-                    isSend = false;
-                });
-            });
-            function reloadPage(datetime) {
-                var href = window.location.href;
-                href = href.replace(/\&.+\&?/g, '');
-                window.location.href = href + "&datetime=" + datetime;
-            }
+                function reloadPage(datetime) {
+                    var href = window.location.href;
+                    href = href.replace(/\&.+\&?/g, '');
+                    window.location.href = href + "&datetime=" + datetime;
+                }
 
-            function ajaxLoading() {
-                $("<div class=\"datagrid-mask\"></div>").css({display: "block", width: "100%", height: $(window).height()}).appendTo("body");
-                $("<div class=\"datagrid-mask-msg\"></div>").html("正在处理，请稍候。。。").appendTo("body").css({display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2});
-            }
-            function ajaxLoadEnd() {
-                $(".datagrid-mask").remove();
-                $(".datagrid-mask-msg").remove();
-            }
-            function showImage(thisLink) {
-                var src = $(thisLink).children("img").attr("src");
-            }
+                function ajaxLoading() {
+                    $("<div class=\"datagrid-mask\"></div>").css({display: "block", width: "100%", height: $(window).height()}).appendTo("body");
+                    $("<div class=\"datagrid-mask-msg\"></div>").html("正在处理，请稍候。。。").appendTo("body").css({display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2});
+                }
+                function ajaxLoadEnd() {
+                    $(".datagrid-mask").remove();
+                    $(".datagrid-mask-msg").remove();
+                }
+                function showImage(thisLink) {
+                    var src = $(thisLink).children("img").attr("src");
+                    var img = new Image();
+                    img.src = src;
+                    var w = img.offsetWidth;
+                    var h = img.offsetHeight;
+                    $("#showImageImg").attr("src", src);
+                    $('#imagePanel').panel({
+                        width: w,
+                        height: h,
+                        title:'查看图片'
+                    }); 
+                }
         </script>  
     </head>  
     <body>   
@@ -144,8 +156,8 @@
                 <div class="txpanel"></div>  
                 <div id="chatArea" class="box chat">  
                     <c:if test="${time}" >
-                    <div class="box_hd"><input type="text" id='datetime' value="" /></div>  
-                    </c:if>
+                        <div class="box_hd"><input type="text" id='datetime' value="" /></div>  
+                        </c:if>
                     <div class="box_bd" id="messageList">  
                         <c:forEach items="${messageList}" var="message">
                             <div class="message <c:if test="${message.fromuser eq userName}">me</c:if>">  
@@ -182,11 +194,14 @@
                                 <pre id="editArea" class="editArea" contenteditable="true">&nbsp;</pre>  
                             </div>  
                             <a href="javascript:;" class="web_wechat_face" id="web_wechat_face"></a>  
-                            <a href="javascript:;" class="btn btn_send" id="btn_send"  onclick="javascript:test();">发送</a>  
+                            <a href="javascript:;" class="btn btn_send" id="btn_send"  onclick="test();">发送</a>  
                         </div>  
                     </div>  
                 </div>  
             </div>  
         </div>  
+        <div id="imagePanel" title="查看图片" style="display:none;">
+            <img id="showImageImg"/>
+        </div>
     </body>  
 </html>  
