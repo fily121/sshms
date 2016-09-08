@@ -18,13 +18,13 @@
             <a href="javascript:clManage.addModifyCllqgl(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加记录</a>
             <a href="javascript:clManage.addModifyCllqgl();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改记录</a>
             <a href="javascript:clManage.deleteCllqgl();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除记录</a>
-            <a href="javascript:clxxManage.init();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查看材料信息</a>
+            <a href="javascript:clxxManage.init();" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">查看材料信息</a>
         </div>
         <div id="cltb" style="display:none">
             <a href="javascript:clxxManage.addModifyClxx(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加材料</a>
             <a href="javascript:clxxManage.addModifyClxx();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改材料</a>
             <a href="javascript:clxxManage.deleteClxx();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除材料</a>
-            <a href="javascript:clManage.init();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查看领取记录</a>
+            <a href="javascript:clManage.init();" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">查看领取记录</a>
         </div>
     </section>
     

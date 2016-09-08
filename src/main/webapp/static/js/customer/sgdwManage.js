@@ -112,6 +112,11 @@ var sgdwManage = function () {
                 });
             });
         },
+        searchSgdw: function (searchKey) {
+            $('#datagrid').datagrid('load', {
+                searchKey: searchKey
+            });
+        },
         submitForm: function () {
             submitForm('#sgdxxManageForm', function () {
                 $('#sgdwManageDialog').dialog('close');

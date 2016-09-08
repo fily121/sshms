@@ -26,7 +26,7 @@
                data-options="label:'材料名称',required:true,valueField:'id',textField:'clmc',url:'data/baseManage/getAllClxx.do'">
     </div>
     <div class="input_area" style="margin-top:20px;">
-        <input class="easyui-datebox" name="lqtime" id="lqtime" value="${cllqGl.lqtime}" style="width:95%" data-options="label:'领取日期',editable:false">
+        <input class="easyui-datebox" name="lqtime" id="lqtime" value="${cllqGl.lqtime}" style="width:95%" data-options="label:'领取日期',required:true,editable:false">
     </div>
     <div class="input_area" style="margin-top:20px;">
         <input class="easyui-numberbox" name="lqsl" id="lqsl" value="${cllqGl.lqsl}" style="width:95%" data-options="label:'领取数量',precision:2,required:true,min:0"/>

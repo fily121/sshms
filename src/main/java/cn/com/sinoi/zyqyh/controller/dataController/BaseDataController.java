@@ -7,6 +7,8 @@ import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IClglService;
 import cn.com.sinoi.zyqyh.service.IOrderService;
 import cn.com.sinoi.zyqyh.service.ISgdxxService;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMD;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMDHMS;
 import cn.com.sinoi.zyqyh.utils.PageModel;
 import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
 import cn.com.sinoi.zyqyh.vo.Attachment;
@@ -37,8 +39,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMDHMS;
-import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMD;
 
 /**
  * <p>
@@ -81,7 +81,7 @@ public class BaseDataController {
 
     @RequestMapping("getSgdList.do")
     @ResponseBody
-    public PageModel<SgdxxDetail> getSgdList(Integer page, Integer rows) {
+    public PageModel<SgdxxDetail> getSgdList(Integer page, Integer rows, String searchKey) {
         if (page == null || page == 0) {
             page = 1;
         }
@@ -90,7 +90,7 @@ public class BaseDataController {
         }
         List<SgdxxDetail> sgdList = null;
         try {
-            sgdList = sgdxxService.findAllForPage(page, rows);
+            sgdList = sgdxxService.findAllForPage(page, rows, searchKey);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemController.class.getName()).log(Level.SEVERE, null, ex);
         }

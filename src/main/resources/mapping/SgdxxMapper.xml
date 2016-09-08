@@ -32,6 +32,13 @@
         select b.name duizhangMc,
         <include refid="Base_Column_List" />, <include refid="cn.com.sinoi.zyqyh.dao.UserMapper.Base_Column_List" />
         from sgdxx a left join p_user b on a.duizhang = b.USER_ID
+        <if test="searchKey != null and searchKey != ''.toString()">
+            where sgdmc like concat('%', #{searchKey}, '%')
+            or detail like concat('%', #{searchKey}, '%')
+            or b.name like concat('%', #{searchKey}, '%')
+            or wechatNo like concat('%', #{searchKey}, '%')
+            or cph like concat('%', #{searchKey}, '%')
+        </if>
         limit #{limit1}, #{limit2}
     </select>
     <select id="findOpenIdByGcdId" resultType="java.lang.String" parameterType="java.lang.String">

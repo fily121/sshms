@@ -67,10 +67,11 @@ public class SgdxxServiceImpl extends BaseServiceImpl<Sgdxx> implements ISgdxxSe
     }
 
     @Override
-    public List<SgdxxDetail> findAllForPage(int page, int rows) {
-        Map<String, Integer> param = new HashMap<>();
+    public List<SgdxxDetail> findAllForPage(int page, int rows, String searchKey) {
+        Map<String, Object> param = new HashMap<>();
         param.put("limit1", (page - 1) * rows);
         param.put("limit2", rows);
+        param.put("searchKey", searchKey);
         return sgdxxMapper.findAllForPage(param);
     }
 

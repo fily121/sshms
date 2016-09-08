@@ -20,7 +20,7 @@ public interface ISgdxxService extends IBaseService<Sgdxx> {
 
     List<String> findOpenIdByGcdId(String id);
 
-    List<SgdxxDetail> findAllForPage(int page, int rows);
+    List<SgdxxDetail> findAllForPage(int page, int rows, String searchKey);
 
     Sgdxx selectBySgdmc(String sgdmc);
 

@@ -23,7 +23,7 @@ public interface SgdxxMapper {
 
     List<String> findOpenIdByGcdId();
 
-    List<SgdxxDetail> findAllForPage(Map<String, Integer> param);
+    List<SgdxxDetail> findAllForPage(Map<String, Object> param);
 
     Sgdxx selectBySgdmc(String sgdmc);
 
