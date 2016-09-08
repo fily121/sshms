@@ -24,7 +24,7 @@
     </div>
     <div class="input_area">
         <select class="easyui-combogrid" name="duizhang" id="duizhang" style="width:95%" data-options="label:'队长信息',required:true,idField:'userId',
-                value:'${sgdxx.duizhang}',
+                value:'${sgdxx.duizhang}',editable:false,
                 textField:'name',url:'data/system/getAllUser.do',columns: [[
                 {field:'userId',hidden:true},
                 {field:'name',title:'姓名',width:80},

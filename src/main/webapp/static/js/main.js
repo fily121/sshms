@@ -19,7 +19,7 @@ var easyuiExt = function(){
                  }
             });
        }
-   } 
+   };
 }();
 var Message = function () {
     return {
