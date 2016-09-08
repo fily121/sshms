@@ -25,8 +25,6 @@ import org.directwebremoting.ScriptSessionFilter;
  */
 public class UdpThreader extends Thread {
 
-    private static final String URL = "http://localhost:8081/zyqyh/data/location/showLocation.do";
-
     @Override
     public void run() {
         DatagramSocket ds = null;

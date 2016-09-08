@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.sinoi.zyqyh.dao.ProjectMapper">
+  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Project">
+    <id column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="attachment_id" jdbcType="VARCHAR" property="attachmentId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.com.sinoi.zyqyh.vo.Project">
+    <result column="project_detail" jdbcType="LONGVARCHAR" property="projectDetail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    project_id, project_name, attachment_id, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    project_detail
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from project
+    where project_id = #{projectId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from project
+    where project_id = #{projectId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Project">
+    insert into project (project_id, project_name, attachment_id, 
+      create_time, project_detail)
+    values (#{projectId,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{attachmentId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{projectDetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Project">
+    insert into project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="attachmentId != null">
+        attachment_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="projectDetail != null">
+        project_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentId != null">
+        #{attachmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectDetail != null">
+        #{projectDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Project">
+    update project
+    <set>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentId != null">
+        attachment_id = #{attachmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectDetail != null">
+        project_detail = #{projectDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.sinoi.zyqyh.vo.Project">
+    update project
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      attachment_id = #{attachmentId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      project_detail = #{projectDetail,jdbcType=LONGVARCHAR}
+    where project_id = #{projectId,jdbcType=VARCHAR}
+  </update>
+  <select id="findAll" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from project
+  </select>
+  <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Project">
+    update project
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      attachment_id = #{attachmentId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where project_id = #{projectId,jdbcType=VARCHAR}
+  </update>
+    
+    <select id="findAllForPage" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
+      select <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+      from project
+      where 1=1
+      <if test="searchKey != null">
+            AND (
+            project_name LIKE concat('%',#{searchKey},'%')
+            OR project_detail LIKE concat('%',#{searchKey},'%')
+            )
+        </if>
+        limit #{limit1}, #{limit2}
+  </select>
+  
+  
+  <resultMap id="relate_resultMap" type="cn.com.sinoi.zyqyh.vo.relate.ProjectDetail" >
+      <id column="project_id" />
+      <association property="projct" resultMap="ResultMapWithBLOBs" />
+      <collection property="orderList" resultMap="cn.com.sinoi.zyqyh.dao.OrderMapper.BaseResultMap" />
+    </resultMap>
+  <select id="findAllForPageWithOrder" parameterType="java.util.Map" resultMap="relate_resultMap">
+      select a.project_id, a.project_name, a.attachment_id as project_atta_id,
+      b.* 
+      from project a left join order_project c on a.project_id = c.project_id left join p_order b on c.order_id = b.order_id
+      where 1=1
+      <if test="searchKey != null">
+            AND (
+            a.project_name LIKE concat('%',#{searchKey},'%')
+            OR a.project_detail LIKE concat('%',#{searchKey},'%')
+            )
+        </if>
+        limit #{limit1}, #{limit2}
+  </select>
+</mapper>

@@ -5,6 +5,7 @@ import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.service.IWechatService;
+import cn.com.sinoi.zyqyh.utils.DateUtil;
 import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
 import cn.com.sinoi.zyqyh.vo.Attachment;
 import cn.com.sinoi.zyqyh.vo.Message;
@@ -22,6 +23,9 @@ import org.directwebremoting.ScriptSessionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMDHMS;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMD;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_HMS;
 
 /**
  * 核心Service类
@@ -38,10 +42,6 @@ public class WechatService implements IWechatService {
     IMessageService messageService;
     @Autowired
     IAttachmentService attachmentService;
-
-    private static final java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    private static final java.text.DateFormat format2 = new java.text.SimpleDateFormat("yyyy-MM-dd");
-    private static final java.text.DateFormat format3 = new java.text.SimpleDateFormat("hh_mm_ss_S");
 
     private static final String DOWNLOAD_URL = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
 
@@ -108,7 +108,7 @@ public class WechatService implements IWechatService {
                         }
                         final String gcdId = user.getOrgId();
                         final String autoMessage = message.getContent();
-                        final String dateTime = format1.format(date);
+                        final String dateTime = DateUtil.FORMATTER_YMDHMS.format(date);
                         sendToBrowers(gcdId, autoMessage, dateTime);
                         return;
                     }
@@ -123,9 +123,9 @@ public class WechatService implements IWechatService {
                     keyword2 = "未绑定微信号，请回复以下消息到服务号来绑定：bd(您的微信号)。";
                 } else {
                     String attachmentId = java.util.UUID.randomUUID().toString();
-                    String uri = FilePathEnum.现场管理.getPath() + user.getOrgId() + "/" + format2.format(date);
+                    String uri = FilePathEnum.现场管理.getPath() + user.getOrgId() + "/" + FORMATTER_YMD.format(date);
                     UrlDownloadFile.downLoadFromUrl(DOWNLOAD_URL.replace("ACCESS_TOKEN", access_token).replace("MEDIA_ID", mediaId),
-                            format3.format(date) + ".jpg",
+                            FORMATTER_HMS.format(date) + ".jpg",
                             path + uri);
                     Message message = new Message();
                     String src = "data/system/downloadFile.do?attachmentId=" + attachmentId;
@@ -137,12 +137,12 @@ public class WechatService implements IWechatService {
                     message.setTosgdid(user.getOrgId());
                     final String gcdId = user.getOrgId();
                     final String autoMessage = message.getContent();
-                    final String dateTime = format1.format(date);
+                    final String dateTime = FORMATTER_YMDHMS.format(date);
 
                     Attachment attachment = new Attachment();
                     attachment.setId(attachmentId);
                     attachment.setUri(uri);
-                    attachment.setFileName(format3.format(date) + ".jpg");
+                    attachment.setFileName(FORMATTER_HMS.format(date) + ".jpg");
                     attachmentService.save(attachment);
                     message.setAttachmentid(attachmentId);
                     messageService.insert(message);

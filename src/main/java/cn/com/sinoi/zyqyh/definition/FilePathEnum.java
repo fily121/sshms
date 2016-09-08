@@ -34,6 +34,10 @@ public enum FilePathEnum {
      */
     施工队伍("sgdgl/"),
     /**
+     * 施工队伍
+     */
+    工程管理("project/"),
+    /**
      * 现场管理
      */
     现场管理("xcgl/");

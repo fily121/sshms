@@ -15,8 +15,8 @@ public class UdpListener extends HttpServlet implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        UdpThreader udpThreader = new UdpThreader();
-        udpThreader.start();
+//        UdpThreader udpThreader = new UdpThreader();
+//        udpThreader.start();
     }
 
     @Override

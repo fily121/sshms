@@ -37,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMDHMS;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMD;
 
 /**
  * <p>
@@ -73,9 +75,6 @@ public class BaseDataController {
     private String corpId;
     @Value("#{readProperties['wechat.secret']}")
     private String secret;
-
-    private static final java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    private static final java.text.DateFormat format2 = new java.text.SimpleDateFormat("yyyy-MM-dd");
 
     @Value("#{readProperties['upload.file.path']}")
     private String path;
@@ -194,7 +193,7 @@ public class BaseDataController {
         if (order != null) {
             List<String> openIds = sgdxxService.findOpenIdByGcdId(order.getSgdid());
             String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
-            String dateTime = format1.format(new Date());
+            String dateTime = FORMATTER_YMDHMS.format(new Date());
             response.setContentType("text/html;charset=UTF-8");
             String msg = "订单创建成功。";
             if (StringUtils.isNotEmpty(order.getOrderId())) {
@@ -219,7 +218,7 @@ public class BaseDataController {
             } else {
                 order.setOrderId(java.util.UUID.randomUUID().toString());
                 Date date = new Date();
-                String uri = FilePathEnum.订单管理.getPath() + format2.format(date) + "/" + order.getOrderId();
+                String uri = FilePathEnum.订单管理.getPath() + FORMATTER_YMD.format(date) + "/" + order.getOrderId();
                 try {
                     for (MultipartFile file : uploadFile) {
                         if (file.getSize() != 0) {
@@ -260,7 +259,7 @@ public class BaseDataController {
                 file.delete();
                 List<String> openIds = sgdxxService.findOpenIdByGcdId(sgdId);
                 String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
-                String dateTime = format1.format(new Date());
+                String dateTime = FORMATTER_YMDHMS.format(new Date());
                 for (String openId : openIds) {
                     String jsonString = MessageUtil.getOrderMessage(openId, 订单变更通知, dateTime, orderName, orderId, 订单有变化文件删除, "");
                     WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);

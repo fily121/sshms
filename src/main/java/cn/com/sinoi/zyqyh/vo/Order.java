@@ -1,10 +1,9 @@
 package cn.com.sinoi.zyqyh.vo;
 
 import java.util.Date;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMDHMS;
 
 public class Order {
-
-    private static final java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     private String orderId;
 
@@ -30,7 +29,7 @@ public class Order {
 
     public String getFormattedCreateDate() {
         if (createDate != null) {
-            return format1.format(createDate);
+            return FORMATTER_YMDHMS.format(createDate);
         } else {
             return "";
         }
