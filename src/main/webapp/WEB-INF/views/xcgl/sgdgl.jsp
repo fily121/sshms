@@ -21,7 +21,6 @@
         <script type='text/javascript' src='<%= basePath%>dwr/util.js'></script>  
         <script type="text/javascript" src="<%= basePath%>dwr/interface/MessagePush.js"></script>  
         <script type='text/javascript' src='<%= basePath%>dwr/interface/ShowMessage.js'></script>
-        <script type='text/javascript' src='<%= basePath%>static/js/plugins/lightbox.js'></script>
         <link rel="stylesheet" type="text/css" href="<%= basePath%>/static/css/gcdtx.css" />
         <script type="text/javascript">
             var messageMeUiStart = '<div class="message">' +
@@ -57,97 +56,98 @@
                     $("#messageList").append($(autoMessage));
                     $("#editArea").text('');
                 }
-                var isSend = false;
-                function test() {
-                    var sgdId = '${gcdId}';
-                    if (!sgdId) {
-                        Message.alert("请选择需要联系的施工队。");
-                        return;
-                    }
-                    if (isSend) {
-                        return;
-                    }
-                    var msg = $("#editArea").html();
-                    if (msg === '&nbsp;') {
-                        Message.alert("发送消息不能为空。");
-                        return;
-                    }
-                    $("#editArea").text('');
-                    var date = new Date();
-                    ajaxLoading();
-                    $.post('data/xcgl/reciveMessage.do', {
-                        msg: msg,
-                        datetime: date.Format('yyyy/M/DD HH:mm:ss'),
-                        gcdId: '${gcdId}'
-                    }, function (data) {
-                        data = eval("(" + data + ")");
-                        if (data === 'true') {
-                            ShowMessage.sendMessageAuto('${gcdId}', msg, date.Format('yyyy-M-DD HH:mm:ss'));
-                            $("#editArea").text('');
-                            isSend = true;
-                            setTimeout(setTimeout(function () {
-                                isSend = false;
-                            }, 500));
-                            ajaxLoadEnd();
-                        } else {
-                            ajaxLoadEnd();
-                            Message.alert("消息发送失败。请重试");
-                        }
-                    })
+            }
+            var isSend = false;
+            function test() {
+                var sgdId = '${gcdId}';
+                if (!sgdId) {
+                    Message.alert("请选择需要联系的施工队。");
+                    return;
                 }
-                $(function () {
-                    onPageLoad();
-                    dwr.engine.setActiveReverseAjax(true);
-                    dwr.engine.setNotifyServerOnPageUnload(true);
-                    $(".exp_cont a").click(function () {
-                        $(".box_ft_bd").addClass('hide');
-                    });
-                    //定义回车事件
-                    $(document).keypress(function (e) {
-                        if (e.ctrlKey && e.which === 13)
-                            $("#btn_send")[0].click();
-                    })
-                    $('#datetime').datebox({
-                        onSelect: function (date) {
-                            var y = date.getFullYear();
-                            var m = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-                            var d = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
-                            var datetime = y + '-' + m + '-' + d;
-                            reloadPage(datetime);
-                        }
-                    });
-                    $("#datetime").datebox('setValue', '${datetime}');
-                    $("#editArea").keypress(function () {
-                        isSend = false;
-                    });
+                if (isSend) {
+                    return;
+                }
+                var msg = $("#editArea").html();
+                if (msg === '&nbsp;') {
+                    Message.alert("发送消息不能为空。");
+                    return;
+                }
+                $("#editArea").text('');
+                var date = new Date();
+                ajaxLoading();
+                $.post('data/xcgl/reciveMessage.do', {
+                    msg: msg,
+                    datetime: date.Format('yyyy/M/DD HH:mm:ss'),
+                    gcdId: '${gcdId}'
+                }, function (data) {
+                    data = eval("(" + data + ")");
+                    if (data === 'true') {
+                        ShowMessage.sendMessageAuto('${gcdId}', msg, date.Format('yyyy-M-DD HH:mm:ss'));
+                        $("#editArea").text('');
+                        isSend = true;
+                        setTimeout(setTimeout(function () {
+                            isSend = false;
+                        }, 500));
+                        ajaxLoadEnd();
+                    } else {
+                        ajaxLoadEnd();
+                        Message.alert("消息发送失败。请重试");
+                    }
+                })
+            }
+            $(function () {
+                onPageLoad();
+                dwr.engine.setActiveReverseAjax(true);
+                dwr.engine.setNotifyServerOnPageUnload(true);
+                $(".exp_cont a").click(function () {
+                    $(".box_ft_bd").addClass('hide');
                 });
-                function reloadPage(datetime) {
-                    var href = window.location.href;
-                    href = href.replace(/\&.+\&?/g, '');
-                    window.location.href = href + "&datetime=" + datetime;
-                }
+                //定义回车事件
+                $(document).keypress(function (e) {
+                    if (e.ctrlKey && e.which === 13)
+                        $("#btn_send")[0].click();
+                })
+                $('#datetime').datebox({
+                    onSelect: function (date) {
+                        var y = date.getFullYear();
+                        var m = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+                        var d = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+                        var datetime = y + '-' + m + '-' + d;
+                        reloadPage(datetime);
+                    }
+                });
+                $("#datetime").datebox('setValue', '${datetime}');
+                $("#editArea").keypress(function () {
+                    isSend = false;
+                });
+            });
+            function reloadPage(datetime) {
+                var href = window.location.href;
+                href = href.replace(/\&.+\&?/g, '');
+                window.location.href = href + "&datetime=" + datetime;
+            }
 
-                function ajaxLoading() {
-                    $("<div class=\"datagrid-mask\"></div>").css({display: "block", width: "100%", height: $(window).height()}).appendTo("body");
-                    $("<div class=\"datagrid-mask-msg\"></div>").html("正在处理，请稍候。。。").appendTo("body").css({display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2});
-                }
-                function ajaxLoadEnd() {
-                    $(".datagrid-mask").remove();
-                    $(".datagrid-mask-msg").remove();
-                }
-                function showImage(thisLink) {
-                    var src = $(thisLink).children("img").attr("src");
-                    var img = new Image();
-                    img.src = src;
-                    var w = img.offsetWidth;
-                    var h = img.offsetHeight;
-                    $("#showImageImg").attr("src", src);
-                    $('#imagePanel').panel({
-                        width: w,
-                        height: h,
-                        title:'查看图片'
-                    }); 
-                }
+            function ajaxLoading() {
+                $("<div class=\"datagrid-mask\"></div>").css({display: "block", width: "100%", height: $(window).height()}).appendTo("body");
+                $("<div class=\"datagrid-mask-msg\"></div>").html("正在处理，请稍候。。。").appendTo("body").css({display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2});
+            }
+            function ajaxLoadEnd() {
+                $(".datagrid-mask").remove();
+                $(".datagrid-mask-msg").remove();
+            }
+            function showImage(thisLink) {
+                var src = $(thisLink).children("img").attr("src");
+                var img = new Image();
+                img.src = src;
+                var w = img.offsetWidth;
+                var h = img.offsetHeight;
+                $("#showImageImg").attr("src", src);
+                $('#imagePanel').panel({
+                    width: w,
+                    height: h,
+                    title: '查看图片'
+                });
+            }
         </script>  
     </head>  
     <body>   
