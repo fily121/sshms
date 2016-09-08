@@ -1,3 +1,26 @@
+var easyuiExt = function(){
+   return {
+       initCombobox:function(){
+            $('.easyui-combobox').combobox({
+                onHidePanel: function () {
+                    var _options = $(this).combobox('options');
+                    var _data = $(this).combobox('getData');
+                    var _value = $(this).combobox('getValue');
+                    var _b = false;
+                    for (var i = 0; i < _data.length; i++) {
+                        if (_data[i][_options.valueField] === _value) {
+                            _b = true;
+                            break;
+                        }
+                    }
+                    if (!_b) {
+                        $(this).combobox('setValue', '');
+                    }
+                 }
+            });
+       }
+   } 
+}();
 var Message = function () {
     return {
         //提示消息
@@ -112,8 +135,8 @@ if (!Date.prototype.Format) {
         str = str.replace(/yyyy|YYYY/, this.getFullYear());
         str = str.replace(/yy|YY/, (this.getYear() % 100) > 9 ? (this.getYear() % 100).toString() : '0' + (this.getYear() % 100));
 
-        str = str.replace(/MM/, this.getMonth()+1 > 9 ? (this.getMonth()+1).toString() : '0' + (this.getMonth()+1));
-        str = str.replace(/M/g, this.getMonth()+1);
+        str = str.replace(/MM/, this.getMonth() + 1 > 9 ? (this.getMonth() + 1).toString() : '0' + (this.getMonth() + 1));
+        str = str.replace(/M/g, this.getMonth() + 1);
 
         str = str.replace(/w|W/g, Week[this.getDay()]);
 
@@ -169,11 +192,17 @@ $.extend($.fn.validatebox.defaults.rules, {
         },
         message: '密码两次输入不一致。'
     },
-    bigthan : {
+    bigthan: {
         validator: function (value, param) {
             return value >= $(param[0]).val();
         },
         message: '{1}要不小于{2}。'
+    },
+    smallthan: {
+        validator: function (value, param) {
+            return value <= $(param[0]).val();
+        },
+        message: '{1}要不大于{2}。'
     }
 });
 
@@ -196,9 +225,9 @@ function clearForm(formSelector) {
     $(formSelector).form('clear');
 }
 
-$.fn.datebox.defaults.formatter = function(date){
-	var y = date.getFullYear();
-	var m = (date.getMonth()+1)>9?(date.getMonth()+1):'0'+(date.getMonth()+1);
-	var d = date.getDate()>9?date.getDate():'0'+date.getDate();
-	return y+'-'+m+'-'+d;
+$.fn.datebox.defaults.formatter = function (date) {
+    var y = date.getFullYear();
+    var m = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+    var d = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+    return y + '-' + m + '-' + d;
 };
