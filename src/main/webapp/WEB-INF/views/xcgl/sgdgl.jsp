@@ -142,11 +142,12 @@
                 var w = img.offsetWidth;
                 var h = img.offsetHeight;
                 $("#showImageImg").attr("src", src);
-                $('#imagePanel').panel({
-                    width: w,
-                    height: h,
+                $('#imagePanel').dialog({
+                    width: w+10,
+                    height: h+10,
                     title: '查看图片'
                 });
+                $('#imagePanel').dialog("open");
             }
         </script>  
     </head>  
