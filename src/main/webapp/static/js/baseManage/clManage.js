@@ -73,6 +73,14 @@ var clManage = function () {
                                 }
                             }
                         },
+                        {field: 'clshengyu', title: '剩余数量', width: 80, formatter: function (value, rows, index) {
+                                if (rows.cllqGl) {
+                                    return rows.cllqGl.clshengyu;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        },
                         {field: 'sgdmc', title: '领取队伍名称', width: 120, formatter: function (value, rows, index) {
                                 if (rows.sgdxx) {
                                     return rows.sgdxx.sgdmc;

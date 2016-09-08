@@ -26,16 +26,16 @@
     <div class="input_area" style="margin-top:20px;">
         <input class="easyui-datebox" name="lqtime" id="lqtime" value="${cllqGl.lqtime}" style="width:95%" data-options="label:'领取日期'">
     </div>
-    <div class="input_area">
-        <input class="easyui-textbox" name="lqsl" id="lqsl" value="${cllqGl.lqsl}" style="width:95%" data-options="label:'领取数量',required:true"/>
+    <div class="input_area" style="margin-top:20px;">
+        <input class="easyui-numberbox" name="lqsl" id="lqsl" value="${cllqGl.lqsl}" style="width:95%" data-options="label:'领取数量',precision:2,required:true,min:0"/>
     </div>
     <div class="input_area" style="margin-top:20px;">
-        <input class="easyui-textbox" name="sysl" id="sysl" value="${cllqGl.sysl}" style="width:95%" data-options="required:true,label:'使用数量'">
+        <input class="easyui-numberbox" name="sysl" id="sysl" value="${cllqGl.sysl}" style="width:95%" data-options="required:true,precision:2,label:'使用数量',min:0">
     </div>
     <div class="input_area" style="margin-top:20px;">
         <input class="easyui-combobox" name="lqdw" id="lqdw" value="${cllqGl.lqdw}" style="width:95%" data-options="required:true,label:'领取队伍',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do'">
     </div>
-    <div style="text-align:center;padding:5px 0;float:left;margin:0 auto;width:750px;">
+    <div style="text-align:center;padding:10px 0;float:left;margin:0 auto;width:750px;">
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clManage.submitForm()" style="width:80px">提交</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clManage.clearForm()" style="width:80px">清空</a>
     </div>

@@ -59,6 +59,10 @@ public class CllqGl {
         this.sysl = sysl;
     }
 
+    public Float getClshengyu() {
+        return lqsl - sysl;
+    }
+
     public String getLqdw() {
         return lqdw;
     }
