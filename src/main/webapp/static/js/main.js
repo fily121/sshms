@@ -14,6 +14,7 @@ var easyuiExt = function(){
                         }
                     }
                     if (!_b) {
+                        Message.warn('请输入下拉框中的一项');
                         $(this).combobox('setValue', '');
                     }
                  }
