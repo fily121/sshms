@@ -15,7 +15,7 @@
             $(function () {
                 $('#datagrid').datagrid({
                     url: 'data/baseManage/getSgdList.do',
-                    method: 'get',
+                    method: 'post',
                     toolbar: '#tb',
                     singleSelect: true,
                     title: '施工队列表',
