@@ -165,9 +165,15 @@ $.extend($.fn.validatebox.defaults.rules, {
 $.extend($.fn.validatebox.defaults.rules, {
     equals: {
         validator: function (value, param) {
-            return value == $(param[0]).val();
+            return value === $(param[0]).val();
         },
         message: '密码两次输入不一致。'
+    },
+    bigthan : {
+        validator: function (value, param) {
+            return value >= $(param[0]).val();
+        },
+        message: '{1}要不小于{2}。'
     }
 });
 
