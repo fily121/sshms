@@ -6,14 +6,29 @@ import cn.com.sinoi.zyqyh.service.IMessageService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.service.IWechatService;
 import cn.com.sinoi.zyqyh.utils.DateUtil;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_HMS;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMD;
+import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMDHMS;
 import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
 import cn.com.sinoi.zyqyh.vo.Attachment;
 import cn.com.sinoi.zyqyh.vo.Message;
 import cn.com.sinoi.zyqyh.vo.User;
 import cn.com.sinoi.zyqyh.weixin.MessageUtil;
 import cn.com.sinoi.zyqyh.weixin.WeixinUtil;
+import cn.com.sinoi.zyqyh.weixin.WxMpServiceInstance;
+import cn.com.sinoi.zyqyh.weixin.WxMpXMLInMemoryConfigStorage;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
+import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.bean.WxMenu;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import org.apache.commons.lang.StringUtils;
 import org.directwebremoting.Browser;
@@ -23,9 +38,6 @@ import org.directwebremoting.ScriptSessionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMDHMS;
-import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMD;
-import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_HMS;
 
 /**
  * 核心Service类
@@ -74,6 +86,10 @@ public class WechatService implements IWechatService {
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
                 // 消息类型
                 String content = request.getContent();
+                if (content.equals("menu")) {
+                    buildMenu();
+                    return;
+                }
                 if (StringUtils.isNotEmpty(content) && content.matches("^bd\\(.*")) {
                     String 微信号 = content.substring(3, content.indexOf(")"));
                     User user = userService.selectByWechatNo(微信号);
@@ -212,6 +228,36 @@ public class WechatService implements IWechatService {
                 }
             }
         });
+    }
+
+    private void buildMenu() {
+        WxMpService wxMpService = new WxMpServiceImpl();
+        InputStream inputStream = WxMpServiceInstance.class.getResourceAsStream("/weixin.config.xml");
+        WxMpXMLInMemoryConfigStorage config;
+        try {
+            config = WxMpXMLInMemoryConfigStorage.fromXml(inputStream);
+            wxMpService.setWxMpConfigStorage(config);
+        } catch (JAXBException ex) {
+            Logger.getLogger(WechatService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        WxMenu x5Menu = new WxMenu();
+        WxMenu.WxMenuButton indexPage = new WxMenu.WxMenuButton();
+        indexPage.setName("起步科技");
+        indexPage.setType(WxConsts.BUTTON_VIEW);
+        indexPage.setUrl("http://www.justep.com");
+        List<WxMenu.WxMenuButton> x5Meuns = new ArrayList<>();
+        x5Meuns.add(indexPage);
+
+        WxMenu.WxMenuButton takeout = new WxMenu.WxMenuButton();
+        takeout.setName("外卖案例");
+        takeout.setType(WxConsts.BUTTON_VIEW);
+        takeout.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + corpId + "&redirect_uri=http%3A%2F%2Fx5.justep.com%2Fx5%2FUI2%2Ftakeout%2Findex.w&"
+                + "response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
+        x5Meuns.add(takeout);
+
+        x5Menu.setButtons(x5Meuns);
+        wxMpService.menuDelete();
+        wxMpService.menuCreate(x5Menu);
     }
 
 }

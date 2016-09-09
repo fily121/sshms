@@ -15,7 +15,7 @@ import org.xml.sax.InputSource;
  */
 @XmlRootElement(name = "xml")
 @XmlAccessorType(XmlAccessType.FIELD)
-class WxMpXMLInMemoryConfigStorage extends WxMpInMemoryConfigStorage {
+public class WxMpXMLInMemoryConfigStorage extends WxMpInMemoryConfigStorage {
 
     @Override
     public String toString() {
