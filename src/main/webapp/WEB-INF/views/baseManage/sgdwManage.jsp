@@ -18,7 +18,7 @@
             <a href="javascript:sgdwManage.addModifySgdw(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
             <a href="javascript:sgdwManage.addModifySgdw();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
             <a href="javascript:sgdwManage.deleteSgdw();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
-            <span><input type="text" name="searchKey" id="searchKey"/><a href="javascript:sgdwManage.searchSgdw($('#searchKey').val());" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">检索</a></span>
+            <span style="float: right"><input type="text" name="searchKey" id="searchKey"/><a href="javascript:sgdwManage.searchSgdw($('#searchKey').val());" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">检索</a></span>
         </div>
     </section>
     

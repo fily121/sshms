@@ -6,6 +6,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>材料管理</title>
         <script type="text/javascript" src="static/js/baseManage/clManage.js"></script>
+        <script>
+            function doSearch(value, name) {
+                $('#datagrid').datagrid('load', {
+                    searchKey: value,
+                    searchType: name
+                });
+            }
+        </script>
     </head>
     <body>
     <section>
@@ -18,7 +26,16 @@
             <a href="javascript:clManage.addModifyCllqgl(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加记录</a>
             <a href="javascript:clManage.addModifyCllqgl();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改记录</a>
             <a href="javascript:clManage.deleteCllqgl();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除记录</a>
+            <input id="searchCllqgl" class="easyui-searchbox" data-options="menu:'#mm', searcher:doSearch" style="width:300px">
+            <div id="mm">
+                <div data-options="name:'0'">所有列</div>
+                <div data-options="name:'1'">材料名称</div>
+                <div data-options="name:'2'">材料详情</div>
+                <div data-options="name:'3'">领取日期</div>
+                <div data-options="name:'4'">施工队名</div>
+            </div>
             <a href="javascript:clxxManage.init();" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">查看材料信息</a>
+            <a href="javascript:clManage.exportCllqgl();" class="easyui-linkbutton" data-options="iconCls:'icon-export',plain:true" style="float: right">导出记录到excel</a>
         </div>
         <div id="cltb" style="display:none">
             <a href="javascript:clxxManage.addModifyClxx(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加材料</a>
@@ -27,9 +44,9 @@
             <a href="javascript:clManage.init();" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true">查看领取记录</a>
         </div>
     </section>
-    
+
     <div id="cllqglManageDialog" style="display:none;padding: 10px;">
-        
+
     </div>
 </body>
 </html>

@@ -116,7 +116,50 @@
         from (select <include refid="Base_Column_List" /> from cllqgl) a 
         left join (select <include refid="cn.com.sinoi.zyqyh.dao.ClxxMapper.Base_Column_List" /> from clxx) b on a.cllqgl_lqclh = b.clxx_id
         left join (select <include refid="cn.com.sinoi.zyqyh.dao.SgdxxMapper.Base_Column_List" /> from sgdxx) c on a.cllqgl_lqdw = c.id
+        <if test="searchKey != null">
+            where 1 != 1
+            <if test='searchType == "0" or searchType == "1"'>
+                or clxx_clmc like concat('%', #{searchKey}, '%')
+            </if>
+            <if test='searchType == "0" or searchType == "2"'>
+                or clxx_detail like concat('%', #{searchKey}, '%')
+            </if>
+            <if test='searchType == "0" or searchType == "3"'>
+                or cllqgl_lqtime like concat('%', #{searchKey}, '%')
+            </if>
+            <if test='searchType == "0" or searchType == "4"'>
+                or sgdmc like concat('%', #{searchKey}, '%')
+            </if>
+        </if>
         limit #{limit1}, #{limit2}
+    </select>
+  
+    <select id="findAllForExportExcel" resultType="cn.com.sinoi.zyqyh.vo.excel.ClglExcel" parameterType="java.util.Map">
+        select clxx_clmc clmc,
+        clxx_detail detail,
+        cllqgl_lqtime lqtime,
+        cllqgl_lqsl lqsl,
+        cllqgl_sysl sysl,
+        cllqgl_lqsl-cllqgl_sysl clshengyu,
+        sgdmc
+        from (select <include refid="Base_Column_List" /> from cllqgl) a 
+        left join (select <include refid="cn.com.sinoi.zyqyh.dao.ClxxMapper.Base_Column_List" /> from clxx) b on a.cllqgl_lqclh = b.clxx_id
+        left join (select <include refid="cn.com.sinoi.zyqyh.dao.SgdxxMapper.Base_Column_List" /> from sgdxx) c on a.cllqgl_lqdw = c.id
+        <if test="searchKey != null">
+            where 1 != 1
+            <if test='searchType == "0" or searchType == "1"'>
+                or clxx_clmc like concat('%', #{searchKey}, '%')
+            </if>
+            <if test='searchType == "0" or searchType == "2"'>
+                or clxx_detail like concat('%', #{searchKey}, '%')
+            </if>
+            <if test='searchType == "0" or searchType == "3"'>
+                or cllqgl_lqtime like concat('%', #{searchKey}, '%')
+            </if>
+            <if test='searchType == "0" or searchType == "4"'>
+                or sgdmc like concat('%', #{searchKey}, '%')
+            </if>
+        </if>
     </select>
     
     <resultMap id="ResultMap_Detail" type="cn.com.sinoi.zyqyh.vo.relate.ClglDetail">

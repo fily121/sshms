@@ -59,7 +59,7 @@ var clManage = function () {
                                 }
                             }
                         },
-                        {field: 'remark', title: '领取数量', width: 80, formatter: function (value, rows, index) {
+                        {field: 'lqsl', title: '领取数量', width: 80, formatter: function (value, rows, index) {
                                 if (rows.cllqGl) {
                                     return rows.cllqGl.lqsl;
                                 } else {
@@ -136,6 +136,22 @@ var clManage = function () {
                         Message.alert("删除失败。");
                     }
                 });
+            });
+        },
+        doSearch: function (searchKey, name) {
+            $('#datagrid').datagrid('load', {
+                searchKey: searchKey,
+                name: name
+            });
+        },
+        exportCllqgl: function () {
+            var value = $('#searchCllqgl').searchbox('getValue');
+            var name = $('#searchCllqgl').searchbox('getName');
+
+            $.get('data/cllqgl/exportCllqgl.do?searchType=' + name + '&searchKey=' + value, function(data){
+                if(data !== ""){
+                    Message.alert(data);
+                }
             });
         },
         submitForm: function () {

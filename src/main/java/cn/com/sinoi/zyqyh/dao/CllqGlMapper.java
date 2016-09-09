@@ -1,6 +1,7 @@
 package cn.com.sinoi.zyqyh.dao;
 
 import cn.com.sinoi.zyqyh.vo.CllqGl;
+import cn.com.sinoi.zyqyh.vo.excel.ClglExcel;
 import cn.com.sinoi.zyqyh.vo.relate.ClglDetail;
 import java.util.List;
 import java.util.Map;
@@ -21,5 +22,7 @@ public interface CllqGlMapper {
 
     int updateByPrimaryKey(CllqGl record);
 
-    List<ClglDetail> findAllForPage(Map<String, Integer> param);
+    List<ClglDetail> findAllForPage(Map<String, Object> param);
+
+    List<ClglExcel> findAllForExportExcel(Map<String, String> param);
 }

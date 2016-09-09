@@ -7,6 +7,7 @@ package cn.com.sinoi.zyqyh.service;
 
 import cn.com.sinoi.zyqyh.vo.CllqGl;
 import cn.com.sinoi.zyqyh.vo.Clxx;
+import cn.com.sinoi.zyqyh.vo.excel.ClglExcel;
 import cn.com.sinoi.zyqyh.vo.relate.ClglDetail;
 import java.util.List;
 
@@ -28,7 +29,9 @@ public interface IClglService extends IBaseService<CllqGl> {
 
     int updateByPrimaryKey(CllqGl record);
 
-    List<ClglDetail> getClglDetailList(Integer page, Integer rows);
+    List<ClglDetail> getClglDetailList(Integer page, Integer rows, String searchKey, String searchType);
+
+    List<ClglExcel> findAllForExportExcel(String searchKey, String searchType);
 
     List<Clxx> findAllClxx();
 

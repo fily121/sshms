@@ -11,6 +11,7 @@ import cn.com.sinoi.zyqyh.service.IClglService;
 import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.CllqGl;
 import cn.com.sinoi.zyqyh.vo.Clxx;
+import cn.com.sinoi.zyqyh.vo.excel.ClglExcel;
 import cn.com.sinoi.zyqyh.vo.relate.ClglDetail;
 import java.util.HashMap;
 import java.util.List;
@@ -71,11 +72,21 @@ public class ClglServiceImpl extends BaseServiceImpl<CllqGl> implements IClglSer
     }
 
     @Override
-    public List<ClglDetail> getClglDetailList(Integer page, Integer rows) {
-        Map<String, Integer> param = new HashMap<>();
+    public List<ClglDetail> getClglDetailList(Integer page, Integer rows, String searchKey, String searchType) {
+        Map<String, Object> param = new HashMap<>();
         param.put("limit1", (page - 1) * rows);
         param.put("limit2", rows);
+        param.put("searchKey", searchKey);
+        param.put("searchType", searchType);
         return this.cllqglMapper.findAllForPage(param);
+    }
+
+    @Override
+    public List<ClglExcel> findAllForExportExcel(String searchKey, String searchType) {
+        Map<String, String> param = new HashMap<>();
+        param.put("searchKey", searchKey);
+        param.put("searchType", searchType);
+        return this.cllqglMapper.findAllForExportExcel(param);
     }
 
     @Override
