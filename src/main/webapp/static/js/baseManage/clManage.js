@@ -147,12 +147,9 @@ var clManage = function () {
         exportCllqgl: function () {
             var value = $('#searchCllqgl').searchbox('getValue');
             var name = $('#searchCllqgl').searchbox('getName');
-
-            $.get('data/cllqgl/exportCllqgl.do?searchType=' + name + '&searchKey=' + value, function(data){
-                if(data !== ""){
-                    Message.alert(data);
-                }
-            });
+            $('#searchKey').val(value);
+            $('#searchType').val(name);
+            submitForm($('#exportCllqgl'));
         },
         submitForm: function () {
             submitForm('#cllqglManageForm', function () {

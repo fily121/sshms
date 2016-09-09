@@ -5,23 +5,21 @@ import cn.com.sinoi.zyqyh.controller.divController.SystemDivController;
 import cn.com.sinoi.zyqyh.service.IClglService;
 import cn.com.sinoi.zyqyh.utils.FileUtil;
 import cn.com.sinoi.zyqyh.utils.PageModel;
-import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
 import cn.com.sinoi.zyqyh.vo.CllqGl;
 import cn.com.sinoi.zyqyh.vo.Clxx;
 import cn.com.sinoi.zyqyh.vo.excel.ClglExcel;
 import cn.com.sinoi.zyqyh.vo.relate.ClglDetail;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletResponse;
+import jxl.write.WriteException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,12 +46,6 @@ public class CllqglDataController {
     private static final Logger logger = Logger.getLogger(CllqglDataController.class);
     @Autowired
     IClglService clglService;
-
-    @Value("#{readProperties['upload.file.path']}")
-    private String path;
-
-    @Value("#{readProperties['upload.tempfiles.path']}")
-    private String temp;
 
     /**
      * 删除材料领取记录。
@@ -196,38 +188,24 @@ public class CllqglDataController {
      *
      * @param searchKey
      * @param searchType
+     * @param fileName
      * @param response
-     * @return
      */
-    @RequestMapping("exportCllqgl.do")
+    @RequestMapping(value = "exportCllqgl.do", method = RequestMethod.POST)
     @ResponseBody
-    public String exportCllqgl(String searchKey, String searchType, HttpServletResponse response) {
-        String fname = "材料领取记录";
+    public void exportCllqgl(String searchKey, String searchType, String fileName, HttpServletResponse response) {
         try {
-            fname = java.net.URLEncoder.encode(fname, "UTF-8");
-            File filePath = new File(path + temp);
-            String realFileName = path + temp + new String(fname.getBytes("UTF-8"), "GBK") + ".xls";
-            File file = new File(realFileName);
-            file.deleteOnExit();
-            if (!filePath.exists()) {
-                filePath.mkdirs();
-            }
-            if (!file.exists()) {
-                file.createNewFile();
-            }
+            OutputStream outputStream = response.getOutputStream();
+            response.reset();
+
+            response.setCharacterEncoding("UTF-8");//设置相应内容的编码格式
+            response.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(fileName, "UTF-8") + ".xls");
+            response.setContentType("application/msexcel");//定义输出类型
             List<ClglExcel> excels = clglService.findAllForExportExcel(searchKey, searchType);
-            OutputStream os = new FileOutputStream(file);//取得输出流
-            //下面是对中文文件名的处理
-//            response.setCharacterEncoding("UTF-8");//设置相应内容的编码格式
-//            response.setHeader("Content-Disposition", "attachment;filename=" + new String(fname.getBytes("UTF-8"), "GBK") + ".xls");
-//            response.setContentType("application/msexcel");//定义输出类型
             excels.add(0, createClglExcelHeader());
-            FileUtil.createExcel(os, excels, ClglExcel.class);
-            UrlDownloadFile.downLoadFileLocal(realFileName, response, false);
-            return null;
-        } catch (Exception ex) {
+            FileUtil.createExcel(outputStream, excels, ClglExcel.class);
+        } catch (IOException | WriteException | IllegalArgumentException | IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(CllqglDataController.class.getName()).log(Level.SEVERE, null, ex);
-            return ex.getMessage();
         }
     }
 

@@ -45,6 +45,12 @@
         </div>
     </section>
 
+    <form id="exportCllqgl" action="data/cllqgl/exportCllqgl.do" method="post">
+        <input id="searchKey" name="searchKey" type="hidden"/>
+        <input id="searchType" name="searchType" type="hidden"/>
+        <input id="fileName" name="fileName" type="hidden" value="材料领取记录"/>
+    </form>
+    
     <div id="cllqglManageDialog" style="display:none;padding: 10px;">
 
     </div>
