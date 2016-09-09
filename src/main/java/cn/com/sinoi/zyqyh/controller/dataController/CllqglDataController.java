@@ -20,6 +20,7 @@ import jxl.write.WriteException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -105,14 +106,16 @@ public class CllqglDataController {
      */
     @RequestMapping("deleteClxx.do")
     @ResponseBody
-    public boolean deleteClxx(String id, Model model) {
+    public int deleteClxx(String id, Model model) {
         try {
-            clglService.deleteClxxByPrimaryKey(id);
-            return true;
+            return clglService.deleteClxxByPrimaryKey(id);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
+            if (ex instanceof DataIntegrityViolationException) {
+                return 23000;
+            }
         }
-        return false;
+        return 0;
     }
 
     /**

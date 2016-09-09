@@ -103,11 +103,13 @@ var sgdwManage = function () {
                 }
                 var id = row.sgdxx.id;
                 $.get('data/baseManage/deleteSgdw.do?id=' + id, function (data) {
-                    if (data === 'true') {
+                    if (data === '1') {
                         Message.alert("删除成功。");
                         $('#datagrid').datagrid('reload');
+                    } else if (data === '23000') {
+                        Message.warn("请先删除材料领取记录表中相应数据。");
                     } else {
-                        Message.alert("删除失败。");
+                        Message.error("删除失败。");
                     }
                 });
             });

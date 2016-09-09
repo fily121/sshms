@@ -34,6 +34,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -152,14 +153,17 @@ public class BaseDataController {
 
     @RequestMapping("deleteSgdw.do")
     @ResponseBody
-    public boolean deleteSgdw(String id, Model model) {
+    public int deleteSgdw(String id, Model model) {
         try {
             sgdxxService.deleteByPrimaryKey(id);
-            return true;
+            return 1;
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
+            if (ex instanceof DataIntegrityViolationException) {
+                return 23000;
+            }
         }
-        return false;
+        return 0;
     }
 
     @RequestMapping(value = "getAllSgd.do", method = RequestMethod.POST)
