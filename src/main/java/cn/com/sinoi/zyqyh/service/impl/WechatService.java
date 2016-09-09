@@ -30,6 +30,7 @@ import me.chanjar.weixin.common.bean.WxMenu;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.directwebremoting.Browser;
 import org.directwebremoting.ScriptBuffer;
@@ -237,27 +238,91 @@ public class WechatService implements IWechatService {
         try {
             config = WxMpXMLInMemoryConfigStorage.fromXml(inputStream);
             wxMpService.setWxMpConfigStorage(config);
+
+            WxMenu x5Menu = new WxMenu();
+            List<WxMenu.WxMenuButton> x5Meuns = new ArrayList<>();
+            WxMenu.WxMenuButton baseManage = new WxMenu.WxMenuButton();
+            baseManage.setName("基础管理");
+            x5Meuns.add(baseManage);
+
+            List<WxMenu.WxMenuButton> baseMenuSuButtons = new ArrayList<>();
+            WxMenu.WxMenuButton orderManage = new WxMenu.WxMenuButton();
+            orderManage.setName("订单管理");
+            orderManage.setType(WxConsts.BUTTON_VIEW);
+            orderManage.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + config.getAppId() + "&redirect_uri=http%3a%2f%2f139.196.171.130%2fzyqyh%2fmobile%2forderManage.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+            baseMenuSuButtons.add(orderManage);
+
+            WxMenu.WxMenuButton gzzdManage = new WxMenu.WxMenuButton();
+            gzzdManage.setName("规章制度");
+            gzzdManage.setType(WxConsts.BUTTON_VIEW);
+            gzzdManage.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + config.getAppId() + "&redirect_uri=http%3a%2f%2f139.196.171.130%2fzyqyh%2fmobile%2fgzzdManage.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+            baseMenuSuButtons.add(gzzdManage);
+
+            WxMenu.WxMenuButton clglManage = new WxMenu.WxMenuButton();
+            clglManage.setName("材料管理");
+            clglManage.setType(WxConsts.BUTTON_VIEW);
+            clglManage.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + config.getAppId() + "&redirect_uri=http%3a%2f%2f139.196.171.130%2fzyqyh%2fmobile%2fclglManage.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+            baseMenuSuButtons.add(clglManage);
+
+            WxMenu.WxMenuButton sgdwManage = new WxMenu.WxMenuButton();
+            sgdwManage.setName("施工队伍");
+            sgdwManage.setType(WxConsts.BUTTON_VIEW);
+            sgdwManage.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + config.getAppId() + "&redirect_uri=http%3a%2f%2f139.196.171.130%2fzyqyh%2fmobile%2fsgdwManage.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+            baseMenuSuButtons.add(sgdwManage);
+            baseManage.setSubButtons(baseMenuSuButtons);
+
+            WxMenu.WxMenuButton xcglManage = new WxMenu.WxMenuButton();
+            xcglManage.setName("现场管理");
+            x5Meuns.add(xcglManage);
+
+            List<WxMenu.WxMenuButton> xcglMenuSuButtons = new ArrayList<>();
+            WxMenu.WxMenuButton xcglSubManage = new WxMenu.WxMenuButton();
+            xcglSubManage.setName("现场管理");
+            xcglSubManage.setType(WxConsts.BUTTON_VIEW);
+            xcglSubManage.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + config.getAppId() + "&redirect_uri=http%3a%2f%2f139.196.171.130%2fzyqyh%2fmobile%2fxcglManage.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+            xcglMenuSuButtons.add(xcglSubManage);
+
+            WxMenu.WxMenuButton xcjcManage = new WxMenu.WxMenuButton();
+            xcjcManage.setName("现场检查");
+            xcjcManage.setType(WxConsts.BUTTON_VIEW);
+            xcjcManage.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + config.getAppId() + "&redirect_uri=http%3a%2f%2f139.196.171.130%2fzyqyh%2fmobile%2fxcjcManage.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+            xcglMenuSuButtons.add(xcjcManage);
+
+            xcglManage.setSubButtons(xcglMenuSuButtons);
+
+            WxMenu.WxMenuButton projectMenuManage = new WxMenu.WxMenuButton();
+            projectMenuManage.setName("项目管理");
+            x5Meuns.add(projectMenuManage);
+
+            List<WxMenu.WxMenuButton> projectManageButtons = new ArrayList<>();
+            WxMenu.WxMenuButton projectManage = new WxMenu.WxMenuButton();
+            projectManage.setName("工程承揽情况");
+            projectManage.setType(WxConsts.BUTTON_VIEW);
+            projectManage.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + config + "&redirect_uri=http%3a%2f%2f139.196.171.130%2fzyqyh%2fmobile%2fprojectManage.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+            projectManageButtons.add(projectManage);
+            projectMenuManage.setSubButtons(projectManageButtons);
+
+            x5Menu.setButtons(x5Meuns);
+            wxMpService.menuDelete();
+            wxMpService.menuCreate(x5Menu);
         } catch (JAXBException ex) {
             Logger.getLogger(WechatService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        WxMenu x5Menu = new WxMenu();
-        WxMenu.WxMenuButton indexPage = new WxMenu.WxMenuButton();
-        indexPage.setName("起步科技");
-        indexPage.setType(WxConsts.BUTTON_VIEW);
-        indexPage.setUrl("http://www.justep.com");
-        List<WxMenu.WxMenuButton> x5Meuns = new ArrayList<>();
-        x5Meuns.add(indexPage);
+    }
 
-        WxMenu.WxMenuButton takeout = new WxMenu.WxMenuButton();
-        takeout.setName("外卖案例");
-        takeout.setType(WxConsts.BUTTON_VIEW);
-        takeout.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + corpId + "&redirect_uri=http%3A%2F%2Fx5.justep.com%2Fx5%2FUI2%2Ftakeout%2Findex.w&"
-                + "response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
-        x5Meuns.add(takeout);
+    private static final String AUTHORIZATION_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 
-        x5Menu.setButtons(x5Meuns);
-        wxMpService.menuDelete();
-        wxMpService.menuCreate(x5Menu);
+    @Override
+    public String loginWithCode(String code) {
+        String RequestURL = AUTHORIZATION_URL.replace("APPID", corpId).replace("SECRET", secret).replace("CODE", code);
+        JSONObject jsonobject = WeixinUtil.httpRequest(RequestURL, "post", "");
+        String openId = jsonobject.getString("openid");
+        User user = userService.selectByOpenId(openId);
+        if (user == null) {
+            return "没有绑定微信号，请发送绑定命令到服务号：bd(您的微信号)";
+        }
+        return "";
+
     }
 
 }

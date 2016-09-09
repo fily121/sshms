@@ -74,7 +74,7 @@ public class WxMpServiceInstance {
             wxMpMessageRouter = new WxMpMessageRouter();
 
 //            this.addTestRouter();
-//            this.addMenuRouter();
+            this.addMenuRouter();
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }
