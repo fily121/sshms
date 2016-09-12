@@ -41,6 +41,22 @@ var sgdwManage = function () {
                                 }
                             }
                         },
+                        {field: 'address', title: '施工队住址', width: 120, formatter: function (value, rows, index) {
+                                if (rows.sgdxx) {
+                                    return rows.sgdxx.address;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        },
+                        {field: 'ctype', title: '车型', width: 120, formatter: function (value, rows, index) {
+                                if (rows.sgdxx) {
+                                    return rows.sgdxx.ctype;
+                                } else {
+                                    return '';
+                                }
+                            }
+                        },
                         {field: 'name', title: '队长名', width: 120, formatter: function (value, rows, index) {
                                 if (rows.user) {
                                     return rows.user.name;

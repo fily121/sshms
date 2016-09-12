@@ -8,6 +8,10 @@ public class Sgdxx {
 
     private String detail;
 
+    private String address;
+
+    private String ctype;
+
     private String duizhang;
 
     private String duizhangMc;
@@ -52,6 +56,22 @@ public class Sgdxx {
 
     public void setDetail(String detail) {
         this.detail = detail == null ? null : detail.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCtype() {
+        return ctype;
+    }
+
+    public void setCtype(String ctype) {
+        this.ctype = ctype;
     }
 
     public String getDuizhang() {

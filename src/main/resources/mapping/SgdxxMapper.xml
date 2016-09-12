@@ -5,12 +5,14 @@
         <id column="id" property="id" jdbcType="VARCHAR" />
         <result column="sgdmc" property="sgdmc" jdbcType="VARCHAR" />
         <result column="detail" property="detail" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="ctype" property="ctype" jdbcType="VARCHAR" />
         <result column="duizhang" property="duizhang" jdbcType="VARCHAR" />
         <result column="duizhangMc" property="duizhangMc" jdbcType="VARCHAR" />
         <result column="cph" property="cph" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
-        id, sgdmc, detail, duizhang, cph
+        id, sgdmc, detail, address, ctype, duizhang, cph
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
@@ -51,9 +53,9 @@
         where id = #{id,jdbcType=VARCHAR}
     </delete>
     <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
-        insert into sgdxx (id, sgdmc, detail,
+        insert into sgdxx (id, sgdmc, detail, address, ctype,
         duizhang, cph)
-        values (#{id,jdbcType=VARCHAR}, #{sgdmc,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR},
+        values (#{id,jdbcType=VARCHAR}, #{sgdmc,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ctype,jdbcType=VARCHAR},
         #{duizhang,jdbcType=VARCHAR}, #{cph,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Sgdxx" >
@@ -67,6 +69,12 @@
             </if>
             <if test="detail != null" >
                 detail,
+            </if>
+            <if test="address != null" >
+                address
+            </if>
+            <if test="ctype != null" >
+                ctype,
             </if>
             <if test="duizhang != null" >
                 duizhang,
@@ -85,6 +93,12 @@
             <if test="detail != null" >
                 #{detail,jdbcType=VARCHAR},
             </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="ctype != null" >
+                #{ctype,jdbcType=VARCHAR},
+            </if>
             <if test="duizhang != null" >
                 #{duizhang,jdbcType=VARCHAR},
             </if>
@@ -102,6 +116,12 @@
             <if test="detail != null" >
                 detail = #{detail,jdbcType=VARCHAR},
             </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="ctype != null" >
+                ctype = #{ctype,jdbcType=VARCHAR},
+            </if>
             <if test="duizhang != null" >
                 duizhang = #{duizhang,jdbcType=VARCHAR},
             </if>
@@ -115,6 +135,8 @@
         update sgdxx
         set sgdmc = #{sgdmc,jdbcType=VARCHAR},
         detail = #{detail,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR}
+        ctype = #{ctype,jdbcType=VARCHAR}
         duizhang = #{duizhang,jdbcType=VARCHAR}
         cph = #{cph,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}

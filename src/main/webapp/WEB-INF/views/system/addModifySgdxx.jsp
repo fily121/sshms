@@ -23,6 +23,12 @@
         <input class="easyui-textbox" name="detail" id="detail" value="${sgdxx.detail}" style="width:95%" data-options="label:'施工队详情'">
     </div>
     <div class="input_area">
+        <input class="easyui-textbox" name="address" id="address" value="${sgdxx.address}" style="width:95%" data-options="label:'施工队住址'">
+    </div>
+    <div class="input_area">
+        <input class="easyui-textbox" name="ctype" id="ctype" value="${sgdxx.ctype}" style="width:95%" data-options="label:'车型'">
+    </div>
+    <div class="input_area">
         <select class="easyui-combogrid" name="duizhang" id="duizhang" style="width:95%" data-options="label:'队长信息',required:true,idField:'userId',
                 value:'${sgdxx.duizhang}',editable:false,
                 textField:'name',url:'data/system/getAllUser.do',columns: [[
