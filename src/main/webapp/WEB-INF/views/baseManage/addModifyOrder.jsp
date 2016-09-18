@@ -17,16 +17,34 @@
 <form id="orderManageForm" method="post" action="data/baseManage/addModifyOrder.do" enctype="multipart/form-data">
     <div class="input_area" style="margin-top:20px;">
         <input name="orderId" value="${order.order.orderId}" type="hidden"/>
-        <input class="easyui-textbox" name="orderName" id="orderName" value="${order.order.orderName}" style="width:95%" data-options="label:'订单名称',required:true" validType="maxLength[20]">
-    </div>
-    <div class="input_area" style="margin-top:20px;">
-        <input class="easyui-textbox" name="formattedCreateDate" id="formattedCreateDate" value="${order.order.formattedCreateDate}" style="width:95%" data-options="label:'创建日期', disabled:true">
+        <input class="easyui-textbox" name="orderName" id="orderName" value="${order.order.orderName}" style="width:95%" data-options="label:'项目名称',required:true" validType="maxLength[20]">
     </div>
     <div class="input_area">
-        <input class="easyui-combobox" name="sgdid"  value="${order.order.sgdid}" id="sgdid" style="width:95%" data-options="label:'所属施工队',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do',required:true"/>
+        <input class="easyui-textbox" name="orderNumber"  value="${order.order.orderNumber}"  id="orderNumber" style="width:95%" data-options="label:'项目编号'" validType="maxLength[200]"/>
     </div>
     <div class="input_area">
-        <input class="easyui-textbox" name="remark"  value="${order.order.remark}"  id="remark" style="width:95%" data-options="label:'备注'" validType="maxLength[200]"/>
+        <input class="easyui-textbox" name="lxNumber"  value="${order.order.lxNumber}"  id="lxNumber" style="width:95%" data-options="label:'工作联系单编号'" validType="maxLength[200]"/>
+    </div>
+    <div class="input_area" >
+        <input class="easyui-textbox" name="formattedCreateDate" id="formattedCreateDate" value="${order.order.formattedCreateDate}" style="width:95%" data-options="label:'派单日期', disabled:true">
+    </div>
+    <div class="input_area" >
+        <input class="easyui-datebox" name="startDate" id="startDate" value="${order.order.startDate}" style="width:95%" data-options="label:'要求开工日期',required:true,editable:false">
+    </div>
+    <div class="input_area" >
+        <input class="easyui-datebox" name="endTime" id="endTime" value="${order.order.endTime}" style="width:95%" data-options="label:'要求完工日期',required:true,editable:false">
+    </div>
+    <div class="input_area">
+        <input class="easyui-textbox" name="realDetail"  value="${order.order.realDetail}"  id="realDetail" style="width:95%" data-options="label:'实际完成情况'" validType="maxLength[200]"/>
+    </div>
+    <div class="input_area">
+        <input class="easyui-textbox" name="problem"  value="${order.order.problem}"  id="problem" style="width:95%" data-options="label:'存在问题'" validType="maxLength[200]"/>
+    </div>
+    <div class="input_area">
+        <input class="easyui-combobox" name="sgdid"  value="${order.order.sgdid}" id="sgdid" style="width:95%" data-options="label:'施工单位',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do',required:true"/>
+    </div>
+    <div class="input_area">
+        <input class="easyui-textbox" name="remark"  value="${order.order.remark}"  id="remark" style="width:95%" data-options="label:'工程内容'" validType="maxLength[200]"/>
     </div>
     <div>
         <select id="guanlianProject" class="easyui-combogrid" name="guanlianProject" style="width:400px"

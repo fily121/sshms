@@ -53,8 +53,8 @@ public class BaseDivController {
         if (org.apache.commons.lang3.StringUtils.isNotEmpty(id)) {
             try {
                 OrderDetail order = orderService.selectByOrderId(id);
-                List<String> projectIds = orderProjectService.selectProjectIdByOrderId(id);
                 model.addAttribute("order", order);
+                List<String> projectIds = orderProjectService.selectProjectIdByOrderId(id);
                 String projectIdArray = projectIds.toString().replaceAll("\\[", "\\['").replaceAll("\\]", "'\\]").replaceAll("\\,", "'\\,'").replaceAll(" ", "");
                 model.addAttribute("projectIds", projectIdArray);
                 String attachmentId = order.getOrder().getAttachmentId();
@@ -68,6 +68,8 @@ public class BaseDivController {
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            model.addAttribute("projectIds", "''");
         }
         return "baseManage/addModifyOrder";
     }

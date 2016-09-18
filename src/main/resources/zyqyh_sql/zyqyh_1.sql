@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : mysql_local
+Source Server         : local
 Source Server Version : 50714
 Source Host           : localhost:3306
 Source Database       : zyqyh
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2016-09-07 19:15:51
+Date: 2016-09-18 17:11:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -187,30 +187,24 @@ DROP TABLE IF EXISTS `p_order`;
 CREATE TABLE `p_order` (
   `ORDER_ID` varchar(36) NOT NULL,
   `ORDER_NAME` varchar(255) DEFAULT NULL COMMENT '订单名称',
-  `CREATE_DATE` datetime DEFAULT NULL,
+  `CREATE_DATE` datetime DEFAULT NULL COMMENT '派单日期',
   `UPDATE_DATE` datetime DEFAULT NULL,
   `CREATE_USER` varchar(36) DEFAULT NULL,
-  `REMARK` varchar(50) DEFAULT NULL COMMENT '备注',
-  `SGDID` varchar(36) DEFAULT NULL COMMENT '所属施工队',
+  `REMARK` varchar(50) DEFAULT NULL COMMENT '工程内容',
+  `SGDID` varchar(36) DEFAULT NULL COMMENT '施工单位',
   `attachment_id` varchar(255) DEFAULT NULL,
-  `EXT1` varchar(255) DEFAULT NULL,
-  `EXT2` varchar(255) DEFAULT NULL,
-  `EXT3` varchar(255) DEFAULT NULL,
+  `ORDER_NUMBER` varchar(255) DEFAULT NULL COMMENT '项目编号',
+  `LX_NUMBER` varchar(255) DEFAULT NULL COMMENT '工作联系单编号',
+  `START_DATE` datetime DEFAULT NULL COMMENT '要求开工日期',
+  `END_TIME` datetime DEFAULT NULL COMMENT '要求完工日期',
+  `REAL_DETAIL` varchar(255) DEFAULT NULL COMMENT '实际完成情况',
+  `PROBLEM` varchar(255) DEFAULT NULL COMMENT '存在问题',
   PRIMARY KEY (`ORDER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_order
 -- ----------------------------
-INSERT INTO `p_order` VALUES ('1', '订单1', '2016-08-22 19:05:55', null, 'jcz', '备注1', '1', '', '蒋传志', null, null);
-INSERT INTO `p_order` VALUES ('2', '订单2', '2016-08-16 08:07:55', null, 'jcz', '备注2', '2', null, '蒋传志', '', null);
-INSERT INTO `p_order` VALUES ('3', '订单3', '2016-08-23 19:05:55', '2016-08-23 19:09:29', 'jcz', '备注3', '1', '', '蒋传志', '', '');
-INSERT INTO `p_order` VALUES ('3cfa56a7-67a5-4db8-b051-9a6783a88909', '222', '2016-09-07 15:18:45', null, null, '', 'fc367d75-8df5-4888-8f03-38f8348695ef', 'aefda677-7da7-484d-b222-6456e5146509', null, null, null);
-INSERT INTO `p_order` VALUES ('4', '订单4', '2016-08-10 08:07:55', '2016-08-25 19:09:32', 'jcz', '备注4', '2', '', '蒋传志', '', '');
-INSERT INTO `p_order` VALUES ('669eb966-1d09-440f-867e-69d5ba67a90e', '测试订单', null, null, null, '121212', 'fc367d75-8df5-4888-8f03-38f8348695ef', '6cfe394c-727d-42c9-b9d4-815f9c28135a', null, null, null);
-INSERT INTO `p_order` VALUES ('95f61254-2f6c-4c53-b611-7989f4707dd1', '123123', null, null, null, 'sdfsdf', 'fc367d75-8df5-4888-8f03-38f8348695ef', '47c9c7b4-fee9-4c74-a32a-93ac0e0e3831', null, null, null);
-INSERT INTO `p_order` VALUES ('d75db616-cb68-47b7-a66c-6c0f610f51ba', 'ｻdﾌｧsdf', null, null, null, '', '', '6a0279c8-3679-441a-a54b-4510d91d9154', null, null, null);
-INSERT INTO `p_order` VALUES ('f6cc3564-121e-4f4b-9567-10498c552d3e', '测试订单', null, null, null, '121212', 'fc367d75-8df5-4888-8f03-38f8348695ef', 'd49b0511-5453-4e9b-9399-713fa2b7a977', null, null, null);
 
 -- ----------------------------
 -- Table structure for p_org
@@ -352,7 +346,9 @@ DROP TABLE IF EXISTS `sgdxx`;
 CREATE TABLE `sgdxx` (
   `id` varchar(36) NOT NULL,
   `sgdmc` varchar(50) DEFAULT NULL,
+  `ctype` varchar(255) DEFAULT NULL,
   `detail` varchar(500) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   `duizhang` varchar(36) NOT NULL,
   `cph` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -363,4 +359,4 @@ CREATE TABLE `sgdxx` (
 -- ----------------------------
 -- Records of sgdxx
 -- ----------------------------
-INSERT INTO `sgdxx` VALUES ('fc367d75-8df5-4888-8f03-38f8348695ef', 'SADasd', 'asd', '2', '123456');
+INSERT INTO `sgdxx` VALUES ('fc367d75-8df5-4888-8f03-38f8348695ef', 'SADasd', null, 'asd', null, '2', '123456');

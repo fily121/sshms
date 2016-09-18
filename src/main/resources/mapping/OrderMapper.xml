@@ -10,13 +10,16 @@
         <result column="REMARK" property="remark" jdbcType="VARCHAR" />
         <result column="SGDID" property="sgdid" jdbcType="VARCHAR" />
         <result column="attachment_id" property="attachmentId" jdbcType="VARCHAR" />
-        <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
-        <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
-        <result column="EXT3" property="ext3" jdbcType="VARCHAR" />
+        <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR" />
+        <result column="LX_NUMBER" property="lxNumber" jdbcType="VARCHAR" />
+        <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+        <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="REAL_DETAIL" jdbcType="VARCHAR" property="realDetail" />
+        <result column="PROBLEM" property="problem" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
         ORDER_ID, ORDER_NAME, CREATE_DATE, UPDATE_DATE, CREATE_USER, REMARK, SGDID, attachment_id, 
-        EXT1, EXT2, EXT3
+        ORDER_NUMBER, LX_NUMBER, START_DATE, END_TIME, REAL_DETAIL PROBLEM
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select 
@@ -38,12 +41,14 @@
     <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
         insert into p_order (ORDER_ID, ORDER_NAME, CREATE_DATE, 
         UPDATE_DATE, CREATE_USER, REMARK, 
-        SGDID, attachment_id, EXT1, 
-        EXT2, EXT3)
+        SGDID, attachment_id, ORDER_NUMBER, 
+        LX_NUMBER, START_DATE, END_TIME, 
+        REAL_DETAIL PROBLEM)
         values (#{orderId,jdbcType=VARCHAR}, #{orderName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
         #{updateDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-        #{sgdid,jdbcType=VARCHAR}, #{attachmentId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
-        #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
+        #{sgdid,jdbcType=VARCHAR}, #{attachmentId,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR}, 
+        #{lxNumber,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+        #{realDetail,jdbcType=VARCHAR}, #{problem,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Order" >
         insert into p_order
@@ -72,14 +77,23 @@
             <if test="attachmentId != null" >
                 attachment_id,
             </if>
-            <if test="ext1 != null" >
-                EXT1,
+            <if test="orderNumber != null" >
+                ORDER_NUMBER,
             </if>
-            <if test="ext2 != null" >
-                EXT2,
+            <if test="lxNumber != null" >
+                LX_NUMBER,
             </if>
-            <if test="ext3 != null" >
-                EXT3,
+            <if test="startDate != null" >
+                START_DATE,
+            </if>
+            <if test="endTime != null" >
+                END_TIME,
+            </if>
+            <if test="realDetail != null" >
+                REAL_DETAIL
+            </if>
+            <if test="problem != null" >
+                PROBLEM,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -107,14 +121,23 @@
             <if test="attachmentId != null" >
                 #{attachmentId,jdbcType=VARCHAR},
             </if>
-            <if test="ext1 != null" >
-                #{ext1,jdbcType=VARCHAR},
+            <if test="orderNumber != null" >
+                #{orderNumber,jdbcType=VARCHAR},
             </if>
-            <if test="ext2 != null" >
-                #{ext2,jdbcType=VARCHAR},
+            <if test="lxNumber != null" >
+                #{lxNumber,jdbcType=VARCHAR},
             </if>
-            <if test="ext3 != null" >
-                #{ext3,jdbcType=VARCHAR},
+            <if test="startDate != null" >
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null" >
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="realDetail != null" >
+               #{realDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="problem != null" >
+                #{problem,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -142,14 +165,23 @@
             <if test="attachmentId != null" >
                 attachment_id = #{attachmentId,jdbcType=VARCHAR},
             </if>
-            <if test="ext1 != null" >
-                EXT1 = #{ext1,jdbcType=VARCHAR},
+            <if test="orderNumber != null" >
+                ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
             </if>
-            <if test="ext2 != null" >
-                EXT2 = #{ext2,jdbcType=VARCHAR},
+            <if test="lxNumber != null" >
+                LX_NUMBER = #{lxNumber,jdbcType=VARCHAR},
             </if>
-            <if test="ext3 != null" >
-                EXT3 = #{ext3,jdbcType=VARCHAR},
+            <if test="startDate != null" >
+                START_DATE = #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null" >
+                END_TIME = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="realDetail != null" >
+                REAL_DETAIL = #{realDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="problem != null" >
+                PROBLEM = #{problem,jdbcType=VARCHAR},
             </if>
         </set>
         where ORDER_ID = #{orderId,jdbcType=VARCHAR}
@@ -163,16 +195,19 @@
         REMARK = #{remark,jdbcType=VARCHAR},
         SGDID = #{sgdid,jdbcType=VARCHAR},
         attachment_id = #{attachmentId,jdbcType=VARCHAR},
-        EXT1 = #{ext1,jdbcType=VARCHAR},
-        EXT2 = #{ext2,jdbcType=VARCHAR},
-        EXT3 = #{ext3,jdbcType=VARCHAR}
+        ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
+        LX_NUMBER = #{lxNumber,jdbcType=VARCHAR},
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+        REAL_DETAIL = #{realDetail,jdbcType=VARCHAR},
+        PROBLEM = #{problem,jdbcType=VARCHAR}
         where ORDER_ID = #{orderId,jdbcType=VARCHAR}
     </update>
   
     <resultMap id="OrderDetail_resultMap" type="cn.com.sinoi.zyqyh.vo.relate.OrderDetail" >
-      <id column="ORDER_ID" />
-      <association property="order" resultMap="BaseResultMap" />
-      <association property="sgdxx" resultMap="cn.com.sinoi.zyqyh.dao.SgdxxMapper.BaseResultMap" />
+        <id column="ORDER_ID" />
+        <association property="order" resultMap="BaseResultMap" />
+        <association property="sgdxx" resultMap="cn.com.sinoi.zyqyh.dao.SgdxxMapper.BaseResultMap" />
     </resultMap>
     <select id="findAllForPage" resultMap="OrderDetail_resultMap" parameterType="java.util.Map" >
         select 
@@ -184,6 +219,11 @@
             AND (
             a.ORDER_NAME LIKE concat('%',#{searchKey},'%')
             OR a.REMARK LIKE concat('%',#{searchKey},'%')
+            OR a.PROBLEM LIKE concat('%',#{searchKey},'%')
+            OR a.REAL_DETAIL LIKE concat('%',#{searchKey},'%')
+            OR a.LX_NUMBER LIKE concat('%',#{searchKey},'%')
+            OR a.LX_NUMBER LIKE concat('%',#{searchKey},'%')
+            OR a.ORDER_NUMBER LIKE concat('%',#{searchKey},'%')
             )
         </if>
         limit #{limit1}, #{limit2}
