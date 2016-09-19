@@ -68,6 +68,8 @@ public class BaseDivController {
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            model.addAttribute("projectIds", "''");
         }
         return "baseManage/addModifyOrder";
     }

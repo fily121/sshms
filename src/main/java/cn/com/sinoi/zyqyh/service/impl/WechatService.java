@@ -30,7 +30,6 @@ import me.chanjar.weixin.common.bean.WxMenu;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.directwebremoting.Browser;
 import org.directwebremoting.ScriptBuffer;
@@ -314,13 +313,18 @@ public class WechatService implements IWechatService {
 
     @Override
     public String loginWithCode(String code) {
-        String RequestURL = AUTHORIZATION_URL.replace("APPID", corpId).replace("SECRET", secret).replace("CODE", code);
-        JSONObject jsonobject = WeixinUtil.httpRequest(RequestURL, "post", "");
-        String openId = jsonobject.getString("openid");
-        User user = userService.selectByOpenId(openId);
-        if (user == null) {
-            return "没有绑定微信号，请发送绑定命令到服务号：bd(您的微信号)";
-        }
+//        String RequestURL = AUTHORIZATION_URL.replace("APPID", corpId).replace("SECRET", secret).replace("CODE", code);
+//        JSONObject jsonobject = WeixinUtil.httpRequest(RequestURL, "post", "");
+//        String openId = jsonobject.getString("openid");
+//        User user = userService.selectByOpenId(openId);
+//        if (user == null) {
+//            return "没有绑定微信号，请发送绑定命令到服务号：bd(您的微信号)";
+//        }
+//
+//        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getUserPwd());
+//        // 获取当前的Subject
+//        Subject currentUser = SecurityUtils.getSubject();
+//        currentUser.login(token);
         return "";
 
     }

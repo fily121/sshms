@@ -207,6 +207,14 @@ public class BaseDataController {
             String msg = "订单创建成功。";
             if (StringUtils.isNotEmpty(order.getOrderId())) {
                 Attachment atta = attachmentService.findbyId(order.getAttachmentId());
+                if (atta == null) {
+                    Date date = new Date();
+                    String uri = FilePathEnum.订单管理.getPath() + FORMATTER_YMD.format(date) + "/" + order.getOrderId();
+                    atta = new Attachment();
+                    atta.setId(java.util.UUID.randomUUID().toString());
+                    atta.setUri(uri);
+                    attachmentService.save(atta);
+                }
                 try {
                     for (MultipartFile file : uploadFile) {
                         if (file.getSize() != 0) {
@@ -218,6 +226,7 @@ public class BaseDataController {
                 }
                 OrderDetail oldOrderDetail = orderService.selectByOrderId(order.getOrderId());
                 String oldOrderName = oldOrderDetail.getOrder().getOrderName();
+                order.setAttachmentId(atta.getId());
                 orderService.updateByPrimaryKeySelective(order);
                 msg = "订单修改成功。";
                 for (String openId : openIds) {

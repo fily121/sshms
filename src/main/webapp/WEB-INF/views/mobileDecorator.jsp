@@ -15,10 +15,10 @@
 
     <title>中移铁通微信企业号-<sitemesh:write property='title' /></title>
 
-    <link href="<%= basePath%>static/css/mobile/style.css"     rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="<%= basePath%>static/css/mobile/jquery.mobile-1.4.5.min.css">
-    <script type="text/javascript"  src="<%= basePath%>static/js/jquery.js"></script>
-    <script src="<%= basePath%>static/js/plugins/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="<%= basePath%>static/js/mobile/jquery.mobile-1.3.1.css">
+    
+    <script type="text/javascript" src="<%= basePath%>static/js/mobile/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript"  src="<%= basePath%>static/js/mobile/jquery.mobile-1.3.1.min.js"></script>
 
     <script type="text/javascript" src="<%= basePath%>static/js/mobile/framework.launcher.js"></script>
 </head>
@@ -31,9 +31,6 @@
             </p>
         </div>
     </div>
-    <div class="top-deco"></div>
     <sitemesh:write property='body' />
-    <div style="height:28px;"></div>
-    <div class="bottom-deco"></div>
-</body>
+`</body>
 </html>

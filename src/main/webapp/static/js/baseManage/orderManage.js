@@ -33,7 +33,7 @@ var orderManage = function () {
                                 }
                             }
                         },
-                        {field: 'formattedCreateDate', width: 150, title: '创建日期', formatter: function (value, rows, index) {
+                        {field: 'formattedCreateDate', width: 150, title: '派单日期', formatter: function (value, rows, index) {
                                 if (rows.order) {
                                     return rows.order.formattedCreateDate;
                                 } else {
@@ -41,7 +41,7 @@ var orderManage = function () {
                                 }
                             }
                         },
-                        {field: 'remark', title: '备注', width: 220, formatter: function (value, rows, index) {
+                        {field: 'remark', title: '实际完成情况', width: 220, formatter: function (value, rows, index) {
                                 if (rows.order) {
                                     return rows.order.remark;
                                 } else {
@@ -49,7 +49,7 @@ var orderManage = function () {
                                 }
                             }
                         },
-                        {field: 'sgdmc', title: '施工队名称', width: 120, formatter: function (value, rows, index) {
+                        {field: 'sgdmc', title: '施工单位', width: 120, formatter: function (value, rows, index) {
                                 if (rows.sgdxx) {
                                     return rows.sgdxx.sgdmc;
                                 } else {
@@ -77,7 +77,7 @@ var orderManage = function () {
             $('#orderManageDialog').dialog({
                 title: '创建订单',
                 width: 800,
-                height: 400,
+                height: 600,
                 closed: true,
                 cache: false,
                 href: 'div/baseManage/addModifyOrder.do?id=' + orderId,

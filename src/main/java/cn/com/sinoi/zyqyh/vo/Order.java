@@ -1,7 +1,7 @@
 package cn.com.sinoi.zyqyh.vo;
 
-import java.util.Date;
 import static cn.com.sinoi.zyqyh.utils.DateUtil.FORMATTER_YMDHMS;
+import java.util.Date;
 
 public class Order {
 
@@ -21,11 +21,17 @@ public class Order {
 
     private String attachmentId;
 
-    private String ext1;
+    private String orderNumber;
 
-    private String ext2;
+    private String orderDetail;
 
-    private String ext3;
+    private String startTime;
+
+    private String endTime;
+
+    private String lxNumber;
+
+    private String problem;
 
     public String getFormattedCreateDate() {
         if (createDate != null) {
@@ -99,27 +105,51 @@ public class Order {
         this.attachmentId = attachmentId == null ? null : attachmentId.trim();
     }
 
-    public String getExt1() {
-        return ext1;
+    public String getOrderNumber() {
+        return orderNumber;
     }
 
-    public void setExt1(String ext1) {
-        this.ext1 = ext1 == null ? null : ext1.trim();
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber == null ? null : orderNumber.trim();
     }
 
-    public String getExt2() {
-        return ext2;
+    public String getOrderDetail() {
+        return orderDetail;
     }
 
-    public void setExt2(String ext2) {
-        this.ext2 = ext2 == null ? null : ext2.trim();
+    public void setOrderDetail(String orderDetail) {
+        this.orderDetail = orderDetail == null ? null : orderDetail.trim();
     }
 
-    public String getExt3() {
-        return ext3;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setExt3(String ext3) {
-        this.ext3 = ext3 == null ? null : ext3.trim();
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getLxNumber() {
+        return lxNumber;
+    }
+
+    public void setLxNumber(String lxNumber) {
+        this.lxNumber = lxNumber == null ? null : lxNumber.trim();
+    }
+
+    public String getProblem() {
+        return problem;
+    }
+
+    public void setProblem(String problem) {
+        this.problem = problem == null ? null : problem.trim();
     }
 }
