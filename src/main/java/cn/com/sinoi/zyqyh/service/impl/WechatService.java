@@ -320,6 +320,11 @@ public class WechatService implements IWechatService {
 //        if (user == null) {
 //            return "没有绑定微信号，请发送绑定命令到服务号：bd(您的微信号)";
 //        }
+//
+//        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getUserPwd());
+//        // 获取当前的Subject
+//        Subject currentUser = SecurityUtils.getSubject();
+//        currentUser.login(token);
         return "";
 
     }

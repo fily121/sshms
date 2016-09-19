@@ -197,8 +197,7 @@ public class BaseDataController {
 
     @RequestMapping(value = "addModifyOrder.do", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> addModifyOrder(Order order, @RequestParam(value = "uploadFile", required = false) MultipartFile[] uploadFile,
-            HttpServletResponse response, String guanlianProject) {
+    public Map<String, String> addModifyOrder(Order order, @RequestParam(value = "uploadFile", required = false) MultipartFile[] uploadFile, HttpServletResponse response, String guanlianProject) {
         Map<String, String> result = new HashMap<>();
         if (order != null) {
             List<String> openIds = sgdxxService.findOpenIdByGcdId(order.getSgdid());
@@ -208,6 +207,14 @@ public class BaseDataController {
             String msg = "订单创建成功。";
             if (StringUtils.isNotEmpty(order.getOrderId())) {
                 Attachment atta = attachmentService.findbyId(order.getAttachmentId());
+                if (atta == null) {
+                    Date date = new Date();
+                    String uri = FilePathEnum.订单管理.getPath() + FORMATTER_YMD.format(date) + "/" + order.getOrderId();
+                    atta = new Attachment();
+                    atta.setId(java.util.UUID.randomUUID().toString());
+                    atta.setUri(uri);
+                    attachmentService.save(atta);
+                }
                 try {
                     for (MultipartFile file : uploadFile) {
                         if (file.getSize() != 0) {
@@ -219,11 +226,11 @@ public class BaseDataController {
                 }
                 OrderDetail oldOrderDetail = orderService.selectByOrderId(order.getOrderId());
                 String oldOrderName = oldOrderDetail.getOrder().getOrderName();
+                order.setAttachmentId(atta.getId());
                 orderService.updateByPrimaryKeySelective(order);
                 msg = "订单修改成功。";
                 for (String openId : openIds) {
-                    String jsonString = MessageUtil.getOrderMessage(openId, "订单有变更，原订单名：" + oldOrderName, dateTime, order.getOrderName(),
-                            order.getOrderId(), "您的订单有变更，请登录系统查看。", "");
+                    String jsonString = MessageUtil.getOrderMessage(openId, "订单有变更，原订单名：" + oldOrderName, dateTime, order.getOrderName(), order.getOrderId(), "您的订单有变更，请登录系统查看。", "");
                     WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
                 }
             } else {

@@ -23,13 +23,13 @@ public class Order {
 
     private String orderNumber;
 
+    private String orderDetail;
+
+    private String startTime;
+
+    private String endTime;
+
     private String lxNumber;
-
-    private Date startDate;
-
-    private Date endTime;
-
-    private String realDetail;
 
     private String problem;
 
@@ -113,36 +113,36 @@ public class Order {
         this.orderNumber = orderNumber == null ? null : orderNumber.trim();
     }
 
+    public String getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(String orderDetail) {
+        this.orderDetail = orderDetail == null ? null : orderDetail.trim();
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
     public String getLxNumber() {
         return lxNumber;
     }
 
     public void setLxNumber(String lxNumber) {
         this.lxNumber = lxNumber == null ? null : lxNumber.trim();
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getRealDetail() {
-        return realDetail;
-    }
-
-    public void setRealDetail(String realDetail) {
-        this.realDetail = realDetail == null ? null : realDetail.trim();
     }
 
     public String getProblem() {

@@ -53,8 +53,8 @@ public class BaseDivController {
         if (org.apache.commons.lang3.StringUtils.isNotEmpty(id)) {
             try {
                 OrderDetail order = orderService.selectByOrderId(id);
-                model.addAttribute("order", order);
                 List<String> projectIds = orderProjectService.selectProjectIdByOrderId(id);
+                model.addAttribute("order", order);
                 String projectIdArray = projectIds.toString().replaceAll("\\[", "\\['").replaceAll("\\]", "'\\]").replaceAll("\\,", "'\\,'").replaceAll(" ", "");
                 model.addAttribute("projectIds", projectIdArray);
                 String attachmentId = order.getOrder().getAttachmentId();
