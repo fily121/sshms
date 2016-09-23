@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,34 +13,14 @@
                 <h1>订单管理</h1>
             </div><!-- /header -->
             <div data-role="content"> 
-                <div data-role="fieldcontain">
-                    <label for="orderName">订单名称：</label>
-                    <input type="text" name="orderName" id="orderName" value=""  />
-                </div>
-                <div data-role="fieldcontain">
-                    <label for="orderNumber">项目编号：</label>
-                    <input type="text" name="orderNumber" id="orderNumber" value=""  />
-                </div>
-                <div data-role="fieldcontain">
-                    <label for="lxNumber">工作联系单编号：</label>
-                    <input type="text" name="lxNumber" id="lxNumber" value=""  />
-                </div>
-                <div data-role="fieldcontain">
-                    <label for="startTime">开工日期：</label>
-                    <input type="date" name="startTime" id="startTime" value="">
-                </div>
+                <shiro:hasPermission name="order:edit">
+                    <li><a href="#" data-icon="plus" class="ui-btn-active ui-state-persist">创建订单</a></li>
+                    </shiro:hasPermission>
+                <li><a href="#" data-icon="search">查询订单</a></li>
+                    <shiro:hasPermission name="order:edit">
+                    <li><a href="#" data-icon="gear">修改订单</a></li>
+                    </shiro:hasPermission>
             </div><!-- /content -->
-
-            <div data-role="footer" data-position="fixed">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#" data-icon="plus" class="ui-btn-active ui-state-persist">创建订单</a></li>
-                        <li><a href="#" data-icon="search">查询订单</a></li>
-                        <li><a href="#" data-icon="gear">修改订单</a></li>
-                    </ul>
-                </div>
-            </div>
-
         </div><!-- /page -->
     </body>
 </html>
