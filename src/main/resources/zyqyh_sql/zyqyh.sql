@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : mysql_local
+Source Server         : local
 Source Server Version : 50714
 Source Host           : localhost:3306
 Source Database       : zyqyh
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2016-09-07 19:15:51
+Date: 2016-09-26 16:27:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,12 +29,22 @@ CREATE TABLE `attachment` (
 -- ----------------------------
 -- Records of attachment
 -- ----------------------------
+INSERT INTO `attachment` VALUES ('0270793b-9b9c-4525-a1bb-6bd2290ac79f', 'ddgl/2016-09-26/5beb2d43-b72d-46da-89ee-d71db5a3623d', null);
+INSERT INTO `attachment` VALUES ('0932d5b7-9b0d-4e1b-b258-db490f3f74de', 'ddgl/2016-09-26/43dd14bd-6227-4f77-9817-e3137bb97999', null);
+INSERT INTO `attachment` VALUES ('0c88964d-d0d1-4688-9b3b-498f9cde2a8b', 'ddgl/2016-09-26/424270f3-c446-45f3-aa82-ed1ee5cae993', null);
 INSERT INTO `attachment` VALUES ('1', 'template', 'userImport.xls');
+INSERT INTO `attachment` VALUES ('38998a51-e8d7-4cbe-b841-bcd760cd8af1', 'ddgl/2016-09-26/96cafc48-7df9-4185-bed5-560a46e2ee16', null);
+INSERT INTO `attachment` VALUES ('40c96a50-5dab-4567-92bf-e37bbb3cf711', 'ddgl/2016-09-26/d6a9fc0c-a44d-40a9-aaaf-00ff89174ed9', null);
+INSERT INTO `attachment` VALUES ('43c747f9-b455-481d-b701-26293987431b', 'ddgl/2016-09-26/cabf887e-3f4e-4696-80d6-e538ea7df398', null);
 INSERT INTO `attachment` VALUES ('47c9c7b4-fee9-4c74-a32a-93ac0e0e3831', 'ddgl/2016-09-07', null);
 INSERT INTO `attachment` VALUES ('6a0279c8-3679-441a-a54b-4510d91d9154', 'ddgl/2016-09-07', null);
 INSERT INTO `attachment` VALUES ('6cfe394c-727d-42c9-b9d4-815f9c28135a', 'ddgl/2016-09-07', null);
+INSERT INTO `attachment` VALUES ('6d87951d-e698-413d-b8d7-80528ab094f0', 'ddgl/2016-09-26/303a0e46-9114-4164-bd38-081f5b9a7ad5', null);
+INSERT INTO `attachment` VALUES ('9e5db5fd-da0e-48f3-b863-fab56830df8e', 'ddgl/2016-09-26/4f1f4c29-7bde-48ec-9d17-d5860e852ea2', null);
 INSERT INTO `attachment` VALUES ('aefda677-7da7-484d-b222-6456e5146509', 'ddgl/2016-09-07/3cfa56a7-67a5-4db8-b051-9a6783a88909', null);
+INSERT INTO `attachment` VALUES ('cedadada-9372-4d74-9d8e-2ab50dbb9405', 'ddgl/2016-09-26/3f5cef2d-9ea1-4bb3-8b36-6729f5d17aa9', null);
 INSERT INTO `attachment` VALUES ('d49b0511-5453-4e9b-9399-713fa2b7a977', 'ddgl/2016-09-07', null);
+INSERT INTO `attachment` VALUES ('f12a55c0-5981-4505-b490-61e1cd184685', 'ddgl/2016-09-26/86d76d23-06c3-4f8c-b661-db2df6a109b9', null);
 
 -- ----------------------------
 -- Table structure for cllqgl
@@ -171,6 +181,11 @@ INSERT INTO `permission` VALUES ('11', '现场管理', '10', 'xcglManage/xcglMan
 INSERT INTO `permission` VALUES ('12', '现场检查', '10', 'xcglManage/xcjcManage.do');
 INSERT INTO `permission` VALUES ('13', '项目管理', null, null);
 INSERT INTO `permission` VALUES ('14', '工程承揽情况', '13', 'projectManage/projectManage.do');
+INSERT INTO `permission` VALUES ('15', 'order:edit', null, '');
+INSERT INTO `permission` VALUES ('16', 'sgd:edit', null, null);
+INSERT INTO `permission` VALUES ('17', 'gzzd:edit', null, null);
+INSERT INTO `permission` VALUES ('18', 'project:edit', null, null);
+INSERT INTO `permission` VALUES ('19', 'xcgl:edit', null, null);
 INSERT INTO `permission` VALUES ('2', '菜单管理', '2', 'system/menuManage.do');
 INSERT INTO `permission` VALUES ('3', '人员管理', '2', 'system/userManage.do');
 INSERT INTO `permission` VALUES ('4', '角色管理', '2', 'system/roleManage.do');
@@ -186,31 +201,28 @@ INSERT INTO `permission` VALUES ('9', '施工队伍', '5', 'baseManage/sgdwManag
 DROP TABLE IF EXISTS `p_order`;
 CREATE TABLE `p_order` (
   `ORDER_ID` varchar(36) NOT NULL,
-  `ORDER_NAME` varchar(255) DEFAULT NULL COMMENT '订单名称',
-  `CREATE_DATE` datetime DEFAULT NULL,
+  `ORDER_NAME` varchar(255) DEFAULT NULL COMMENT '项目名称',
+  `CREATE_DATE` datetime DEFAULT NULL COMMENT '派单日期',
   `UPDATE_DATE` datetime DEFAULT NULL,
   `CREATE_USER` varchar(36) DEFAULT NULL,
-  `REMARK` varchar(50) DEFAULT NULL COMMENT '备注',
-  `SGDID` varchar(36) DEFAULT NULL COMMENT '所属施工队',
+  `REMARK` varchar(50) DEFAULT NULL COMMENT '工程内容',
+  `SGDID` varchar(36) DEFAULT NULL COMMENT '施工单位',
   `attachment_id` varchar(255) DEFAULT NULL,
-  `EXT1` varchar(255) DEFAULT NULL,
-  `EXT2` varchar(255) DEFAULT NULL,
-  `EXT3` varchar(255) DEFAULT NULL,
+  `ORDER_NUMBER` varchar(255) DEFAULT NULL COMMENT '项目编号',
+  `LX_NUMBER` varchar(255) DEFAULT NULL COMMENT '工作联系单编号',
+  `START_TIME` datetime DEFAULT NULL COMMENT '要求开工日期',
+  `END_TIME` datetime DEFAULT NULL COMMENT '要求完工日期',
+  `REAL_DETAIL` varchar(255) DEFAULT NULL COMMENT '实际完成情况',
+  `PROBLEM` varchar(255) DEFAULT NULL COMMENT '存在问题',
   PRIMARY KEY (`ORDER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_order
 -- ----------------------------
-INSERT INTO `p_order` VALUES ('1', '订单1', '2016-08-22 19:05:55', null, 'jcz', '备注1', '1', '', '蒋传志', null, null);
-INSERT INTO `p_order` VALUES ('2', '订单2', '2016-08-16 08:07:55', null, 'jcz', '备注2', '2', null, '蒋传志', '', null);
-INSERT INTO `p_order` VALUES ('3', '订单3', '2016-08-23 19:05:55', '2016-08-23 19:09:29', 'jcz', '备注3', '1', '', '蒋传志', '', '');
-INSERT INTO `p_order` VALUES ('3cfa56a7-67a5-4db8-b051-9a6783a88909', '222', '2016-09-07 15:18:45', null, null, '', 'fc367d75-8df5-4888-8f03-38f8348695ef', 'aefda677-7da7-484d-b222-6456e5146509', null, null, null);
-INSERT INTO `p_order` VALUES ('4', '订单4', '2016-08-10 08:07:55', '2016-08-25 19:09:32', 'jcz', '备注4', '2', '', '蒋传志', '', '');
-INSERT INTO `p_order` VALUES ('669eb966-1d09-440f-867e-69d5ba67a90e', '测试订单', null, null, null, '121212', 'fc367d75-8df5-4888-8f03-38f8348695ef', '6cfe394c-727d-42c9-b9d4-815f9c28135a', null, null, null);
-INSERT INTO `p_order` VALUES ('95f61254-2f6c-4c53-b611-7989f4707dd1', '123123', null, null, null, 'sdfsdf', 'fc367d75-8df5-4888-8f03-38f8348695ef', '47c9c7b4-fee9-4c74-a32a-93ac0e0e3831', null, null, null);
-INSERT INTO `p_order` VALUES ('d75db616-cb68-47b7-a66c-6c0f610f51ba', 'ｻdﾌｧsdf', null, null, null, '', '', '6a0279c8-3679-441a-a54b-4510d91d9154', null, null, null);
-INSERT INTO `p_order` VALUES ('f6cc3564-121e-4f4b-9567-10498c552d3e', '测试订单', null, null, null, '121212', 'fc367d75-8df5-4888-8f03-38f8348695ef', 'd49b0511-5453-4e9b-9399-713fa2b7a977', null, null, null);
+INSERT INTO `p_order` VALUES ('424270f3-c446-45f3-aa82-ed1ee5cae993', 'asdfasd', '2016-09-26 14:39:38', '2016-09-26 14:39:38', null, '', '请选择施工队', '0c88964d-d0d1-4688-9b3b-498f9cde2a8b', 'sadfasdf', 'asdfefe', '2016-09-10 00:00:00', '2016-09-16 00:00:00', '', '');
+INSERT INTO `p_order` VALUES ('86d76d23-06c3-4f8c-b661-db2df6a109b9', '32', '2016-09-26 14:38:40', '2016-09-26 14:38:40', null, '23', '请选择施工队', 'f12a55c0-5981-4505-b490-61e1cd184685', '23', '23', '2016-09-08 00:00:00', '2016-09-15 00:00:00', '', '');
+INSERT INTO `p_order` VALUES ('96cafc48-7df9-4185-bed5-560a46e2ee16', '32', '2016-09-26 14:36:30', '2016-09-26 14:36:30', null, '23', '请选择施工队', '38998a51-e8d7-4cbe-b841-bcd760cd8af1', '23', '23', '2016-09-08 00:00:00', '2016-09-15 00:00:00', '', '');
 
 -- ----------------------------
 -- Table structure for p_org
@@ -352,7 +364,9 @@ DROP TABLE IF EXISTS `sgdxx`;
 CREATE TABLE `sgdxx` (
   `id` varchar(36) NOT NULL,
   `sgdmc` varchar(50) DEFAULT NULL,
+  `ctype` varchar(255) DEFAULT NULL,
   `detail` varchar(500) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   `duizhang` varchar(36) NOT NULL,
   `cph` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -363,4 +377,4 @@ CREATE TABLE `sgdxx` (
 -- ----------------------------
 -- Records of sgdxx
 -- ----------------------------
-INSERT INTO `sgdxx` VALUES ('fc367d75-8df5-4888-8f03-38f8348695ef', 'SADasd', 'asd', '2', '123456');
+INSERT INTO `sgdxx` VALUES ('fc367d75-8df5-4888-8f03-38f8348695ef', 'SADasd', null, 'asd', null, '2', '123456');
