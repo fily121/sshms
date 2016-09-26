@@ -15,4 +15,6 @@ public interface IOrderService extends IBaseService<Order> {
     void updateByPrimaryKeySelective(Order order);
 
     void insert(Order order);
+
+    public List<OrderDetail> findAllForLimit(String keywords, String userId);
 }

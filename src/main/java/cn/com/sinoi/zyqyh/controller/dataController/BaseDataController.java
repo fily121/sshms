@@ -200,6 +200,7 @@ public class BaseDataController {
     public Map<String, String> addModifyOrder(Order order, @RequestParam(value = "uploadFile", required = false) MultipartFile[] uploadFile, HttpServletResponse response, String guanlianProject) {
         Map<String, String> result = new HashMap<>();
         if (order != null) {
+            Date date = new Date();
             List<String> openIds = sgdxxService.findOpenIdByGcdId(order.getSgdid());
             String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
             String dateTime = FORMATTER_YMDHMS.format(new Date());
@@ -208,7 +209,6 @@ public class BaseDataController {
             if (StringUtils.isNotEmpty(order.getOrderId())) {
                 Attachment atta = attachmentService.findbyId(order.getAttachmentId());
                 if (atta == null) {
-                    Date date = new Date();
                     String uri = FilePathEnum.订单管理.getPath() + FORMATTER_YMD.format(date) + "/" + order.getOrderId();
                     atta = new Attachment();
                     atta.setId(java.util.UUID.randomUUID().toString());
@@ -227,6 +227,7 @@ public class BaseDataController {
                 OrderDetail oldOrderDetail = orderService.selectByOrderId(order.getOrderId());
                 String oldOrderName = oldOrderDetail.getOrder().getOrderName();
                 order.setAttachmentId(atta.getId());
+                order.setUpdateDate(date);
                 orderService.updateByPrimaryKeySelective(order);
                 msg = "订单修改成功。";
                 for (String openId : openIds) {
@@ -235,7 +236,6 @@ public class BaseDataController {
                 }
             } else {
                 order.setOrderId(java.util.UUID.randomUUID().toString());
-                Date date = new Date();
                 String uri = FilePathEnum.订单管理.getPath() + FORMATTER_YMD.format(date) + "/" + order.getOrderId();
                 try {
                     for (MultipartFile file : uploadFile) {
@@ -252,6 +252,7 @@ public class BaseDataController {
                 attachmentService.save(atta);
                 order.setAttachmentId(atta.getId());
                 order.setCreateDate(date);
+                order.setUpdateDate(date);
                 orderService.insert(order);
                 for (String openId : openIds) {
                     String jsonString = MessageUtil.getOrderMessage(openId, "新的订单", dateTime, order.getOrderName(), order.getOrderId(), "您有新的订单，请登录系统查看。", "");
@@ -270,6 +271,7 @@ public class BaseDataController {
             }
             result.put("code", "true");
             result.put("message", msg);
+            result.put("id", order.getOrderId());
             return result;
         }
         result.put("code", "false");

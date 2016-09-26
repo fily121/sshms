@@ -22,4 +22,6 @@ public interface OrderMapper {
     List<OrderDetail> findAllForPage(Map<String, Object> param);
 
     OrderDetail selectByOrderId(String orderId);
+
+    public List<OrderDetail> findAllForLimit(Map<String, String> params);
 }

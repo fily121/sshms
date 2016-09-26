@@ -13,13 +13,13 @@
                 <h1>订单管理</h1>
             </div><!-- /header -->
             <div data-role="content"> 
-                <shiro:hasPermission name="order:edit">
-                    <li><a href="#" data-icon="plus" class="ui-btn-active ui-state-persist">创建订单</a></li>
-                    </shiro:hasPermission>
-                <li><a href="#" data-icon="search">查询订单</a></li>
-                    <shiro:hasPermission name="order:edit">
-                    <li><a href="#" data-icon="gear">修改订单</a></li>
-                    </shiro:hasPermission>
+                <%--<shiro:hasPermission name="order:edit">--%>
+                    <a href="addModifyOrder.do" data-icon="plus" data-role="button">发布订单</a>
+                <%--</shiro:hasPermission>--%>
+                <a href="#" data-icon="search" data-role="button">查询订单</a>
+                <%--<shiro:hasPermission name="order:edit">--%>
+                    <a href="#" data-icon="gear" data-role="button">修改订单</a>
+                <%--</shiro:hasPermission>--%>
             </div><!-- /content -->
         </div><!-- /page -->
     </body>

@@ -56,4 +56,12 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements IOrderSe
     public void insert(Order order) {
         orderMapper.insert(order);
     }
+
+    @Override
+    public List<OrderDetail> findAllForLimit(String keywords, String userId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("searchKey", keywords);
+        params.put("userId", userId);
+        return orderMapper.findAllForLimit(params);
+    }
 }

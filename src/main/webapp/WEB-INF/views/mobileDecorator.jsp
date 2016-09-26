@@ -12,25 +12,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
     <title>中移铁通微信企业号-<sitemesh:write property='title' /></title>
-
     <link rel="stylesheet" href="<%= basePath%>static/js/mobile/jquery.mobile-1.3.1.css">
-    
     <script type="text/javascript" src="<%= basePath%>static/js/mobile/jquery-1.9.1.min.js"></script>
     <script type="text/javascript"  src="<%= basePath%>static/js/mobile/jquery.mobile-1.3.1.min.js"></script>
-
-    <script type="text/javascript" src="<%= basePath%>static/js/mobile/framework.launcher.js"></script>
+    <script type="text/javascript"  src="<%= basePath%>static/js/plugins/easyUi/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="<%= basePath%>static/js/mobile/jquery.validate.min.js"></script>
+    <script type="text/javascript"  src="<%= basePath%>static/js/mobile/messages_zh.min.js"></script>
+    <sitemesh:write property='head' />
 </head>
 <body>
-    <div id="preloader">
-        <div id="status">
-            <p class="center-text">
-                Loading...
-                <em>Please waite!</em>
-            </p>
-        </div>
-    </div>
     <sitemesh:write property='body' />
-`</body>
+</body>
 </html>

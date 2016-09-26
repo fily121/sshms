@@ -23,7 +23,7 @@ public class Order {
 
     private String orderNumber;
 
-    private String orderDetail;
+    private String realDetail;
 
     private String startTime;
 
@@ -113,16 +113,16 @@ public class Order {
         this.orderNumber = orderNumber == null ? null : orderNumber.trim();
     }
 
-    public String getOrderDetail() {
-        return orderDetail;
+    public String getRealDetail() {
+        return realDetail;
     }
 
-    public void setOrderDetail(String orderDetail) {
-        this.orderDetail = orderDetail == null ? null : orderDetail.trim();
+    public void setRealDetail(String realDetail) {
+        this.realDetail = realDetail == null ? null : realDetail.trim();
     }
 
     public String getStartTime() {
-        return startTime;
+        return startTime != null && startTime.contains(" ") ? startTime.substring(0, startTime.indexOf(" ")) : startTime;
     }
 
     public void setStartTime(String startTime) {
@@ -130,7 +130,7 @@ public class Order {
     }
 
     public String getEndTime() {
-        return endTime;
+        return endTime != null && endTime.contains(" ") ? endTime.substring(0, endTime.indexOf(" ")) : endTime;
     }
 
     public void setEndTime(String endTime) {
