@@ -60,7 +60,7 @@ public class BaseDivController {
                 String attachmentId = order.getOrder().getAttachmentId();
                 if (StringUtils.isNotEmpty(attachmentId)) {
                     Attachment atta = attachmentService.findbyId(attachmentId);
-                    File file = new File(path + atta.getUri() + "/" + order.getOrder().getOrderId());
+                    File file = new File(path + atta.getUri());
                     if (file.exists()) {
                         model.addAttribute("files", file.listFiles());
                     }

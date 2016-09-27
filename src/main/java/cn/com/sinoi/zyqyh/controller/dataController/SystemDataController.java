@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -204,7 +205,8 @@ public class SystemDataController {
 
     @RequestMapping(value = "downloadFile.do")
     @ResponseBody
-    public void downloadFile(String attachmentId, HttpServletResponse response, String fileName) throws IOException, Exception {
+    public void downloadFile(String attachmentId, HttpServletResponse response, String fileName, HttpServletRequest request) throws IOException, Exception {
+        fileName = new String(fileName.getBytes("ISO-8859-1"), "UTF-8");
         if (StringUtils.isEmpty(attachmentId)) {
             return;
         }
@@ -214,10 +216,15 @@ public class SystemDataController {
             return;
         }
         if (StringUtils.isNotEmpty(fileName)) {
-            UrlDownloadFile.downLoadFileLocal(path + attachment.getUri() + "/" + fileName, response, false);
+            UrlDownloadFile.downLoadFileLocal(path + attachment.getUri() + "/" + fileName, response, false, isIE(request));
         } else {
-            UrlDownloadFile.downLoadFileLocal(path + attachment.getUri() + "/" + attachment.getFileName(), response, false);
+            UrlDownloadFile.downLoadFileLocal(path + attachment.getUri() + "/" + attachment.getFileName(), response, false, isIE(request));
         }
+    }
+    // 简单判断ie
+
+    private static boolean isIE(HttpServletRequest request) {
+        return request.getHeader("USER-AGENT").toLowerCase().indexOf("msie") > 0 ? true : false;
     }
 
     @RequestMapping(value = "uploadUserFile.do", method = RequestMethod.POST)

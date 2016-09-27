@@ -83,7 +83,12 @@
         <property name="filterChainDefinitions">
             <value>
                 /static/** = anon
-                /mobile/** = anon
+                /mobile/orderManage.do = anon
+                /mobile/gzzdManage.do = anon
+                /mobile/sgdManage.do = anon
+                /mobile/xcglManage.do = anon
+                /mobile/xcjcManage.do = anon
+                /mobile/projectManage.do = anon
                 /sendMessage.do = anon
                 /data/testLocation.do = anon
                 /user/login.do=anon

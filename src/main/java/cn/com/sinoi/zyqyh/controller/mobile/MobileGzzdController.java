@@ -4,16 +4,11 @@ import cn.com.sinoi.zyqyh.controller.dataController.SystemDataController;
 import cn.com.sinoi.zyqyh.definition.RoleEnum;
 import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IOrderProjectService;
-import cn.com.sinoi.zyqyh.service.IOrderService;
-import cn.com.sinoi.zyqyh.service.ISgdxxService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.service.IWechatService;
 import cn.com.sinoi.zyqyh.utils.ShiroUtils;
-import cn.com.sinoi.zyqyh.vo.Attachment;
-import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.User;
 import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,16 +36,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("mobile")
-public class MobileOrderController {
+public class MobileGzzdController {
 
-    private static final Logger logger = Logger.getLogger(MobileOrderController.class);
+    private static final Logger logger = Logger.getLogger(MobileGzzdController.class);
     @Autowired
     private IWechatService wechatService;
 
-    @Autowired
-    IOrderService orderService;
-    @Autowired
-    ISgdxxService sgdxxService;
     @Autowired
     IUserService userService;
     @Autowired
@@ -61,8 +52,8 @@ public class MobileOrderController {
     @Autowired
     IOrderProjectService orderProjectService;
 
-    @RequestMapping("orderManage.do")
-    public String orderManage(String code, Model model) {
+    @RequestMapping("gzzdManage.do")
+    public String gzzdManage(String code, Model model) {
 //        if (StringUtils.isEmpty(code)) {
 //            model.addAttribute("errorMessage", "请从微信菜单打开");
 //            return "mobile/error";
@@ -72,38 +63,36 @@ public class MobileOrderController {
             model.addAttribute("errorMessage", result);
             return "mobile/error";
         }
-        return "mobile/orderManage";
+        return "mobile/gzzdManage";
     }
 
-    @RequestMapping(value = "addModifyOrder.do", method = RequestMethod.GET)
-    public String addModifyOrder(Model model, String orderId) throws Exception {
-        List<Sgdxx> sgdxxList = sgdxxService.findAll();
-        model.addAttribute("sgdxxList", sgdxxList);
+    @RequestMapping(value = "addModifyGzzd.do", method = RequestMethod.GET)
+    public String addModifyGzzd(Model model, String orderId) throws Exception {
         if (org.apache.commons.lang3.StringUtils.isNotEmpty(orderId)) {
             try {
-                OrderDetail order = orderService.selectByOrderId(orderId);
-                model.addAttribute("order", order);
-                String attachmentId = order.getOrder().getAttachmentId();
-                if (StringUtils.isNotEmpty(attachmentId)) {
-                    Attachment atta = attachmentService.findbyId(attachmentId);
-                    File file = new File(path + atta.getUri());
-                    if (file.exists()) {
-                        model.addAttribute("files", file.listFiles());
-                    }
-                }
+//                OrderDetail order = orderService.selectByOrderId(orderId);
+//                model.addAttribute("order", order);
+//                String attachmentId = order.getOrder().getAttachmentId();
+//                if (StringUtils.isNotEmpty(attachmentId)) {
+//                    Attachment atta = attachmentService.findbyId(attachmentId);
+//                    File file = new File(path + atta.getUri());
+//                    if (file.exists()) {
+//                        model.addAttribute("files", file.listFiles());
+//                    }
+//                }
             } catch (Exception ex) {
                 logger.error(ex.getMessage());
             }
         }
-        return "mobile/addModifyOrder";
+        return "mobile/addModifyGzzd";
     }
 
-    @RequestMapping(value = "viewOrder.do", method = RequestMethod.GET)
+    @RequestMapping(value = "viewGzzd.do", method = RequestMethod.GET)
     public String viewOrder(String keywords, Model model) throws Exception {
-        return "mobile/viewOrder";
+        return "mobile/viewGzzd";
     }
 
-    @RequestMapping(value = "findOrder.do", method = RequestMethod.GET)
+    @RequestMapping(value = "findGzzd.do", method = RequestMethod.GET)
     public String findOrder(String keywords, Model model) throws Exception {
         User user = ShiroUtils.getUserBySubject(userService);
         String userId = null;
@@ -112,29 +101,29 @@ public class MobileOrderController {
         }
         List<OrderDetail> result = Collections.EMPTY_LIST;
         try {
-            result = orderService.findAllForLimit(keywords, userId);
+//            result = orderService.findAllForLimit(keywords, userId);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
             model.addAttribute("error", "查询失败");
         }
-        model.addAttribute("orderList", result);
-        return "mobile/orderList";
+        model.addAttribute("gzzdList", result);
+        return "mobile/gzzdList";
     }
 
-    @RequestMapping("orderDetail.do")
-    public String orderDetail(String orderId, Model model) {
+    @RequestMapping("gzzdDetail.do")
+    public String gzzdDetail(String orderId, Model model) {
         if (StringUtils.isNotEmpty(orderId)) {
-            OrderDetail order = orderService.selectByOrderId(orderId);
-            String attachmentId = order.getOrder().getAttachmentId();
-            if (StringUtils.isNotEmpty(attachmentId)) {
-                Attachment atta = attachmentService.findbyId(attachmentId);
-                File file = new File(path + atta.getUri());
-                if (file.exists()) {
-                    model.addAttribute("files", file.listFiles());
-                }
-            }
-            model.addAttribute("order", order);
+//            OrderDetail order = orderService.selectByOrderId(orderId);
+//            String attachmentId = order.getOrder().getAttachmentId();
+//            if (StringUtils.isNotEmpty(attachmentId)) {
+//                Attachment atta = attachmentService.findbyId(attachmentId);
+//                File file = new File(path + atta.getUri());
+//                if (file.exists()) {
+//                    model.addAttribute("files", file.listFiles());
+//                }
+//            }
+//            model.addAttribute("order", order);
         }
-        return "mobile/orderDetail";
+        return "mobile/gzzdDetail";
     }
 }

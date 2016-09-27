@@ -5,10 +5,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>
-            <c:if test="${order.order.orderId != null}">
+            <c:if test="${not empty order}">
                 修改订单
             </c:if>
-            <c:if test="${order.order.orderId == null}">
+            <c:if test="${empty order}">
                 发布订单
             </c:if>
         </title>
@@ -19,7 +19,7 @@
                         success: function (data) {
                             data = eval("(" + data + ")");
                             if (data && data.code === 'true') {
-                                alert(data.message);
+                                window.location.href = 'orderDetail.do?orderId='+data.id;
                             }
                         }
                     });
@@ -29,16 +29,29 @@
             $(function () {
                 $("#orderManageForm").validate();
             })
-            function submitForm() {
+            function submitForm(){
                 $("#orderManageForm").submit();
             }
+            function deleteFile (thisLink, attachmentId, fileName, sgdId, orderName, orderId) {
+            confirmMessage("确认要删除这个文件吗？文件删除会立即生效。", function (y) {
+                if (attachmentId) {
+                    $.post('../data/baseManage/deleteFile.do', {attachmentId: attachmentId, fileName: fileName, sgdId: sgdId, orderName: orderName, orderId: orderId});
+                }
+                $(thisLink).parent().remove();
+            });
+        }
         </script>
     </head>
     <body>
         <div data-role="page">
             <form id="orderManageForm" method="post" action="../data/baseManage/addModifyOrder.do" enctype="multipart/form-data">
                 <div data-role="header" data-position="fixed">
-                    <h1>发布订单</h1>
+                    <h1> <c:if test="${not empty order}">
+                            修改订单
+                        </c:if>
+                        <c:if test="${empty order}">
+                            发布订单
+                        </c:if></h1>
                 </div><!-- /header -->
                 <div data-role="content"> 
                     <c:if test="${order.order.orderId != null}">
@@ -48,7 +61,7 @@
                         </div>
                     </c:if>
                     <div data-role="fieldcontain">
-                        <input type="hidden" name="id" value="${order.order.orderId}"/>
+                        <input type="hidden" name="orderId" value="${order.order.orderId}"/>
                         <label for="orderName">订单名称：</label>
                         <input type="text" name="orderName" id="orderName" value="${order.order.orderName}" required />
                     </div>
@@ -95,8 +108,8 @@
                         <div id="fileDiv">
                             <c:forEach items="${files}" var="file">
                                 <div>
-                                    <a href="data/system/downloadFile.do?fileName=${file.name}&attachmentId=${order.order.attachmentId}">${file.name}</a>
-                                    <a onclick="javascript: orderManage.deleteFile(this, '${order.order.attachmentId}', '${file.name}', '${order.order.sgdid}', '${order.order.orderName}', '${order.order.orderId}');"  href="javascript:void(0);">删除文件</a>
+                                    <a href="../data/system/downloadFile.do?fileName=${file.name}&attachmentId=${order.order.attachmentId}">${file.name}</a>
+                                    <a onclick="javascript: deleteFile(this, '${order.order.attachmentId}', '${file.name}', '${order.order.sgdid}', '${order.order.orderName}', '${order.order.orderId}');"  href="javascript:void(0);">删除文件</a>
                                 </div>
                             </c:forEach>
                         </div>
@@ -107,7 +120,7 @@
                 <div data-role="footer" data-position="fixed">
                     <div data-role="navbar">
                         <ul>
-                            <li><a href="javascript: submitForm();" data-icon="plus">提交</a></li>
+                            <li><a href="javascript:submitForm();" data-icon="plus">提交</a></li>
                         </ul>
                     </div>
                 </div>

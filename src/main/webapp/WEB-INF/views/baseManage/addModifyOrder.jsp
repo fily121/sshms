@@ -32,10 +32,10 @@
         <input class="easyui-combobox" name="sgdid"  value="${order.order.sgdid}" id="sgdid" style="width:95%" data-options="label:'施工单位',valueField:'id',textField:'sgdmc',url:'data/baseManage/getAllSgd.do',required:true"/>
     </div>
     <div class="input_area">
-        <input class="easyui-textbox" name="remark"  value="${order.order.remark}"  id="remark" style="width:95%" data-options="label:'实际完成情况'" validType="maxLength[200]"/>
+        <input class="easyui-textbox" name="realDetail"  value="${order.order.realDetail}"  id="remark" style="width:95%" data-options="label:'实际完成情况'" validType="maxLength[200]"/>
     </div>
     <div class="input_area">
-        <input class="easyui-textbox" name="orderDetail"  value="${order.order.orderDetail}"  id="orderDetail" style="width:95%" data-options="label:'工程内容'" validType="maxLength[200]"/>
+        <input class="easyui-textbox" name="remark"  value="${order.order.remark}"  id="orderDetail" style="width:95%" data-options="label:'工程内容'" validType="maxLength[200]"/>
     </div>
     <div class="input_area" >
         <input class="easyui-datebox" name="startTime" id="startTime" value="${order.order.startTime}" style="width:95%" data-options="label:'要求开工日期'">

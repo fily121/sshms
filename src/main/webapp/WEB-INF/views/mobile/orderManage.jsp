@@ -16,10 +16,7 @@
                 <%--<shiro:hasPermission name="order:edit">--%>
                     <a href="addModifyOrder.do" data-icon="plus" data-role="button">发布订单</a>
                 <%--</shiro:hasPermission>--%>
-                <a href="#" data-icon="search" data-role="button">查询订单</a>
-                <%--<shiro:hasPermission name="order:edit">--%>
-                    <a href="#" data-icon="gear" data-role="button">修改订单</a>
-                <%--</shiro:hasPermission>--%>
+                <a href="viewOrder.do" data-icon="search" data-role="button">查询订单</a>
             </div><!-- /content -->
         </div><!-- /page -->
     </body>

@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -49,11 +50,11 @@
                     ${order.order.problem}
                 </div>
                 <div data-role="fieldcontain">
-                    <label for="uploadFile1">文件：</label>
+                    <label for="uploadFile1">文件(若要下载文件，请点击右上角的三个点，选择在浏览器中打开)：</label>
                     <!--<div id="fileDiv">-->
                         <c:forEach items="${files}" var="file">
                             <div>
-                                <a href="data/system/downloadFile.do?fileName=${file.name}&attachmentId=${order.order.attachmentId}">${file.name}</a>
+                                <a href="javascript:downloadFile('${file.name}', '${order.order.attachmentId}');">${file.name}</a>
                             </div>
                         </c:forEach>
                     </div>
