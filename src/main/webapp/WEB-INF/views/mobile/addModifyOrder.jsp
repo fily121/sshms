@@ -19,7 +19,7 @@
                         success: function (data) {
                             data = eval("(" + data + ")");
                             if (data && data.code === 'true') {
-                                window.location.href = 'orderDetail.do?orderId='+data.id;
+                                window.location.href = 'orderDetail.do?modify=true&orderId='+data.id;
                             }
                         }
                     });

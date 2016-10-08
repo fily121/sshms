@@ -287,12 +287,14 @@ public class BaseDataController {
             if (att != null && StringUtils.isNotEmpty(fileName)) {
                 File file = new File(path + att.getUri() + "/" + fileName);
                 file.delete();
-                List<String> openIds = sgdxxService.findOpenIdByGcdId(sgdId);
-                String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
-                String dateTime = FORMATTER_YMDHMS.format(new Date());
-                for (String openId : openIds) {
-                    String jsonString = MessageUtil.getOrderMessage(openId, 订单变更通知, dateTime, orderName, orderId, 订单有变化文件删除, "");
-                    WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
+                if (StringUtils.isNotEmpty(sgdId)) {
+                    List<String> openIds = sgdxxService.findOpenIdByGcdId(sgdId);
+                    String access_token = WeixinUtil.getAccessToken(corpId, secret).getToken();
+                    String dateTime = FORMATTER_YMDHMS.format(new Date());
+                    for (String openId : openIds) {
+                        String jsonString = MessageUtil.getOrderMessage(openId, 订单变更通知, dateTime, orderName, orderId, 订单有变化文件删除, "");
+                        WeixinUtil.PostMessage(access_token, "POST", MessageUtil.MB_SEND_URL, jsonString);
+                    }
                 }
             }
         }

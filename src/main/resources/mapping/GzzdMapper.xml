@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.sinoi.zyqyh.dao.GzzdMapper" >
+    <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Gzzd" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="detail" property="detail" jdbcType="VARCHAR" />
+        <result column="attachmentId" property="attachmentid" jdbcType="VARCHAR" />
+        <result column="lastModifyUserId" property="lastmodifyuserid" jdbcType="VARCHAR" />
+        <result column="lastModifyTime" property="lastmodifytime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, name, detail, attachmentId, lastModifyUserId, lastModifyTime
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from gzzd
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findAllForLimit" resultMap="BaseResultMap" parameterType="java.util.Map" >
+        select 
+        <include refid="Base_Column_List" />
+        from gzzd
+        where (name like concat('%',#{keywords},'%') or detail like concat('%',#{keywords},'%'))
+        <if test="userId != null" >
+            lastModifyUserId = #{userId}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from gzzd
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Gzzd" >
+        insert into gzzd (id, name, detail, 
+        attachmentId, lastModifyUserId, lastModifyTime
+        )
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
+        #{attachmentid,jdbcType=VARCHAR}, #{lastmodifyuserid,jdbcType=VARCHAR}, #{lastmodifytime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Gzzd" >
+        insert into gzzd
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="detail != null" >
+                detail,
+            </if>
+            <if test="attachmentid != null" >
+                attachmentId,
+            </if>
+            <if test="lastmodifyuserid != null" >
+                lastModifyUserId,
+            </if>
+            <if test="lastmodifytime != null" >
+                lastModifyTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null" >
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="attachmentid != null" >
+                #{attachmentid,jdbcType=VARCHAR},
+            </if>
+            <if test="lastmodifyuserid != null" >
+                #{lastmodifyuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="lastmodifytime != null" >
+                #{lastmodifytime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Gzzd" >
+        update gzzd
+        <set >
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null" >
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="attachmentid != null" >
+                attachmentId = #{attachmentid,jdbcType=VARCHAR},
+            </if>
+            <if test="lastmodifyuserid != null" >
+                lastModifyUserId = #{lastmodifyuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="lastmodifytime != null" >
+                lastModifyTime = #{lastmodifytime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Gzzd" >
+        update gzzd
+        set name = #{name,jdbcType=VARCHAR},
+        detail = #{detail,jdbcType=VARCHAR},
+        attachmentId = #{attachmentid,jdbcType=VARCHAR},
+        lastModifyUserId = #{lastmodifyuserid,jdbcType=VARCHAR},
+        lastModifyTime = #{lastmodifytime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -10,7 +10,6 @@ import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.service.IWechatService;
 import cn.com.sinoi.zyqyh.utils.ShiroUtils;
 import cn.com.sinoi.zyqyh.vo.Attachment;
-import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.User;
 import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
 import java.io.File;
@@ -75,30 +74,6 @@ public class MobileOrderController {
         return "mobile/orderManage";
     }
 
-    @RequestMapping(value = "addModifyOrder.do", method = RequestMethod.GET)
-    public String addModifyOrder(Model model, String orderId) throws Exception {
-        List<Sgdxx> sgdxxList = sgdxxService.findAll();
-        model.addAttribute("sgdxxList", sgdxxList);
-        if (org.apache.commons.lang3.StringUtils.isNotEmpty(orderId)) {
-            try {
-                OrderDetail order = orderService.selectByOrderId(orderId);
-                model.addAttribute("order", order);
-                String attachmentId = order.getOrder().getAttachmentId();
-                if (StringUtils.isNotEmpty(attachmentId)) {
-                    Attachment atta = attachmentService.findbyId(attachmentId);
-                    File file = new File(path + atta.getUri());
-                    if (file.exists()) {
-                        model.addAttribute("files", file.listFiles());
-                    }
-                }
-            } catch (Exception ex) {
-                logger.error(ex.getMessage());
-            }
-        }
-        return "mobile/addModifyOrder";
-    }
-
-    @RequestMapping(value = "viewOrder.do", method = RequestMethod.GET)
     public String viewOrder(String keywords, Model model) throws Exception {
         return "mobile/viewOrder";
     }
@@ -122,7 +97,7 @@ public class MobileOrderController {
     }
 
     @RequestMapping("orderDetail.do")
-    public String orderDetail(String orderId, Model model) {
+    public String orderDetail(String orderId, Model model, boolean modify) {
         if (StringUtils.isNotEmpty(orderId)) {
             OrderDetail order = orderService.selectByOrderId(orderId);
             String attachmentId = order.getOrder().getAttachmentId();
@@ -134,6 +109,7 @@ public class MobileOrderController {
                 }
             }
             model.addAttribute("order", order);
+            model.addAttribute("modify", modify);
         }
         return "mobile/orderDetail";
     }

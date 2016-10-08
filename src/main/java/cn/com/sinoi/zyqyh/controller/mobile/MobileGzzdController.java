@@ -3,12 +3,14 @@ package cn.com.sinoi.zyqyh.controller.mobile;
 import cn.com.sinoi.zyqyh.controller.dataController.SystemDataController;
 import cn.com.sinoi.zyqyh.definition.RoleEnum;
 import cn.com.sinoi.zyqyh.service.IAttachmentService;
-import cn.com.sinoi.zyqyh.service.IOrderProjectService;
+import cn.com.sinoi.zyqyh.service.IGzzdService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.service.IWechatService;
 import cn.com.sinoi.zyqyh.utils.ShiroUtils;
+import cn.com.sinoi.zyqyh.vo.Attachment;
+import cn.com.sinoi.zyqyh.vo.Gzzd;
 import cn.com.sinoi.zyqyh.vo.User;
-import cn.com.sinoi.zyqyh.vo.relate.OrderDetail;
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * <p>
- * Title: 现场管理控制器
+ * Title: 规章制度管理控制器
  * </p>
  * <p>
  * Description:
@@ -43,14 +45,14 @@ public class MobileGzzdController {
     private IWechatService wechatService;
 
     @Autowired
+    IGzzdService gzzdService;
+    @Autowired
     IUserService userService;
+
     @Autowired
     IAttachmentService attachmentService;
     @Value("#{readProperties['upload.file.path']}")
     private String path;
-
-    @Autowired
-    IOrderProjectService orderProjectService;
 
     @RequestMapping("gzzdManage.do")
     public String gzzdManage(String code, Model model) {
@@ -67,19 +69,19 @@ public class MobileGzzdController {
     }
 
     @RequestMapping(value = "addModifyGzzd.do", method = RequestMethod.GET)
-    public String addModifyGzzd(Model model, String orderId) throws Exception {
-        if (org.apache.commons.lang3.StringUtils.isNotEmpty(orderId)) {
+    public String addModifyGzzd(Model model, String id) throws Exception {
+        if (org.apache.commons.lang3.StringUtils.isNotEmpty(id)) {
             try {
-//                OrderDetail order = orderService.selectByOrderId(orderId);
-//                model.addAttribute("order", order);
-//                String attachmentId = order.getOrder().getAttachmentId();
-//                if (StringUtils.isNotEmpty(attachmentId)) {
-//                    Attachment atta = attachmentService.findbyId(attachmentId);
-//                    File file = new File(path + atta.getUri());
-//                    if (file.exists()) {
-//                        model.addAttribute("files", file.listFiles());
-//                    }
-//                }
+                Gzzd gzzd = gzzdService.selectByPrimaryKey(id);
+                model.addAttribute("gzzd", gzzd);
+                String attachmentId = gzzd.getAttachmentid();
+                if (StringUtils.isNotEmpty(attachmentId)) {
+                    Attachment atta = attachmentService.findbyId(attachmentId);
+                    File file = new File(path + atta.getUri());
+                    if (file.exists()) {
+                        model.addAttribute("files", file.listFiles());
+                    }
+                }
             } catch (Exception ex) {
                 logger.error(ex.getMessage());
             }
@@ -93,15 +95,15 @@ public class MobileGzzdController {
     }
 
     @RequestMapping(value = "findGzzd.do", method = RequestMethod.GET)
-    public String findOrder(String keywords, Model model) throws Exception {
+    public String findGzzd(String keywords, Model model) throws Exception {
         User user = ShiroUtils.getUserBySubject(userService);
         String userId = null;
         if (RoleEnum.fromCode(user.getRoleId()) != RoleEnum.管理员用户) {
             userId = user.getOrgId();
         }
-        List<OrderDetail> result = Collections.EMPTY_LIST;
+        List<Gzzd> result = Collections.EMPTY_LIST;
         try {
-//            result = orderService.findAllForLimit(keywords, userId);
+            result = gzzdService.findAllForLimit(keywords, userId);
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemDataController.class.getName()).log(Level.SEVERE, null, ex);
             model.addAttribute("error", "查询失败");
@@ -111,18 +113,26 @@ public class MobileGzzdController {
     }
 
     @RequestMapping("gzzdDetail.do")
-    public String gzzdDetail(String orderId, Model model) {
-        if (StringUtils.isNotEmpty(orderId)) {
-//            OrderDetail order = orderService.selectByOrderId(orderId);
-//            String attachmentId = order.getOrder().getAttachmentId();
-//            if (StringUtils.isNotEmpty(attachmentId)) {
-//                Attachment atta = attachmentService.findbyId(attachmentId);
-//                File file = new File(path + atta.getUri());
-//                if (file.exists()) {
-//                    model.addAttribute("files", file.listFiles());
-//                }
-//            }
-//            model.addAttribute("order", order);
+    public String gzzdDetail(String id, Model model) {
+        if (StringUtils.isNotEmpty(id)) {
+            Gzzd gzzd = gzzdService.selectByPrimaryKey(id);
+            try {
+                User user = userService.selectById(gzzd.getLastmodifyuserid());
+                if (user != null) {
+                    model.addAttribute("addUser", user.getName());
+                }
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(MobileGzzdController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String attachmentId = gzzd.getAttachmentid();
+            if (StringUtils.isNotEmpty(attachmentId)) {
+                Attachment atta = attachmentService.findbyId(attachmentId);
+                File file = new File(path + atta.getUri());
+                if (file.exists()) {
+                    model.addAttribute("files", file.listFiles());
+                }
+            }
+            model.addAttribute("gzzd", gzzd);
         }
         return "mobile/gzzdDetail";
     }
