@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -64,11 +65,11 @@
                         </div>
                     </c:if>
                     <div data-role="fieldcontain">
-                        <label for="orderName">规章制度名称：</label>
+                        <label for="name">规章制度名称：</label>
                         <input type="text" name="name" id="name" value="${gzzd.name}" required />
                     </div>
                     <div data-role="fieldcontain">
-                        <label for="problem">详情：</label>
+                        <label for="detail">详情：</label>
                         <textarea cols="40" rows="8" name="detail" id="detail">${gzzd.detail}</textarea>
                     </div>
                     <div data-role="fieldcontain">

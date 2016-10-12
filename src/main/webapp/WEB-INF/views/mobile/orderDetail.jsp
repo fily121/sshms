@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -52,26 +53,28 @@
                 <div data-role="fieldcontain">
                     <label for="uploadFile1">文件(若要下载文件，请点击右上角的三个点，选择在浏览器中打开)：</label>
                     <!--<div id="fileDiv">-->
-                        <c:forEach items="${files}" var="file">
-                            <div>
-                                <a href="javascript:downloadFile('${file.name}', '${order.order.attachmentId}');">${file.name}</a>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div><!-- /content -->
-                <div data-role="footer" data-position="fixed">
-                    <div data-role="navbar">
-                        <ul>
+                    <c:forEach items="${files}" var="file">
+                        <div>
+                            <a href="javascript:downloadFile('${file.name}', '${order.order.attachmentId}');">${file.name}</a>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div><!-- /content -->
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <c:if test="${view eq false}">
                             <%--<shiro:hasPermission name="order:edit">--%>
                             <li><a href="addModifyOrder.do?orderId=${order.order.orderId}" data-icon="edit">修改</a></li>
-                            <%--</shiro:hasPermission>--%>
-                            <c:if test="${empty modify or !modify}">
-                            <li><a href="javascript: history.go(-1);" data-icon="arrow-l">返回</a></li>
-                            </c:if>
-                        </ul>
-                    </div>
+                                <%--</shiro:hasPermission>--%>
+                        </c:if>
+                        <c:if test="${empty modify or !modify}">
+                        <li><a href="javascript: history.go(-1);" data-icon="arrow-l">返回</a></li>
+                        </c:if>
+                    </ul>
                 </div>
             </div>
-        </div><!-- /page -->
-    </body>
+        </div>
+    </div><!-- /page -->
+</body>
 </html>

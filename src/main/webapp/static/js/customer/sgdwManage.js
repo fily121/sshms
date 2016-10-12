@@ -27,7 +27,7 @@ var sgdwManage = function () {
                         },
                         {field: 'sgdmc', title: '施工队名', width: 120, formatter: function (value, rows, index) {
                                 if (rows.sgdxx) {
-                                    return rows.sgdxx.sgdmc;
+                                    return '<a href="javascript:sgdwManage.viewDetail(\''+rows.sgdxx.id+'\');">'+rows.sgdxx.sgdmc+'</a>';
                                 } else {
                                     return '';
                                 }
@@ -143,6 +143,9 @@ var sgdwManage = function () {
         },
         clearForm: function () {
             clearForm('#sgdxxManageForm');
+        },
+        viewDetail:function(id){
+            window.open("mobile/sgdxxDetail.do?view=true&id=" + id, "_blank", "height=768, width=1024, toolbar= no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,top=10,left=10");
         }
     };
 }();

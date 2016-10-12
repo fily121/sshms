@@ -1,5 +1,6 @@
 package cn.com.sinoi.zyqyh.controller.dataController;
 
+import cn.com.sinoi.zyqyh.controller.BaseController;
 import cn.com.sinoi.zyqyh.controller.SystemController;
 import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IPermissionService;
@@ -49,7 +50,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 @RequestMapping("data/system")
-public class SystemDataController {
+public class SystemDataController extends BaseController {
 
     private static final Logger logger = Logger.getLogger(SystemDataController.class);
     @Value("#{readProperties['upload.file.path']}")
@@ -240,28 +241,37 @@ public class SystemDataController {
             User user = new User();
             String[] str = list.get(i);
             if (str.length != 5) {
-                errorMessage.append((i + 1) + "行有空字段。<br/>");
+                errorMessage.append((i + 1));
+                errorMessage.append("行有空字段。<br/>");
             } else {
                 user.setUserName(str[1]);
                 user.setUserPwd(StringUtils.isEmpty(str[2]) ? "123456" : str[2]);
                 user.setName(str[3]);
-                user.setWechatNo(str[4]);
+                user.setWechatno(str[4]);
                 if (StringUtils.isEmpty(user.getUserName())) {
-                    errorMessage.append((i + 1) + "行用户名不能为空。<br/>");
+                    errorMessage.append((i + 1));
+                    errorMessage.append("行用户名不能为空。<br/>");
                 }
                 User userExists = userService.selectByUserName(user.getUserName());
                 if (userExists != null) {
-                    errorMessage.append((i + 1) + "行用户名已存在。<br/>");
+                    errorMessage.append((i + 1));
+                    errorMessage.append("行用户名已存在。<br/>");
                 }
                 if (userNameMap.containsKey(str[1])) {
-                    errorMessage.append((i + 1) + "行与" + userNameMap.get(str[1]) + "行，用户名重复。<br/>");
+                    errorMessage.append((i + 1));
+                    errorMessage.append("行与");
+                    errorMessage.append(userNameMap.get(str[1]));
+                    errorMessage.append("行，用户名重复。<br/>");
                 } else {
                     userNameMap.put(user.getUserName(), i + 1);
                 }
-                if (wechatMap.containsKey(user.getWechatNo())) {
-                    errorMessage.append((i + 1) + "行与" + wechatMap.get(user.getWechatNo()) + "行，微信号重复。<br/>");
+                if (wechatMap.containsKey(user.getWechatno())) {
+                    errorMessage.append((i + 1));
+                    errorMessage.append("行与");
+                    errorMessage.append(wechatMap.get(user.getWechatno()));
+                    errorMessage.append("行，微信号重复。<br/>");
                 } else {
-                    wechatMap.put(user.getWechatNo(), i + 1);
+                    wechatMap.put(user.getWechatno(), i + 1);
                 }
                 userList.add(user);
             }

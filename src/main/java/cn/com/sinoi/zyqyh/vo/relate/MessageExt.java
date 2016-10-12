@@ -12,11 +12,34 @@ import cn.com.sinoi.zyqyh.vo.Message;
  *
  * @author 强成西
  */
-@lombok.Getter
-@lombok.Setter
 public class MessageExt extends Message {
 
     private String userFullName;
     private String sgdmc;
     private String formattedTime;
+
+    public String getUserFullName() {
+        return userFullName;
+    }
+
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
+    }
+
+    public String getSgdmc() {
+        return sgdmc;
+    }
+
+    public void setSgdmc(String sgdmc) {
+        this.sgdmc = sgdmc;
+    }
+
+    public String getFormattedTime() {
+        return formattedTime;
+    }
+
+    public void setFormattedTime(String formattedTime) {
+        this.formattedTime = formattedTime;
+    }
+
 }

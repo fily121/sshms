@@ -74,7 +74,7 @@
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/user/login.do"/>
-        <property name="unauthorizedUrl" value="/"/>
+        <property name="unauthorizedUrl" value="/mobile/noauthorized.do"/>
         <property name="filters">
             <util:map>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
@@ -83,9 +83,10 @@
         <property name="filterChainDefinitions">
             <value>
                 /static/** = anon
+                /mobile/noauthorized.do = anon
                 /mobile/orderManage.do = anon
                 /mobile/gzzdManage.do = anon
-                /mobile/sgdManage.do = anon
+                /mobile/searchSgd.do = anon
                 /mobile/xcglManage.do = anon
                 /mobile/xcjcManage.do = anon
                 /mobile/projectManage.do = anon

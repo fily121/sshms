@@ -8,10 +8,25 @@ package cn.com.sinoi.zyqyh.vo.relate;
 import cn.com.sinoi.zyqyh.vo.Sgdxx;
 import cn.com.sinoi.zyqyh.vo.User;
 
-@lombok.Getter
-@lombok.Setter
 public class SgdxxDetail {
 
     private User user;
     private Sgdxx sgdxx;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Sgdxx getSgdxx() {
+        return sgdxx;
+    }
+
+    public void setSgdxx(Sgdxx sgdxx) {
+        this.sgdxx = sgdxx;
+    }
+
 }

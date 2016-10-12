@@ -13,13 +13,34 @@
         <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
         <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
         <result column="openid" property="openid" jdbcType="VARCHAR" />
-        <result column="wechatNo" property="wechatNo" jdbcType="VARCHAR" />
+        <result column="wechatNo" property="wechatno" jdbcType="VARCHAR" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+        <result column="gender" property="gender" jdbcType="VARCHAR" />
+        <result column="birthday" property="birthday" jdbcType="DATE" />
+        <result column="id_no" property="idNo" jdbcType="VARCHAR" />
+        <result column="education" property="education" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="major" property="major" jdbcType="VARCHAR" />
+        <result column="gangwei" property="gangwei" jdbcType="VARCHAR" />
+        <result column="yongglx" property="yongglx" jdbcType="VARCHAR" />
+        <result column="gongzsj" property="gongzsj" jdbcType="INTEGER" />
+        <result column="gongzds" property="gongzds" jdbcType="VARCHAR" />
+        <result column="bendsgzkssj" property="bendsgzkssj" jdbcType="TIMESTAMP" />
+        <result column="zhengsmc" property="zhengsmc" jdbcType="VARCHAR" />
+        <result column="ziz_no" property="zizNo" jdbcType="VARCHAR" />
+        <result column="ziz_time" property="zizTime" jdbcType="TIMESTAMP" />
+        <result column="ziz_org" property="zizOrg" jdbcType="VARCHAR" />
+        <result column="ziz_endtime" property="zizEndtime" jdbcType="TIMESTAMP" />
+        <result column="baox" property="baox" jdbcType="VARCHAR" />
+        <result column="other" property="other" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
         USER_ID, USER_NAME, USER_PWD, IS_GUEST, IS_LOCKED, ROLE_ID, ORG_ID, CREATE_DATE, 
-        UPDATE_DATE, CREATE_USER, openid, wechatNo, name, REMARK
+        UPDATE_DATE, CREATE_USER, openid, wechatNo, name, REMARK, gender, birthday, id_no, 
+        education, phone, email, major, gangwei, yongglx, gongzsj, gongzds, bendsgzkssj, 
+        zhengsmc, ziz_no, ziz_time, ziz_org, ziz_endtime, baox, other
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select 
@@ -36,12 +57,26 @@
         IS_GUEST, IS_LOCKED, ROLE_ID, 
         ORG_ID, CREATE_DATE, UPDATE_DATE, 
         CREATE_USER, openid, wechatNo, 
-        name, REMARK)
+        name, REMARK, gender, 
+        birthday, id_no, education, 
+        phone, email, major, 
+        gangwei, yongglx, gongzsj, 
+        gongzds, bendsgzkssj, zhengsmc, 
+        ziz_no, ziz_time, ziz_org, 
+        ziz_endtime, baox, other
+        )
         values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
         #{isGuest,jdbcType=INTEGER}, #{isLocked,jdbcType=INTEGER}, #{roleId,jdbcType=VARCHAR}, 
         #{orgId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
-        #{createUser,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{wechatNo,jdbcType=VARCHAR}, 
-        #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+        #{createUser,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{wechatno,jdbcType=VARCHAR}, 
+        #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+        #{birthday,jdbcType=DATE}, #{idNo,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+        #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, 
+        #{gangwei,jdbcType=VARCHAR}, #{yongglx,jdbcType=VARCHAR}, #{gongzsj,jdbcType=INTEGER}, 
+        #{gongzds,jdbcType=VARCHAR}, #{bendsgzkssj,jdbcType=TIMESTAMP}, #{zhengsmc,jdbcType=VARCHAR}, 
+        #{zizNo,jdbcType=VARCHAR}, #{zizTime,jdbcType=TIMESTAMP}, #{zizOrg,jdbcType=VARCHAR}, 
+        #{zizEndtime,jdbcType=TIMESTAMP}, #{baox,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}
+        )
     </insert>
     <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.User" >
         insert into p_user
@@ -79,7 +114,7 @@
             <if test="openid != null" >
                 openid,
             </if>
-            <if test="wechatNo != null" >
+            <if test="wechatno != null" >
                 wechatNo,
             </if>
             <if test="name != null" >
@@ -87,6 +122,63 @@
             </if>
             <if test="remark != null" >
                 REMARK,
+            </if>
+            <if test="gender != null" >
+                gender,
+            </if>
+            <if test="birthday != null" >
+                birthday,
+            </if>
+            <if test="idNo != null" >
+                id_no,
+            </if>
+            <if test="education != null" >
+                education,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="major != null" >
+                major,
+            </if>
+            <if test="gangwei != null" >
+                gangwei,
+            </if>
+            <if test="yongglx != null" >
+                yongglx,
+            </if>
+            <if test="gongzsj != null" >
+                gongzsj,
+            </if>
+            <if test="gongzds != null" >
+                gongzds,
+            </if>
+            <if test="bendsgzkssj != null" >
+                bendsgzkssj,
+            </if>
+            <if test="zhengsmc != null" >
+                zhengsmc,
+            </if>
+            <if test="zizNo != null" >
+                ziz_no,
+            </if>
+            <if test="zizTime != null" >
+                ziz_time,
+            </if>
+            <if test="zizOrg != null" >
+                ziz_org,
+            </if>
+            <if test="zizEndtime != null" >
+                ziz_endtime,
+            </if>
+            <if test="baox != null" >
+                baox,
+            </if>
+            <if test="other != null" >
+                other,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -123,14 +215,71 @@
             <if test="openid != null" >
                 #{openid,jdbcType=VARCHAR},
             </if>
-            <if test="wechatNo != null" >
-                #{wechatNo,jdbcType=VARCHAR},
+            <if test="wechatno != null" >
+                #{wechatno,jdbcType=VARCHAR},
             </if>
             <if test="name != null" >
                 #{name,jdbcType=VARCHAR},
             </if>
             <if test="remark != null" >
                 #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null" >
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null" >
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="idNo != null" >
+                #{idNo,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null" >
+                #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null" >
+                #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="gangwei != null" >
+                #{gangwei,jdbcType=VARCHAR},
+            </if>
+            <if test="yongglx != null" >
+                #{yongglx,jdbcType=VARCHAR},
+            </if>
+            <if test="gongzsj != null" >
+                #{gongzsj,jdbcType=INTEGER},
+            </if>
+            <if test="gongzds != null" >
+                #{gongzds,jdbcType=VARCHAR},
+            </if>
+            <if test="bendsgzkssj != null" >
+                #{bendsgzkssj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="zhengsmc != null" >
+                #{zhengsmc,jdbcType=VARCHAR},
+            </if>
+            <if test="zizNo != null" >
+                #{zizNo,jdbcType=VARCHAR},
+            </if>
+            <if test="zizTime != null" >
+                #{zizTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="zizOrg != null" >
+                #{zizOrg,jdbcType=VARCHAR},
+            </if>
+            <if test="zizEndtime != null" >
+                #{zizEndtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="baox != null" >
+                #{baox,jdbcType=VARCHAR},
+            </if>
+            <if test="other != null" >
+                #{other,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -167,14 +316,71 @@
             <if test="openid != null" >
                 openid = #{openid,jdbcType=VARCHAR},
             </if>
-            <if test="wechatNo != null" >
-                wechatNo = #{wechatNo,jdbcType=VARCHAR},
+            <if test="wechatno != null" >
+                wechatNo = #{wechatno,jdbcType=VARCHAR},
             </if>
             <if test="name != null" >
                 name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="remark != null" >
                 REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null" >
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null" >
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="idNo != null" >
+                id_no = #{idNo,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null" >
+                education = #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null" >
+                major = #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="gangwei != null" >
+                gangwei = #{gangwei,jdbcType=VARCHAR},
+            </if>
+            <if test="yongglx != null" >
+                yongglx = #{yongglx,jdbcType=VARCHAR},
+            </if>
+            <if test="gongzsj != null" >
+                gongzsj = #{gongzsj,jdbcType=INTEGER},
+            </if>
+            <if test="gongzds != null" >
+                gongzds = #{gongzds,jdbcType=VARCHAR},
+            </if>
+            <if test="bendsgzkssj != null" >
+                bendsgzkssj = #{bendsgzkssj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="zhengsmc != null" >
+                zhengsmc = #{zhengsmc,jdbcType=VARCHAR},
+            </if>
+            <if test="zizNo != null" >
+                ziz_no = #{zizNo,jdbcType=VARCHAR},
+            </if>
+            <if test="zizTime != null" >
+                ziz_time = #{zizTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="zizOrg != null" >
+                ziz_org = #{zizOrg,jdbcType=VARCHAR},
+            </if>
+            <if test="zizEndtime != null" >
+                ziz_endtime = #{zizEndtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="baox != null" >
+                baox = #{baox,jdbcType=VARCHAR},
+            </if>
+            <if test="other != null" >
+                other = #{other,jdbcType=VARCHAR},
             </if>
         </set>
         where USER_ID = #{userId,jdbcType=VARCHAR}
@@ -191,12 +397,38 @@
         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
         CREATE_USER = #{createUser,jdbcType=VARCHAR},
         openid = #{openid,jdbcType=VARCHAR},
-        wechatNo = #{wechatNo,jdbcType=VARCHAR},
+        wechatNo = #{wechatno,jdbcType=VARCHAR},
         name = #{name,jdbcType=VARCHAR},
-        REMARK = #{remark,jdbcType=VARCHAR}
+        REMARK = #{remark,jdbcType=VARCHAR},
+        gender = #{gender,jdbcType=VARCHAR},
+        birthday = #{birthday,jdbcType=DATE},
+        id_no = #{idNo,jdbcType=VARCHAR},
+        education = #{education,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        major = #{major,jdbcType=VARCHAR},
+        gangwei = #{gangwei,jdbcType=VARCHAR},
+        yongglx = #{yongglx,jdbcType=VARCHAR},
+        gongzsj = #{gongzsj,jdbcType=INTEGER},
+        gongzds = #{gongzds,jdbcType=VARCHAR},
+        bendsgzkssj = #{bendsgzkssj,jdbcType=TIMESTAMP},
+        zhengsmc = #{zhengsmc,jdbcType=VARCHAR},
+        ziz_no = #{zizNo,jdbcType=VARCHAR},
+        ziz_time = #{zizTime,jdbcType=TIMESTAMP},
+        ziz_org = #{zizOrg,jdbcType=VARCHAR},
+        ziz_endtime = #{zizEndtime,jdbcType=TIMESTAMP},
+        baox = #{baox,jdbcType=VARCHAR},
+        other = #{other,jdbcType=VARCHAR}
         where USER_ID = #{userId,jdbcType=VARCHAR}
     </update>
   
+    <select id="findUsersBySgdId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from p_user
+        where ORG_ID = #{id,jdbcType=VARCHAR}
+    </select>
+    
     <select id="findAll" resultMap="BaseResultMap" >
         select 
         <include refid="Base_Column_List" />
@@ -212,7 +444,9 @@
     <select id="findAllForPage" resultMap="UserDetail_resultMap" parameterType="java.util.Map">
         select 
         a.USER_ID, a.USER_NAME, a.USER_PWD, a.IS_GUEST, a.IS_LOCKED, a.ROLE_ID, a.ORG_ID, a.CREATE_DATE, 
-        a.UPDATE_DATE, a.CREATE_USER, a.openid, a.wechatNo, a.name, a.REMARK, b.sgdmc, d.ROLE_NAME
+        a.UPDATE_DATE, a.CREATE_USER, a.openid, a.wechatNo, a.name, a.REMARK, a.gender, a.birthday, a.id_no, 
+        a.education, a.phone, a.email, a.major, a.gangwei, a.yongglx, a.gongzsj, a.gongzds, a.bendsgzkssj, 
+        a.zhengsmc, a.ziz_no, a.ziz_time, a.ziz_org, a.ziz_endtime, a.baox, a.other, b.sgdmc, d.ROLE_NAME
         from p_user a left join sgdxx b on a.ORG_ID = b.id
         left join role d on a.ROLE_ID = d.ROLE_ID
         where a.USER_NAME != 'admin'
@@ -254,5 +488,9 @@
         <if test="searchParams != null">
     	
         </if>
+    </select>
+    
+    <select id="selectNumOfType" resultType="java.util.Map" parameterType="java.util.Map" >
+        select ${type} type, count(1) as number from p_user where ORG_ID = #{id, jdbcType=VARCHAR} group by ${type}
     </select>
 </mapper>

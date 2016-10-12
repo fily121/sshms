@@ -11,7 +11,7 @@
         <h2>
             <strong style="color: grey;">菜单列表</strong>
         </h2>
-        <table class="easyui-datagrid" title="菜单列表" style="width:auto;height:600px;"
+        <table class="easyui-datagrid" title="菜单列表" style="width:auto;height:500px;"
                data-options="singleSelect:true,url:'data/system/getMenuList.do',method:'get',pagination:true">
             <thead>
                 <tr>

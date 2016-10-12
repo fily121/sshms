@@ -5,6 +5,7 @@ import cn.com.sinoi.zyqyh.service.IProjectService;
 import cn.com.sinoi.zyqyh.vo.Attachment;
 import cn.com.sinoi.zyqyh.vo.Project;
 import java.io.File;
+import java.util.Date;
 import java.util.logging.Level;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -42,10 +43,10 @@ public class ProjectDivController {
 
     @RequestMapping("addModifyProject.do")
     public String addModifyProject(String id, Model model) {
+        Project project = new Project();
         if (org.apache.commons.lang3.StringUtils.isNotEmpty(id)) {
             try {
-                Project project = projectService.selectByPrimaryKey(id);
-                model.addAttribute("project", project);
+                project = projectService.selectByPrimaryKey(id);
                 String attachmentId = project.getAttachmentId();
                 if (StringUtils.isNotEmpty(attachmentId)) {
                     Attachment atta = attachmentService.findbyId(attachmentId);
@@ -57,7 +58,10 @@ public class ProjectDivController {
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(SystemDivController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            project.setCreateTime(new Date());
         }
+        model.addAttribute("project", project);
         return "projectManage/addModifyProject";
     }
 }

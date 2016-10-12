@@ -33,4 +33,8 @@ public interface UserMapper {
     User selectByWechatNo(String wechatNo);
 
     User selectByOpenId(String fromUserName);
+
+    List<User> findUsersBySgdId(String id);
+
+    List<Map<String, Integer>> selectNumOfType(Map<String, Object> param);
 }

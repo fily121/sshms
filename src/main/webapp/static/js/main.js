@@ -1,6 +1,6 @@
-var easyuiExt = function(){
-   return {
-       initCombobox:function(){
+var easyuiExt = function () {
+    return {
+        initCombobox: function () {
             $('.easyui-combobox').combobox({
                 onHidePanel: function () {
                     var _options = $(this).combobox('options');
@@ -19,8 +19,8 @@ var easyuiExt = function(){
                     }
                  }
             });
-       }
-   };
+        }
+    };
 }();
 var Message = function () {
     return {
@@ -193,13 +193,24 @@ $.extend($.fn.validatebox.defaults.rules, {
         },
         message: '密码两次输入不一致。'
     },
+    email: {
+        validator: function (value) {
+            var emailPat = /^(.+)@(.+)$/;
+            var matchArray = value.match(emailPat);
+            if (matchArray === null) {
+                return false;
+            }
+            return true;
+        },
+        message: 'email地址不正确。'
+    },
     bigthan: {
         validator: function (value, param) {
             var sl = value.length - $(param[0]).val().length;
-            if(sl < 0){
+            if (sl < 0) {
                 return false;
             }
-            if(sl === 0){
+            if (sl === 0) {
                 return value >= $(param[0]).val();
             }
             return true;
@@ -209,10 +220,10 @@ $.extend($.fn.validatebox.defaults.rules, {
     smallthan: {
         validator: function (value, param) {
             var sl = value.length - $(param[0]).val().length;
-            if(sl < 0){
+            if (sl < 0) {
                 return true;
             }
-            if(sl === 0){
+            if (sl === 0) {
                 return value <= $(param[0]).val();
             }
             return false;

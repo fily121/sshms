@@ -5,6 +5,7 @@ import cn.com.sinoi.zyqyh.utils.SearchParams;
 import cn.com.sinoi.zyqyh.vo.User;
 import cn.com.sinoi.zyqyh.vo.relate.UserDetail;
 import java.util.List;
+import java.util.Map;
 
 public interface IUserService extends IBaseService<User> {
 
@@ -16,7 +17,7 @@ public interface IUserService extends IBaseService<User> {
 
     User get(User record) throws Exception;
 
-    User selectById(String id) throws Exception;
+    User selectById(String id);
 
     User selectByUserName(String userName) throws Exception;
 
@@ -29,4 +30,8 @@ public interface IUserService extends IBaseService<User> {
     User selectByWechatNo(String 微信号);
 
     User selectByOpenId(String fromUserName);
+
+    List<User> findUsersBySgdId(String id);
+
+    Map<Integer, Integer> selectNumOfType(String type, String id);
 }

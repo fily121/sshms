@@ -12,7 +12,7 @@
         <h2>
             <strong style="color: grey;">工程承揽情况</strong>
         </h2>
-        <table class="easyui-datagrid" title="工程承揽列表" style="width:auto;height:600px;" id="datagrid">
+        <table class="easyui-datagrid" title="工程承揽列表" style="width:auto;height:500px;" id="datagrid">
         </table>
         <div id="tb" style="display:none">
             <a href="javascript:projectManage.addModifyProject(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>

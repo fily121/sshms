@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,8 +43,8 @@
                 <div data-role="footer" data-position="fixed">
                     <div data-role="navbar">
                         <ul>
-                            <%--<shiro:hasPermission name="order:edit">--%>
-                            <li><a href="addModifyOrder.do?orderId=${gzzd.orderId}" data-icon="edit">修改</a></li>
+                            <%--<shiro:hasPermission name="gzzd:edit">--%>
+                            <li><a href="addModifyGzzd.do?id=${gzzd.id}" data-icon="edit">修改</a></li>
                             <%--</shiro:hasPermission>--%>
                             <c:if test="${empty modify or !modify}">
                             <li><a href="javascript: history.go(-1);" data-icon="arrow-l">返回</a></li>

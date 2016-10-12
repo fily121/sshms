@@ -35,7 +35,7 @@ var userManage = function () {
                         },
                         {field: 'userName', title: '用户名', width: 120, formatter: function (value, rows, index) {
                                 if (rows.user) {
-                                    return rows.user.userName;
+                                    return '<a href="javascript:userManage.viewDetail(\''+rows.user.userId+'\');">'+rows.user.userName+'</a>';
                                 } else {
                                     return '';
                                 }
@@ -56,7 +56,9 @@ var userManage = function () {
         },
         addModifyUser: function (isAdd) {
             var userId = '';
+            var title = '增加用户';
             if (!isAdd) {
+                title = '修改用户';
                 var row = $('#datagrid').datagrid("getSelected");
                 if (!row) {
                     Message.alert("请选择一条数据进行修改。");
@@ -65,9 +67,9 @@ var userManage = function () {
                 userId = row.user.userId;
             }
             $('#userManageDialog').dialog({
-                title: '增加用户',
-                width: 800,
-                height: 400,
+                title: title,
+                width: 1000,
+                height: 600,
                 closed: true,
                 cache: false,
                 href: 'div/system/addModifyUser.do?userId=' + userId,
@@ -126,6 +128,18 @@ var userManage = function () {
         },
         clearForm: function () {
             clearForm('#userManageForm');
+        },
+        viewDetail : function(userId){
+             $('#userManageDialog').dialog({
+                title: "查看详情",
+                width: 1000,
+                height: 600,
+                closed: true,
+                cache: false,
+                href: 'div/system/addModifyUser.do?view=true&userId=' + userId,
+                modal: true
+            });
+            $('#userManageDialog').dialog('open');
         }
     };
 }();

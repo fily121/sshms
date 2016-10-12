@@ -14,11 +14,34 @@ import cn.com.sinoi.zyqyh.vo.Sgdxx;
  *
  * @author LDNS 杜保軍
  */
-@lombok.Getter
-@lombok.Setter
 public class ClglDetail {
 
     private CllqGl cllqGl;
     private Clxx clxx;
     private Sgdxx sgdxx;
+
+    public CllqGl getCllqGl() {
+        return cllqGl;
+    }
+
+    public void setCllqGl(CllqGl cllqGl) {
+        this.cllqGl = cllqGl;
+    }
+
+    public Clxx getClxx() {
+        return clxx;
+    }
+
+    public void setClxx(Clxx clxx) {
+        this.clxx = clxx;
+    }
+
+    public Sgdxx getSgdxx() {
+        return sgdxx;
+    }
+
+    public void setSgdxx(Sgdxx sgdxx) {
+        this.sgdxx = sgdxx;
+    }
+
 }

@@ -58,7 +58,7 @@ var orderManage = function () {
                             }
                         },
                         {field: 'ckxq', title: '操作', width: 120, formatter: function (value, rows, index) {
-                                return '<a href="javascript:orderManage.showDetail(' + rows.order.orderId + ');">查看详情</a>';
+                                return '<a href="javascript:orderManage.showDetail(\'' + rows.order.orderId + '\');">查看详情</a>';
                             }
                         }
                     ]]
@@ -118,7 +118,7 @@ var orderManage = function () {
             clearForm('#orderManageForm');
         },
         showDetail: function (orderId, basePath) {
-            window.open("div/baseManage/orderDetail.do?orderId=" + orderId, "_blank", "height=768, width=1024, toolbar= no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,top=100,left=300");
+            window.open("mobile/orderDetail.do?view=true&orderId=" + orderId, "_blank", "height=768, width=1024, toolbar= no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,top=10,left=30");
         }
     };
 }();

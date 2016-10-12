@@ -85,4 +85,22 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     public User selectByOpenId(String fromUserName) {
         return userMapper.selectByOpenId(fromUserName);
     }
+
+    @Override
+    public List<User> findUsersBySgdId(String id) {
+        return userMapper.findUsersBySgdId(id);
+    }
+
+    @Override
+    public Map<Integer, Integer> selectNumOfType(String type, String id) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("type", type);
+        param.put("id", id);
+        List<Map<String, Integer>> major = userMapper.selectNumOfType(param);
+        Map<Integer, Integer> majorResult = new HashMap<>();
+        for (Map<String, Integer> map : major) {
+            majorResult.put(map.get("type"), map.get("number"));
+        }
+        return majorResult;
+    }
 }

@@ -16,7 +16,6 @@
                 $('#datagrid').datagrid({
                     url: 'data/baseManage/getSgdList.do',
                     method: 'post',
-                    toolbar: '#tb',
                     singleSelect: true,
                     title: '施工队列表',
                     pagination: true,
@@ -61,12 +60,7 @@
             <strong style="color: grey;">施工队列表</strong>
         </h2>
         <div><a href="javascript:openLocation();">位置信息</a></div>
-        <table title="施工队列表" style="width:auto;height:600px;" id="datagrid"> </table>
-        <div id="tb" style="display:none">
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
-        </div>
+        <table title="施工队列表" style="width:auto;height:500px;" id="datagrid"> </table>
     </section>
 </body>
 </html>

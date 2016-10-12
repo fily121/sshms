@@ -8,7 +8,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.ht
 重新启动Tomcat服务器。
 
 
-install:install-file -Dfile=d:\weixin-java-common.jar -DgroupId=weixin-java-common -DartifactId=weixin-java-common -Dversion=1.0.0.RELEASE -Dpackaging=jar
-install:install-file -Dfile=D:\weixin-java-mp.jar -DgroupId=weixin-java-mp -DartifactId=weixin-java-mp -Dversion=1.0.0.RELEASE -Dpackaging=jar
+install:install-file -Dfile=D:\其他工具\weixin-java-common.jar -DgroupId=weixin-java-common -DartifactId=weixin-java-common -Dversion=1.0.0.RELEASE -Dpackaging=jar
+install:install-file -Dfile=D:\其他工具\weixin-java-mp.jar -DgroupId=weixin-java-mp -DartifactId=weixin-java-mp -Dversion=1.0.0.RELEASE -Dpackaging=jar
 
 https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf9ab1176223ac12d&redirect_uri=http%3a%2f%2f139.196.171.130%2fzyqyh%2fmobile%2forderManage.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect

@@ -20,7 +20,7 @@
         <h2>
             <strong style="color: grey;">材料管理</strong>
         </h2>
-        <table class="easyui-datagrid" title="材料领取列表" style="width:auto;height:600px;" id="datagrid">
+        <table class="easyui-datagrid" title="材料领取列表" style="width:auto;height:500px;" id="datagrid">
         </table>
         <div id="tb" style="display:none">
             <a href="javascript:clManage.addModifyCllqgl(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加记录</a>

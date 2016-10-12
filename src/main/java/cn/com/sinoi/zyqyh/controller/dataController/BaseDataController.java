@@ -96,7 +96,7 @@ public class BaseDataController {
         }
         List<SgdxxDetail> sgdList = null;
         try {
-            sgdList = sgdxxService.findAllForPage(page, rows, searchKey);
+            sgdList = sgdxxService.findAllForPage(page, rows, searchKey == null ? searchKey : searchKey.trim());
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SystemController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -144,6 +144,7 @@ public class BaseDataController {
                 result.put("code", "true");
                 result.put("message", "修改成功。");
             }
+            result.put("id", sgdxx.getId());
         } catch (Exception ex) {
             result.put("code", "false");
             result.put("message", ex.getMessage());

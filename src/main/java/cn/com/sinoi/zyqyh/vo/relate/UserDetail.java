@@ -7,11 +7,34 @@ package cn.com.sinoi.zyqyh.vo.relate;
 
 import cn.com.sinoi.zyqyh.vo.User;
 
-@lombok.Getter
-@lombok.Setter
 public class UserDetail {
 
     private String sgdmc;
     private String roleName;
     private User user;
+
+    public String getSgdmc() {
+        return sgdmc;
+    }
+
+    public void setSgdmc(String sgdmc) {
+        this.sgdmc = sgdmc;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
