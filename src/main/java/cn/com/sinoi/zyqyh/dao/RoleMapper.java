@@ -1,6 +1,7 @@
 package cn.com.sinoi.zyqyh.dao;
 
 import cn.com.sinoi.zyqyh.vo.Role;
+import cn.com.sinoi.zyqyh.vo.relate.RolePermission;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Repository;
@@ -21,4 +22,8 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
 
     List<Role> selectRolesByRoleId(Map<String, String> parameter);
+
+    List<Role> findAll();
+
+    List<RolePermission> findAllRole(String roleId);
 }

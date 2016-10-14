@@ -1,67 +1,83 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.sinoi.zyqyh.dao.RoleMapper" >
-  <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Role" >
-    <id column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
-    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    ROLE_ID, ROLE_NAME
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from role
-    where ROLE_ID = #{roleId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from role
-    where ROLE_ID = #{roleId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Role" >
-    insert into role (ROLE_ID, ROLE_NAME)
-    values (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Role" >
-    insert into role
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="roleId != null" >
-        ROLE_ID,
-      </if>
-      <if test="roleName != null" >
-        ROLE_NAME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="roleId != null" >
-        #{roleId,jdbcType=VARCHAR},
-      </if>
-      <if test="roleName != null" >
-        #{roleName,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Role" >
-    update role
-    <set >
-      <if test="roleName != null" >
-        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ROLE_ID = #{roleId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Role" >
-    update role
-    set ROLE_NAME = #{roleName,jdbcType=VARCHAR}
-    where ROLE_ID = #{roleId,jdbcType=VARCHAR}
-  </update>
+    <resultMap id="BaseResultMap" type="cn.com.sinoi.zyqyh.vo.Role" >
+        <id column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
+        <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        ROLE_ID, ROLE_NAME
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from role
+        where ROLE_ID = #{roleId,jdbcType=VARCHAR}
+    </select>
   
-  <select id="selectRolesByRoleId" resultMap="BaseResultMap" parameterType="java.util.Map">
-  	select distinct r.* from role r, role_pers rps
-  	where r.role_id = rps.role_id
-      <if test="roleId != null" >
-      and rps.role_id = #{roleId,jdbcType=VARCHAR}
-      </if>
-  </select>
+    <resultMap id="RolePermissionResultMap" type="cn.com.sinoi.zyqyh.vo.relate.RolePermission" >
+        <id column="ROLE_ID"/>
+        <association property="role" resultMap="BaseResultMap" />
+        <collection property="permissions" resultMap="cn.com.sinoi.zyqyh.dao.PermissionMapper.BaseResultMap"/>
+    </resultMap>
+  
+    <select id="findAllRole" resultMap="RolePermissionResultMap" parameterType="java.lang.String" >
+        select 
+        a.*, c.*
+        from role a left join role_pers b on a.ROLE_ID = b.ROLE_ID
+        left join permission c on b.per_id = c.PER_ID
+        <if test="roleId !=null and roldId != ''">
+            where ROLE_ID = #{roleId,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from role
+        where ROLE_ID = #{roleId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.Role" >
+        insert into role (ROLE_ID, ROLE_NAME)
+        values (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.com.sinoi.zyqyh.vo.Role" >
+        insert into role
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="roleId != null" >
+                ROLE_ID,
+            </if>
+            <if test="roleName != null" >
+                ROLE_NAME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="roleId != null" >
+                #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="roleName != null" >
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.sinoi.zyqyh.vo.Role" >
+        update role
+        <set >
+            <if test="roleName != null" >
+                ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ROLE_ID = #{roleId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.com.sinoi.zyqyh.vo.Role" >
+        update role
+        set ROLE_NAME = #{roleName,jdbcType=VARCHAR}
+        where ROLE_ID = #{roleId,jdbcType=VARCHAR}
+    </update>
+  
+    <select id="selectRolesByRoleId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select distinct r.* from role r, role_pers rps
+        where r.role_id = rps.role_id
+        <if test="roleId != null" >
+            and rps.role_id = #{roleId,jdbcType=VARCHAR}
+        </if>
+    </select>
   
 </mapper>

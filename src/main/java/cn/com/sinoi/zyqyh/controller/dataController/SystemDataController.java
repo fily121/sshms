@@ -4,6 +4,7 @@ import cn.com.sinoi.zyqyh.controller.BaseController;
 import cn.com.sinoi.zyqyh.controller.SystemController;
 import cn.com.sinoi.zyqyh.service.IAttachmentService;
 import cn.com.sinoi.zyqyh.service.IPermissionService;
+import cn.com.sinoi.zyqyh.service.IRolePersService;
 import cn.com.sinoi.zyqyh.service.IRoleService;
 import cn.com.sinoi.zyqyh.service.IUserService;
 import cn.com.sinoi.zyqyh.utils.FileUtil;
@@ -13,7 +14,9 @@ import cn.com.sinoi.zyqyh.utils.UrlDownloadFile;
 import cn.com.sinoi.zyqyh.vo.Attachment;
 import cn.com.sinoi.zyqyh.vo.Permission;
 import cn.com.sinoi.zyqyh.vo.Role;
+import cn.com.sinoi.zyqyh.vo.RolePersKey;
 import cn.com.sinoi.zyqyh.vo.User;
+import cn.com.sinoi.zyqyh.vo.relate.RolePermission;
 import cn.com.sinoi.zyqyh.vo.relate.UserDetail;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,6 +71,9 @@ public class SystemDataController extends BaseController {
 
     @Autowired
     private IAttachmentService attachmentService;
+
+    @Autowired
+    private IRolePersService rolePersService;
 
     @RequestMapping("getMenuList.do")
     @ResponseBody
@@ -133,10 +140,39 @@ public class SystemDataController extends BaseController {
     /**
      * 增加修改用户
      *
-     * @param user
+     * @param role 角色
+     * @param guanlianPer 关联权限
      * @param response
      * @return
      */
+    @RequestMapping(value = "addModifyRole.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> addModifyRole(Role role, String guanlianPer, HttpServletResponse response) {
+        response.setContentType("text/html;charset=UTF-8");
+        Map<String, String> result = new HashMap<>();
+        if (StringUtils.isNotEmpty(role.getRoleId())) {
+            roleService.updateByPrimaryKeySelective(role);
+            result.put("code", "true");
+            result.put("message", "修改成功。");
+        } else {
+            role.setRoleId(UUID.randomUUID().toString());
+            roleService.insert(role);
+            result.put("code", "true");
+            result.put("message", "创建成功。");
+        }
+        if (StringUtils.isNotEmpty(guanlianPer)) {
+            rolePersService.deleteByRoleId(role.getRoleId());
+            String[] glPers = guanlianPer.split(",");
+            for (String per : glPers) {
+                RolePersKey rolePer = new RolePersKey();
+                rolePer.setRoleId(role.getRoleId());
+                rolePer.setPerId(per);
+                rolePersService.insert(rolePer);
+            }
+        }
+        return result;
+    }
+
     @RequestMapping(value = "addModifyUser.do", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> addModifyUser(User user, HttpServletResponse response) {
@@ -291,5 +327,21 @@ public class SystemDataController extends BaseController {
         }
 
         return "<font color=red>" + errorMessage.toString() + "</font>";
+    }
+
+    @RequestMapping("getRoleList.do")
+    @ResponseBody
+    public PageModel<RolePermission> getRoleList() {
+        List<RolePermission> roleList = null;
+        try {
+            roleList = roleService.findAllRole(null);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SystemController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (roleList != null) {
+            PageModel<RolePermission> result = new PageModel<>(roleList, roleList.size());
+            return result;
+        }
+        return null;
     }
 }

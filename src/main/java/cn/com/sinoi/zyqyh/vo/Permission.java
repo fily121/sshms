@@ -1,6 +1,9 @@
 package cn.com.sinoi.zyqyh.vo;
 
+import net.sf.json.JSONObject;
+
 public class Permission {
+
     private String perId;
 
     private String perName;
@@ -8,8 +11,9 @@ public class Permission {
     private String parentPerId;
 
     private String perUrl;
-    
+
     private String parentPerName;
+
     public String getPerId() {
         return perId;
     }
@@ -42,17 +46,23 @@ public class Permission {
         this.perUrl = perUrl == null ? null : perUrl.trim();
     }
 
-	/**
-	 * @return the parentPerName
-	 */
-	public String getParentPerName() {
-		return parentPerName;
-	}
+    /**
+     * @return the parentPerName
+     */
+    public String getParentPerName() {
+        return parentPerName;
+    }
 
-	/**
-	 * @param parentPerName the parentPerName to set
-	 */
-	public void setParentPerName(String parentPerName) {
-		this.parentPerName = parentPerName;
-	}
+    /**
+     * @param parentPerName the parentPerName to set
+     */
+    public void setParentPerName(String parentPerName) {
+        this.parentPerName = parentPerName;
+    }
+
+    public String toString() {
+        JSONObject json = JSONObject.fromObject(this);
+        return json.toString();
+    }
+
 }

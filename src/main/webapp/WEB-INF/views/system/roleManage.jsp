@@ -4,6 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="static/js/customer/roleManage.js"></script>
         <title>角色管理</title>
     </head>
     <body>
@@ -14,13 +15,13 @@
         <table class="easyui-datagrid" title="角色列表" style="width:auto;height:500px;" id="datagrid">
         </table>
         <div id="tb" style="display:none">
-            <a href="javascript:userManage.addModifyUser(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
-            <a href="javascript:userManage.addModifyUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
-            <a href="javascript:userManage.deleteUser();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+            <a href="javascript:roleManage.addModifyRole(true);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">增加</a>
+            <a href="javascript:roleManage.addModifyRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+            <a href="javascript:roleManage.deleteRole();" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
         </div>
     </section>
     
-    <div id="userManageDialog" style="display:none;padding: 10px;">
+    <div id="roleManageDialog" style="display:none;padding: 10px;">
         
     </div>
 </body>

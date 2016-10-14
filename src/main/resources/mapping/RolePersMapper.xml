@@ -16,6 +16,10 @@
     where ROLE_ID = #{roleId,jdbcType=VARCHAR}
       and PER_ID = #{perId,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByRoleId" parameterType="java.lang.String" >
+    delete from role_pers
+    where ROLE_ID = #{roleId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="cn.com.sinoi.zyqyh.vo.RolePersKey" >
     insert into role_pers (ROLE_ID, PER_ID)
     values (#{roleId,jdbcType=VARCHAR}, #{perId,jdbcType=VARCHAR})
